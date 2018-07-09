@@ -1,0 +1,35 @@
+<app-loader [loading]="loading"></app-loader>
+
+<h2>Customers</h2>
+
+<form (submit)="onFilterSubmit()">
+
+   <div class="form-group col-lg-4">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="name" name="name" class="form-control">
+  </div> 
+
+  <div class="form-group col-md-4">
+    <label>Username</label>
+    <input type="text" [(ngModel)]="username" name="username" class="form-control">
+  </div>
+
+  <div class="form-group col-md-4">
+    <label>Email</label>
+    <input type="text" [(ngModel)]="email" name="email" class="form-control">
+  </div>
+  <br>
+  <input type="submit" class="btn btn-primary" value="Filter">
+  <input type="reset" class="btn btn-primary" value="Reset">
+</form>
+<br>
+<div *ngIf="customers">
+  <ol>
+    <div *ngFor="let customer of customers">
+      <li>
+        Name : {{customer.name}} <br> Username: {{customer.username}} <br> Email: {{customer.email}} <br> Phone: {{customer.phone}}
+        <br> <br>
+      </li>
+    </div>
+  </ol>
+</div>

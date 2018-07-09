@@ -1,0 +1,25 @@
+.amenities-slider .owl-dots{
+	top: 95%;
+}
+.career-slider-card{
+	box-shadow: 0px 0px 10px 0px;
+	background: #fff;
+}
+.current-enterprices-galry {
+    height: 14em !important;
+    /*padding: 1.2em!important;*/
+}
+@media (max-width: 767px){
+	.amenities-slider .owl-dots{
+		top: 90%;
+	}
+	.current-enterprices-galry {
+	    padding: 3em 1.2em;
+    	margin-bottom: 0px!important;
+	}
+}
+@media (min-width: 1200px){
+	.w-35{
+		width: 35%;
+	}
+}

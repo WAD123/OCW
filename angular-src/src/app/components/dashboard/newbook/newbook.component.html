@@ -1,0 +1,881 @@
+<div id="newbook-content">
+        
+        <div id="step-bar" class="row container-fluid topmargin-xs">
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" [style.width]="(stepNumber*25)+'%'">
+            </div>
+            <div class="col-sm-12">
+              <div (click)="stepNumber=1" class="col-sm-3 text-center steps" [ngClass]="stepNumber>=1?'text-white':null">
+                <ng-container *ngIf="center&&stepNumber!=1">
+                  {{center}}
+                </ng-container>
+                <div class="title-transition" [ngClass]="{'push-top text-black':!(!center||stepNumber==1)}">
+                  Center
+                </div>
+              </div>
+              <div (click)="stepNumber<2? null : stepNumber=2" class="col-sm-3 text-center steps" [ngClass]="stepNumber>=2?'text-white':null">
+                <ng-container *ngIf="selectedPackage&&stepNumber>2">
+                  {{selectedPackage}}
+                </ng-container>
+                <div class="title-transition" [ngClass]="{'push-top text-black':!(!selectedPackage||stepNumber<=2)}">
+                  Package
+                </div>
+              </div>
+              <div (click)="stepNumber<3? null : stepNumber=3" class="col-sm-3 text-center steps" [ngClass]="stepNumber>=3?'text-white':null">
+                <ng-container *ngIf="plan&&stepNumber>3">
+                  {{plan}}
+                </ng-container>
+                <div class="title-transition" [ngClass]="{'push-top text-black':!(!plan||stepNumber<=3)}">
+                  Plan
+                </div>
+              </div>
+              <div class="col-sm-3 text-center steps" [ngClass]="stepNumber>=4?'text-white':null">Checkout</div>
+            </div>
+          </div>
+            <!-- <div class="col-sm-3 padding-4px"><div class="text-center steps" [ngClass]="{ 'nextstep color-white': stepNumber>=1 }" (click)="stepNumber=1">Step 1</div></div>
+            <div class="col-sm-3 padding-4px"><div class="text-center steps" [ngClass]="{ 'nextstep color-white': stepNumber>=2, 'prevstep color-black': stepNumber<2 }" (click)="stepNumber<2? null : stepNumber=2">Step 2</div></div>
+            <div class="col-sm-3 padding-4px"><div class="text-center steps" [ngClass]="{ 'nextstep color-white': stepNumber>=3, 'prevstep color-black': stepNumber<3 }" (click)="stepNumber<3? null : stepNumber=3">Step 3</div></div>
+            <div class="col-sm-3 padding-4px"><div class="text-center steps" [ngClass]="{ 'nextstep color-white': stepNumber>=4, 'prevstep color-black': stepNumber<4 }" (click)="stepNumber<4? null : stepNumber=4">Step 4</div></div> -->
+          
+        </div>
+        <form #bookingForm="ngForm" (submit)="bookingform()">
+          
+          <!-- <div id="location" *ngIf="stepNumber==1">
+            <h2 class="text-center text-bold text-uppercase">Choose Location</h2>
+            <div class="row">
+              <div class="col-sm-6 col-sm-push-3"  *ngIf="centers.length">
+               
+                <select class="form-control input-lg" name="center" [(ngModel)]="center" (ngModelChange)="center!='0'?stepNumber=2:null" (change)=updateCenter()> 
+                  
+                  <option [value]="0">Choose a center</option>
+                  <option *ngFor="let c of centers">{{c}}</option>
+                </select>
+              </div>
+            </div>
+            
+          </div>location ends -->
+          <div *ngIf="stepNumber==1&&centers.length">
+              <div class="col-sm-4 col-xs-12 topmargin-xxs" *ngFor="let c of centers" [ngClass]="{'book-fade-in':stepNumber==1}">
+                <div class="panel panel-success text-center">
+                  <div class="panel-heading">
+                    </div><!-- panel heading ends -->
+                    <div class="panel-body text-justify">
+                        <h3 class="text-bold text-center nomargin">{{c}}</h3>
+                        <br>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                        
+
+                    </div><!-- panel body ends -->
+                    <div class="panel-footer">
+                      <button type="button" name="center" (click)="updateCenter(c)" class="btn btn-success btn-lg btn-block">Choose</button>
+                    </div>
+                  </div><!--  panel ends -->
+                </div><!-- col ends -->
+          </div>
+          <!-- location ends -->
+
+          <!-- <div id="bookingtype" *ngIf="stepNumber==2">
+            <h2 class="text-center text-bold text-uppercase">Booking Type</h2>
+            <div class="row">
+              <div class="col-sm-6 col-sm-push-3"  *ngIf="centers.length">
+                <select [(ngModel)]="subStepNumber" (ngModelChange)="subStepNumber!=0?stepNumber=3:null" name="subStepNumber" class="form-control input-lg">
+                    
+                    <option [value]="0">Choose suitable plan</option>
+                    <option [value]="1">Hot Desk</option>
+                    <option [value]="2">Permanent</option>
+                    <option [value]="3">Meeting</option>
+                </select>
+                
+              </div>
+            </div>
+          </div>bookingtype ends -->
+
+          <div *ngIf="stepNumber==2">
+              <div class="col-sm-4 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==2}">
+                  <div class="panel panel-success text-center panel-color">
+                    <div class="panel-heading">
+                      
+                    </div><!-- panel heading ends -->
+                    <div class="panel-body text-justify">
+                        <h3 class="text-bold text-center nomargin">Hot Desk</h3>
+                        <br>
+                        <p>With the emergence of hot desking and the increasing presence of technology in the workplace, tools have been developed to make it easier to utilize hot desking in an office environment, to standardize the process, and to automatically enforce basic business rules or policies. </p>
+                    </div><!-- panel body ends -->
+                    <div class="panel-footer">
+                      <button type="button" (click)="selectedPackage='Hotdesk';stepNumber=3;subStepNumber=1" class="btn btn-success btn-lg btn-block">Choose</button>
+                    </div>
+                  </div><!--  panel ends -->
+                </div><!-- col ends -->
+
+                <div class="col-sm-4 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==2}">
+                    <div class="panel panel-success text-center">
+                      <div class="panel-heading">
+                        
+                      </div><!-- panel heading ends -->
+                      <div class="panel-body text-justify">
+                          <h3 class="text-bold text-center nomargin">Dedicated Booking</h3>
+                          <br>
+                          <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                          <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                          <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                          <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                           
+                      </div><!-- panel body ends -->
+                      <div class="panel-footer">
+                        <button type="button" (click)="selectedPackage='Dedicated';stepNumber=3;subStepNumber=2" class="btn btn-success btn-lg btn-block">Choose</button>
+                      </div>
+                    </div><!--  panel ends -->
+                  </div><!-- col ends -->
+
+                  <div class="col-sm-4 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==2}">
+                      <div class="panel panel-success text-center">
+                        <div class="panel-heading">
+                          
+                        </div><!-- panel heading ends -->
+                        <div class="panel-body text-justify">
+                            <h3 class="text-bold text-center nomargin">Meeting Rooms</h3>
+                            <br>
+                            <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                             
+                        </div><!-- panel body ends -->
+                        <div class="panel-footer">
+                          <button type="button" (click)="selectedPackage='MeetingRoom';stepNumber=3;subStepNumber=3" class="btn btn-success btn-lg btn-block">Choose</button>
+                        </div>
+                      </div><!--  panel ends -->
+                    </div><!-- col ends -->
+          </div>
+          <!-- booking type ends -->
+
+          <!-- <div id="hotdeskpackage" *ngIf="stepNumber==3 && subStepNumber==1">
+            <h2 class="text-center text-bold text-uppercase">Select Package</h2>
+            <div class="btn-group col-sm-push-3">
+              <button type="button" (click)="plan='1DP';stepNumber=4" class="btn btn-success btn-lg">One Day Pass</button>
+              <button type="button" (click)="plan='4DP';stepNumber=4" class="btn btn-success btn-lg">Four Days Pass</button>
+              <button type="button" (click)="plan='10DP';stepNumber=4" class="btn btn-success btn-lg">Ten Days Pass</button>
+            </div>
+            
+          </div>hotdeskpakcage ends -->
+
+          <div *ngIf="stepNumber==3 && subStepNumber==1">
+                <div class="col-sm-4 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                  <div class="panel panel-success text-center">
+                    <div class="panel-heading">
+                      
+                    </div><!-- panel heading ends -->
+                    <div class="panel-body text-justify">
+                        <h3 class="text-bold text-center nomargin">One Day Pass</h3>
+                        <br>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                         
+                    </div><!-- panel body ends -->
+                    <div class="panel-footer">
+                        <button type="button" (click)="plan='1DP';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                    </div>
+                  </div><!--  panel ends -->
+                </div><!-- col ends -->
+
+                <div class="col-sm-4 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                    <div class="panel panel-success text-center">
+                      <div class="panel-heading">
+                        
+                      </div><!-- panel heading ends -->
+                      <div class="panel-body text-justify">
+                          <h3 class="text-bold text-center nomargin">Four Day Pass</h3>
+                          <br>
+                          <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                           
+                      </div><!-- panel body ends -->
+                      <div class="panel-footer">
+                          <button type="button" (click)="plan='4DP';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                      </div>
+                    </div><!--  panel ends -->
+                  </div><!-- col ends -->
+
+                  <div class="col-sm-4 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                      <div class="panel panel-success text-center">
+                        <div class="panel-heading">
+                          
+                        </div><!-- panel heading ends -->
+                        <div class="panel-body text-justify">
+                            <h3 class="text-bold text-center nomargin">Ten Day Pass</h3>
+                            <br>
+                            <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                             
+                        </div><!-- panel body ends -->
+                        <div class="panel-footer">
+                            <button type="button" (click)="plan='10DP';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                        </div>
+                      </div><!--  panel ends -->
+                    </div><!-- col ends -->
+          </div>
+          <!-- hotdeskpakcage ends -->
+
+          <!-- <div id="dedicatedpakcage" *ngIf="stepNumber==3 && subStepNumber==2">
+            <h2 class="text-center text-bold text-uppercase">Select Package</h2>
+            <div class="btn-group col-sm-push-4">
+              <button type="button" (click)="plan='18DP';stepNumber=4" class="btn btn-success btn-lg">18 Days Booking</button>
+              <button type="button" (click)="plan='30DP';stepNumber=4" class="btn btn-success btn-lg">30 Days Booking</button>
+              
+            </div>
+            
+          </div>dedicatedpakcage ends -->
+
+          <div *ngIf="stepNumber==3 && subStepNumber==2">
+              <div class="col-sm-4 col-sm-push-2 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                  <div class="panel panel-success text-center">
+                    <div class="panel-heading">
+                      
+                    </div><!-- panel heading ends -->
+                    <div class="panel-body text-justify">
+                        <h3 class="text-bold text-center nomargin">18 Day Pass</h3>
+                        <br>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                         
+                    </div><!-- panel body ends -->
+                    <div class="panel-footer">
+                        <button type="button" (click)="plan='18DP';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                    </div>
+                  </div><!--  panel ends -->
+                </div><!-- col ends -->
+
+                <div class="col-sm-4 col-sm-push-2 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                    <div class="panel panel-success text-center">
+                      <div class="panel-heading">
+                        
+                      </div><!-- panel heading ends -->
+                      <div class="panel-body text-justify">
+                          <h3 class="text-bold text-center nomargin">30 Day Pass</h3>
+                          <br>
+                          <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                           
+                      </div><!-- panel body ends -->
+                      <div class="panel-footer">
+                          <button type="button" (click)="plan='30DP';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                      </div>
+                    </div><!--  panel ends -->
+                  </div><!-- col ends -->
+                
+          </div>
+          <!-- dedicatedpakcage ends -->
+
+          <!-- <div id="meetingpackage" *ngIf="stepNumber==3 && subStepNumber==3">
+            <h2 class="text-center text-bold text-uppercase">Select Package</h2>
+            <div class="btn-group col-sm-push-2">
+              <button type="button" (click)="plan='MTR';stepNumber=4" class="btn btn-success btn-lg">Meeting Rooms</button>
+              <button type="button" (click)="plan='VO';stepNumber=4" class="btn btn-success btn-lg">Virtual Office</button>
+              <button type="button" (click)="plan='VO+';stepNumber=4" class="btn btn-success btn-lg">Virtual Office Plus</button>
+              <button type="button" (click)="plan='TS';stepNumber=4" class="btn btn-success btn-lg">Training Sessions</button>
+            </div>
+            
+          </div>meetingpakcage ends -->
+
+          <div *ngIf="stepNumber==3 && subStepNumber==3">
+              <div class="col-sm-3 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                  <div class="panel panel-success text-center">
+                    <div class="panel-heading">
+                      
+                    </div><!-- panel heading ends -->
+                    <div class="panel-body text-justify">
+                        <h3 class="text-bold text-center nomargin">Meeting Rooms</h3>
+                        <br>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                         
+                    </div><!-- panel body ends -->
+                    <div class="panel-footer">
+                        <button type="button" (click)="plan='MTR';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                    </div>
+                  </div><!--  panel ends -->
+                </div><!-- col ends -->
+
+                <div class="col-sm-3 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                    <div class="panel panel-success text-center">
+                      <div class="panel-heading">
+                        
+                      </div><!-- panel heading ends -->
+                      <div class="panel-body text-justify">
+                          <h3 class="text-bold text-center nomargin">Virtual Office</h3>
+                          <br>
+                          <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                           
+                      </div><!-- panel body ends -->
+                      <div class="panel-footer">
+                          <button type="button" (click)="plan='VO';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                      </div>
+                    </div><!--  panel ends -->
+                  </div><!-- col ends -->
+
+                  <div class="col-sm-3 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                      <div class="panel panel-success text-center">
+                        <div class="panel-heading">
+                          
+                        </div><!-- panel heading ends -->
+                        <div class="panel-body text-justify">
+                            <h3 class="text-bold text-center nomargin">Virtual Office Plus</h3>
+                            <br>
+                            <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                        <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                       
+                             
+                        </div><!-- panel body ends -->
+                        <div class="panel-footer">
+                            <button type="button" (click)="plan='VO+';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                        </div>
+                      </div><!--  panel ends -->
+                    </div><!-- col ends -->
+
+                    <div class="col-sm-3 col-xs-12 topmargin-xxs" [ngClass]="{'book-fade-in':stepNumber==3}">
+                        <div class="panel panel-success text-center">
+                          <div class="panel-heading">
+                            
+                          </div><!-- panel heading ends -->
+                          <div class="panel-body text-justify">
+                              <h3 class="text-bold text-center nomargin">Training Sessions</h3>
+                              <br>
+                              <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong> to Open Sitting &amp; common area</p>
+                              <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Access</strong>to Open Sitting &amp; common area</p>
+                              <p><span class="glyphicon glyphicon-triangle-right"></span><strong> Paid Access</strong> to Meeting / Conf. Rooms | 10% Discount</p>
+                              <p><span class="glyphicon glyphicon-triangle-right"></span><strong> High Speed</strong> Internet [LAN / Wi Fi]</p>
+                               
+                          </div><!-- panel body ends -->
+                          <div class="panel-footer">
+                              <button type="button" (click)="plan='TS';stepNumber=4" class="btn btn-success btn-lg btn-block">Select</button>
+                          </div>
+                        </div><!--  panel ends -->
+                      </div><!-- col ends -->
+                
+          </div>
+          <!-- meetingpakcage ends -->
+
+          <div id="hotdeskpackage" *ngIf="stepNumber==4 && subStepNumber==1">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+                <div [ngClass]="{'col-sm-6 col-sm-push-2':plan=='1DP','col-sm-4 col-sm-push-1':plan!='1DP'}">
+                  <ng-datepicker [(ngModel)]="startdate" name="startdate" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)"></ng-datepicker>
+                  <!-- <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control input-lg" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)" required="required"> -->
+                </div>
+
+                <!-- <div *ngIf="plan!='1DP'" class="col-sm-4 col-sm-push-1"> -->
+                    <!-- <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control input-lg" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)" required="required"> -->
+                <!-- </div> -->
+
+                <div *ngIf="plan!='1DP'" class="col-sm-4 col-sm-push-1">  
+                    <select class="form-control input-lg" [(ngModel)]="selected_plan_duration" name="selected_plan_duration" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+                      <option disabled>Subscription Period (in months)</option>
+                      <option [ngClass]="{hidden: month<plan_duration}" *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]">{{month}}</option>
+                    </select>
+                    <input type="hidden" [(ngModel)]="enddate" name="enddate" class="form-control input-lg" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+                </div>
+              <!-- <div class="col-sm-6 col-sm-push-2">
+                <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+              </div> -->
+              <div class="col-sm-2" [ngClass]="{'col-sm-push-2':plan=='1DP','col-sm-push-1':plan!='1DP'}">
+                <!-- <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required"> -->
+                <input type="number" [(ngModel)]="seats" placeholder="Seats" name="quantity" class="form-control input-lg" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)" required="required">
+              </div>
+            </div>
+            <div class="text-center topmargin-xxs">Total Amount to be Paid: {{amount}}</div>
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+
+          </div><!-- onedaypass ends -->            
+
+          <!-- <div id="fourdaypass">
+                       <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="col-sm-4 col-sm-push-1">
+                <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+              </div>
+              <div class="col-sm-4 col-sm-push-1">
+                <select class="form-control input-lg">
+                    <optgroup label="Subscription Period (in Months)">
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                    </optgroup>
+                </select>
+              </div>
+              <div class="col-sm-2 col-sm-push-1">
+                <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required">
+              </div>
+            </div>
+            
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+            
+          </div>fourdaypass ends -->
+
+          <!-- <div id="tendaypass">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="col-sm-4 col-sm-push-1">
+                <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+              </div>
+              <div class="col-sm-4 col-sm-push-1">
+                <select class="form-control input-lg">
+                    <optgroup label="Subscription Period (in Months)">
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                    </optgroup>
+                </select>
+              </div>
+              <div class="col-sm-2 col-sm-push-1">
+                <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required">
+              </div>
+            </div>
+            
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+            
+          </div>tendaypass ends -->
+
+          <div id="permanentpackage" *ngIf="stepNumber==4 && subStepNumber==2">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="datepicker-bootstrap-style" class="col-sm-4 col-sm-push-1">
+                  <ng-datepicker [(ngModel)]="startdate" name="startdate" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)"></ng-datepicker>
+                  <!-- <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control input-lg" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)" required="required"> -->
+                <!-- <input type="date" name="txtmonth" class="form-control input-lg" required="required"> -->
+              </div>
+              <div class="col-sm-4 col-sm-push-1">
+                  
+                  <select class="form-control input-lg" [(ngModel)]="selected_plan_duration" name="selected_plan_duration" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+                      <option disabled>Subscription Period (in months)</option>
+                      <option *ngFor="let month of [3,4,5,6,7,8,9,10,11,12]">{{month}}</option>
+                  </select>
+                  <input type="hidden" [(ngModel)]="enddate" name="enddate" class="form-control input-lg" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+                
+                <!-- <select class="form-control input-lg">
+                    <optgroup label="Subscription Period (in Months)">
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                    </optgroup>
+                </select> -->
+              </div>
+              <div class="col-sm-2 col-sm-push-1">
+                <!-- <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required"> -->
+                <!-- <input [ngClass]="{'disabled': startdate==null || selected_plan_duration==null }" type="button" (click)="checkavailability(); stepNumber=5" class="btn btn-primary btn-lg" value="Check Availability"> -->
+                <a [ngClass]="{'disabled': startdate==null || selected_plan_duration==null }" (click)="checkavailability()" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#permanentbookingmap">Check Availability</a>
+              </div>
+            </div>
+
+            <!-- <div class="row">
+                <div *ngIf="seatsBooked.length>0" class="col-sm-4 col-sm-push-2">
+                    <h4 class="text-center text-danger">Booked Seats</h4>
+                    <li *ngFor="let bookedSeat of seatsBooked" class="list-unstyled">
+                      <input type="checkbox" name="bookedSeat" class="form-control-input-lg" value="bookedSeat" disabled>Seat No. {{bookedSeat}}<br>
+                    </li>
+               </div>
+               <div *ngIf="seatsAvailable.length>0" class="col-sm-4 col-sm-push-2">
+                  <h4 class="text-center text-success">Available Seats</h4>
+                    <li *ngFor="let availableSeat of seatsAvailable; let i = index" class="list-unstyled">
+                     <input type="checkbox" name="availableSeat" class="form-control-input-lg" value="availableSeat" [(ngModel)]="seatsChecked[i]" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">Seat No. {{availableSeat}}
+                    </li>
+               </div>
+            </div>
+
+            <div class="text-center topmargin-xxs">Total Amount to be Paid: {{amount}}</div>
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button> -->
+            
+          </div><!-- 18daysdedicated ends -->
+
+
+
+
+
+
+
+          <!-- <div id="30daysdedicated">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="col-sm-4 col-sm-push-1">
+                <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+              </div>
+              <div class="col-sm-4 col-sm-push-1">
+                <select class="form-control input-lg">
+                    <optgroup label="Subscription Period (in Months)">
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                    </optgroup>
+                </select>
+              </div>
+              <div class="col-sm-2 col-sm-push-1">
+                <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required">
+              </div>
+            </div>
+            
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+            
+          </div>30daysdedicated ends -->
+
+
+          <div id="otherpackage" *ngIf="stepNumber==4 && subStepNumber==3">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="datepicker-bootstrap-style" class="col-sm-4 col-sm-push-1">
+                  <ng-datepicker [(ngModel)]="startdate" name="startdate" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)"></ng-datepicker>
+                  <!-- <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control input-lg" required="required"> -->
+                <!-- <input type="date" name="txtmonth" class="form-control input-lg" required="required"> -->
+              </div>
+              <div class="col-sm-4 col-sm-push-1">
+                  <select class="form-control input-lg" [(ngModel)]="mtrid" name="mtrid">
+                    <option disabled>Select Meeting room</option>
+                    <option *ngFor="let mtr of totalMtrArray">{{mtr}}</option>
+                  </select>
+              </div>
+              <div class="col-sm-2 col-sm-push-1">
+                <!-- <button class="btn btn-info btn-lg">Check Availibility</button> -->
+                <input [ngClass]="{'disabled': startdate==null }" type="button" (click)="checkmeetingroomavailability()" class="btn btn-primary btn-lg" value="Check Availability">
+              </div>
+            </div>
+            <div class="row">
+                <div class="topmargin-xxs">
+                    <li class="list-group-item meeting-slot" [ngClass]="{'slotNotAvailable disabled':(bookedTime.indexOf(bookSlot)+1)!=0}" (click)="checkMeetingRoomSlots(bookSlot,i)" [class.active]="slotsChecked[i]==true" style="display:inline-block;" *ngFor="let bookSlot of slotsAvailable;let i=index">
+                      {{bookSlot}}
+                    </li>
+                    <a *ngIf="slotsAvailable.length>0" class="btn btn-danger" (click)="checkMeetingRoomSlots(0,0,1)">Reset</a>
+                </div>
+            </div>
+            <div class="text-center topmargin-xxs">Total Amount to be Paid: {{amount}}</div>
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+
+          </div><!-- meetingroom ends -->
+
+          <!-- <div id="virtualoffice">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="col-sm-6 col-sm-push-2">
+                <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+              </div>
+              <div class="col-sm-2 col-sm-push-2">
+                <button class="btn btn-info btn-lg">Check Availibility</button>
+              </div>
+            </div>
+
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+
+          </div>virtualoffice ends -->
+
+          <!-- <div id="virtualofficeplus">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="col-sm-6 col-sm-push-2">
+                <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+              </div>
+              <div class="col-sm-2 col-sm-push-2">
+                <button class="btn btn-info btn-lg">Check Availibility</button>
+              </div>
+            </div>
+
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+
+          </div>virtualofficeplus ends -->
+
+          <!-- <div id="trainingsession">
+            <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+            <div class="row">
+              <div class="col-sm-6 col-sm-push-2">
+                <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+              </div>
+              <div class="col-sm-2 col-sm-push-2">
+                <button class="btn btn-info btn-lg">Check Availibility</button>
+              </div>
+            </div>
+
+            <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+
+          </div>trainingsession ends -->
+
+
+
+          <div id="permanentbookingmap" class="modal fade">
+              <!-- <div [routerLinkActive]="['hidden']" [routerLinkActiveOptions] = "{exact:true}" [routerLink]="['dashboard/newbook']" class="overlay"></div> -->
+              <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h4>
+                        <div *ngIf="plan=='18DP'">18 DAY BOOKING</div>
+                      <div *ngIf="plan=='30DP'">30 DAY BOOKING</div>
+                      <div><a href="dashboard/newbook#" (click)="stepNumber=stepNumber-1">&times;</a></div>
+                    </h4>
+                </div> -->
+                <div class="modal-body">
+                    <input [(ngModel)]="plan" class="hidden" value="1DP" name="plan">
+                  <div class="col-sm-8">
+                    <bookmap [seats]="totalSeats"></bookmap>{{totalSeats}}
+                    <!-- <bookmap seats="4"></bookmap> -->
+                    <!-- <bookmap seats="4"></bookmap> -->
+                    <!-- <bookmap seats="6"></bookmap> -->
+                    
+                  </div>
+            
+                  <div class="col-sm-4">
+                    
+                      <div *ngIf="seatsAvailable.length>0" class="">
+                          <h4 class="text-center text-success">Available Seats</h4>
+                          <div style="column-count:2">
+                              <li *ngFor="let availableSeat of seatsAvailable; let i = index" class="list-unstyled">
+                                  <input type="checkbox" name="availableSeat" class="form-control-input-lg" value="availableSeat" [(ngModel)]="seatsChecked[i]" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">Seat No. {{availableSeat}}
+                                 </li>
+                          </div>
+                            
+                       </div>
+                       <div class="text-center topmargin-xxs">Total Amount to be Paid: {{amount}}</div>
+                       <button class="btn btn-success btn-lg topmargin-xxs btn-block">Checkout</button>
+                  </div>
+                </div>
+              </div>
+              <!-- <div>
+                  <h4>
+                      <div class="col-sm-10" *ngIf="plan=='18DP'">18 DAY BOOKING</div>
+                    <div class="col-sm-10" *ngIf="plan=='30DP'">30 DAY BOOKING</div>
+                    <div class="col-sm-2"><a href="dashboard/newbook#" (click)="stepNumber=stepNumber-1">&times;</a></div>
+                  </h4>
+              </div> -->
+          
+              
+            
+          </div>
+
+
+
+
+
+        
+        </form><!-- newbooking form ends -->
+        <!-- <div class="container-fluid topmargin-xs">
+            <button type="button" class="btn btn-danger btn-sm" (click)="stepNumber=stepNumber-1" [ngClass]=" {'hidden' : stepNumber==1}">Go Back</button>
+            <button type="button" class="btn btn-danger btn-sm pull-right" (click)="stepNumber=stepNumber+1" [ngClass]=" {'hidden' : stepNumber==4}">Proceed</button>
+        </div> -->
+        
+
+      </div><!-- newbooking ends -->
+
+
+
+
+
+
+
+<!--       
+<div id="newbook-content" *ngIf="user">
+  <div id="packages">
+    <h2> Welcome, {{user.name}}!</h2>
+    <h4>Choose suitable package for your booking.</h4>
+    <div *ngIf="centers.length"> 
+      
+      Select Center: 
+      
+      <select class="form-control" name="center" value="{{center}}" name="center" [(ngModel)]="center" (change)=updateCenter()> 
+        <option *ngFor="let c of centers">{{c}}</option>
+      </select>  
+
+    </div>
+    <div>
+      <div>PACKAGES with HOTDESKING</div>
+      <a (click)="plan='1DP'" class="btn btn-primary" href="dashboard/newbook#hotdesking-form">Book One Day Pass</a>
+      <a (click)="plan='4DP'" class="btn btn-primary" href="dashboard/newbook#hotdesking-form">Book Four Day Pass</a>
+      <a (click)="plan='10DP'" class="btn btn-primary" href="dashboard/newbook#hotdesking-form">Book Ten Day Pass</a>
+    </div>
+    <div>
+      <div>PERMANENT PACKAGES</div>
+      <a (click)="plan='18DP'" class="btn btn-primary" href="dashboard/newbook#permanentbooking-form" >Book for 18 Days</a>
+      <a (click)="plan='30DP'" class="btn btn-primary" href="dashboard/newbook#permanentbooking-form" >Book for 30 Days</a>
+    </div>
+    <div>
+      <div>OTHER PACKAGES</div>
+      <a (click)="plan='MTR'" class="btn btn-primary"  href="dashboard/newbook#otherbooking-form">Meeting Rooms</a>
+      <a (click)="plan='VO'" class="btn btn-primary"  href="dashboard/newbook#otherbooking-form">Virtual Office</a>
+      <a (click)="plan='VO+'" class="btn btn-primary"  href="dashboard/newbook#otherbooking-form">Virtual Office Plus</a>
+      <a (click)="plan='TS'" class="btn btn-primary"  href="dashboard/newbook#otherbooking-form">Training Sessions</a>
+    </div>
+  </div>
+
+  <form #bookingForm="ngForm" (submit)="bookingform()" class="form-group">
+  <input type="hidden" name="amount" [(ngModel)]=amount>
+  <div id="hotdesking-form">
+    <h4>
+      <div class="col-sm-10" *ngIf="plan=='1DP'">ONE DAY PASS BOOKING</div>
+      <div class="col-sm-10" *ngIf="plan=='4DP'">4 DAY BOOKING</div>
+      <div class="col-sm-10" *ngIf="plan=='10DP'">10 DAY BOOKING</div>
+      <div class="col-sm-2"><a href="dashboard/newbook#" (click)="bookingForm.reset({amount:0})">(Close?)</a></div>
+    </h4>
+    <hr>
+
+      <input type="hidden" [(ngModel)]="plan" name="plan">
+
+      <div *ngIf="plan=='1DP'" class="col-sm-10">
+        <div>Select Date</div>
+        <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+      </div>
+      <div *ngIf="plan!='1DP'" class="col-sm-5">
+        <div>Start Date </div>
+        <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+      </div>
+    
+      <div *ngIf="plan!='1DP'" class="col-sm-5">
+
+        <div>Subscription Period (in months)</div>
+        <select class="form-control" [(ngModel)]="selected_plan_duration" name="selected_plan_duration" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+          <option [ngClass]="{hidden: month<plan_duration}" *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]">{{month}}</option>
+        </select>
+        <input type="hidden" [(ngModel)]="enddate" name="enddate" class="form-control" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+      </div>
+      <div class="col-sm-2">
+        <div>Seats</div>
+        <input type="number" [(ngModel)]="seats" name="quantity" class="form-control" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+      </div>
+      <div class="col-sm-12">Total Amount to be Paid: {{amount}}</div>
+
+      <div class="col-sm-12 space-out">
+        <input type="submit" class="btn btn-primary btn-block" value="Book">
+      </div>
+  </div>
+  <div id="permanentbooking-form">
+    <div class="overlay"></div>
+    <h4>
+        <div class="col-sm-10" *ngIf="plan=='18DP'">18 DAY BOOKING</div>
+      <div class="col-sm-10" *ngIf="plan=='30DP'">30 DAY BOOKING</div>
+      <div class="col-sm-2"><a href="dashboard/newbook#" (click)="bookingForm.reset({amount:0});seatsAvailable=[];seatsBooked=[];">(Close?)</a></div>
+    </h4>
+    <hr>
+
+      <input [(ngModel)]="plan" class="hidden" value="1DP" name="plan">
+
+      <div class="col-sm-4">
+        <div>Start Date </div>
+        <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+      </div>
+      <div class="col-sm-4">
+        <div>Subscription</div>
+        <select class="form-control" [(ngModel)]="selected_plan_duration" name="selected_plan_duration" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+          <option *ngFor="let month of [3,4,5,6,7,8,9,10,11,12]">{{month}}</option>
+        </select>
+        <input type="hidden" [(ngModel)]="enddate" name="enddate" class="form-control" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">
+      </div>
+      <div class="col-sm-4">
+        <div style="visibility: hidden">a</div>
+        <input [ngClass]="{'disabled': startdate==null || selected_plan_duration==null }" type="button" (click)="checkavailability()" class="btn btn-primary btn-block" value="Check Availability">
+      </div>
+      <div *ngIf="seatsBooked.length>0">
+           Booked Seats <br>
+           <li *ngFor="let bookedSeat of seatsBooked">
+             <input type="checkbox" name="bookedSeat" value="bookedSeat" disabled>Seat No. {{bookedSeat}}<br>
+           </li>
+      </div>
+      <div *ngIf="seatsAvailable.length>0">
+           Available Seats <br>
+           <li *ngFor="let availableSeat of seatsAvailable; let i = index">
+            <input type="checkbox" name="availableSeat" value="availableSeat" [(ngModel)]="seatsChecked[i]" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)">Seat No. {{availableSeat}}
+           </li>
+      </div>
+      <div class="col-sm-12">Total Amount to be Paid: {{amount}}</div>
+
+      <div class="col-sm-12 space-out">
+        <input type="submit" class="btn btn-primary btn-block" value="Book">
+      </div>
+
+  </div>
+  <div id="otherbooking-form"> 
+    <div class="overlay"></div>
+    <h4>
+      <div class="col-sm-10" *ngIf="plan=='MTR'">MEETING ROOM BOOKING</div>
+      <div class="col-sm-10" *ngIf="plan=='VO'">VIRTUAL OFFICE BOOKING(*)</div>
+      <div class="col-sm-10" *ngIf="plan=='VO+'">VIRTUAL OFFICE+ BOOKING(*)</div>
+      <div class="col-sm-10" *ngIf="plan=='TS'">TRAINING SESSION BOOKING(*)</div>
+      <div class="col-sm-2"><a href="dashboard/newbook#" (click)="bookingForm.reset({amount:0});slotsAvailable=[];">(Close?)</a></div>
+    </h4>
+    <hr>
+
+        <input type="hidden" [(ngModel)]="plan" name="plan">
+
+        <div>
+          <div class="col-sm-4">
+            <div>Select Date </div>
+            <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control">
+          </div>
+          <div class="col-sm-4">
+            <div>Select Meeting room  </div>
+             <select class="form-control" [(ngModel)]="mtrid" name="mtrid"> 
+              <option *ngFor="let mtr of totalMtrArray">{{mtr}}</option>
+            </select> 
+          </div>
+          <div class="col-sm-4">
+            <div style="visibility: hidden">a</div>
+            <input [ngClass]="{'disabled': startdate==null }" type="button" (click)="checkmeetingroomavailability()" class="btn btn-primary btn-block" value="Check Availability">
+          </div>
+
+        </div>
+        <div class="list-group space-out">
+          <li class="list-group-item meeting-slot" [ngClass]="{'slotNotAvailable disabled':(bookedTime.indexOf(bookedSlot)+1)!=0}" (click)="checkMeetingRoomSlots(i)" [class.active]="slotsChecked[i]==true" style="display:inline-block;" *ngFor="let bookedSlot of slotsAvailable;let i=index">
+            {{bookedSlot}}
+          </li>
+          <a *ngIf="slotsAvailable.length>0" class="btn" (click)="checkMeetingRoomSlots(0,1)">Reset</a>
+        </div>
+
+        <div class="col-sm-12">Total Amount to be Paid: {{amount}}</div>
+        <div class="col-sm-12 space-out">
+          <input type="submit" class="btn btn-primary btn-block" value="Book">
+      </div>
+
+  </div>
+  </form>
+  <div class="overlay">
+    <div id="dip">* still in development phase</div>
+  </div>
+</div> -->

@@ -1,0 +1,168 @@
+<div class="navbar navbar-custom navbar-fixed-top" [ngClass]="{'text-black': !isHome()}">
+  <div class="container-fluid">
+    <div class="clearfix">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand page-scroll" routerLink="/">
+          <img src="../../assets/images/logo.png" alt="">
+        </a>
+      </div>
+
+      <nav class="collapse navbar-collapse  navbar-main-collapse">
+        <ul class="nav navbar-nav">
+          <li class=" dropdown mega-dropdown ">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="line">Locations
+                <span>
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </span>
+            </a>
+            <div class="div"></div>
+            <ul class="dropdown-menu mega-dropdown-menu row">
+              <li class="col-sm-12">
+                <div class="clearfix text-black">
+                  <a class="navbar-brand pull-left" routerLink="locations">See all &gt;</a>
+                  <a class="pull-right navbar-brand" href="#">
+                    <i class="fa fa-times " aria-hidden="true"></i>
+                  </a>
+                </div>
+              </li>
+              <li class="col-sm-2">
+                <ul>
+                  <li class="dropdown-header"> India</li>
+                  <li>
+                    <a href="location-detail.php">Delhi/NCR</a>
+                  </li>
+                  <li>
+                    <a href="#">Mumbai</a>
+                  </li>
+                  <li>
+                    <a href="#">Bangalore</a>
+                  </li>
+
+
+                </ul>
+              </li>
+              <li class="col-sm-4">
+                <ul>
+                  <li class="dropdown-header"> Delhi/NCR</li>
+                  <li>
+                    <a href="#">
+                      <strong> G-36, Connaught Place, New Delhi-110001</strong>
+                    </a>
+                  </li>
+
+
+                  <li>
+                    <a href="#">
+                      <strong> 605, D mall, Netaji Subhash Place, Ring Road, New Delhi - 110034</strong>
+                    </a>
+                  </li>
+
+
+                  <li>
+                    <a href="#">
+                      <strong> Gold Souk Mall , LGF, Block- C, Sector- 43, SushantLok, Phase- I Gurugram, Haryana 122002</strong>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+              <li class="col-sm-3">
+                <ul>
+                  <li class="dropdown-header">Mumbai</li>
+
+                </ul>
+              </li>
+              <li class="col-sm-3">
+                <ul>
+                  <li class="dropdown-header">Bangalore</li>
+
+
+                </ul>
+              </li>
+
+            </ul>
+          </li>
+          <li>
+            <a class="page-scroll" routerLink="about">
+              <span class="line">About</span>
+            </a>
+          </li>
+          <li>
+            <a class="page-scroll" routerLink="plan">
+              <span class="line">Plans</span>
+            </a>
+          </li>
+          <li>
+            <a class="page-scroll" routerLink="enterprise">
+              <span class="line">Enterprise</span>
+            </a>
+          </li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right ">
+          <li>
+            <a href="#">
+              <i class="icon-screen-smartphone"></i> 001-2345-98765</a>
+          </li>
+          <li *ngIf="isLoggedIn()" class=" dropdown drp-wd">
+            <a href="#" class="notification dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell"></i>
+              <span class="badge">4</span>
+            </a>
+            <ul class="dropdown-menu ">
+              <li>
+                <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, esse.</a>
+              </li>
+              <li>
+                <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, esse.</a>
+              </li>
+              <li>
+                <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, esse.</a>
+              </li>
+              <li>
+                <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, esse.</a>
+              </li>
+            </ul>
+
+          </li>
+          <li *ngIf="!isLoggedIn()"><a routerLink="login">Login</a></li>
+          <li *ngIf="!isLoggedIn()"><a routerLink="register">Register</a></li>
+      
+          <li *ngIf="isLoggedIn()"  class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-user"></i>  User
+              <span>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="profile">My Dashboard</a>
+              </li>
+              <li>
+                <a routerLink="plan">My Plans</a>
+              </li>
+              <li>
+                <a routerLink="bookinghistory">My Bookings</a>
+              </li>
+              <li>
+                <a routerLink="/" (click)="onLogoutClick()">Logout</a>
+              </li>
+            </ul>
+          </li>
+          <!-- <li class="hidden">
+            <a href="login.php">
+              <span>LOGIN</span>
+            </a>
+          </li> -->
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</div>

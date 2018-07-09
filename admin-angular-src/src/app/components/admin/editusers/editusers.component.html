@@ -1,0 +1,441 @@
+<!-- <app-loader [loading]="loading"></app-loader> -->
+<!-- <h3> List of Admins </h3> -->
+<section class="content-header">
+  <h1>
+     List of Admins
+    <!-- <small>Preview</small> -->
+  </h1>
+</section>
+
+
+<div class="content" *ngIf="otheradmins">
+  <!-- <ol>
+    <li *ngFor="let otheradmin of otheradmins">
+      Designation : {{otheradmin.designation}} <br> Name: {{otheradmin.name}} <br> Username: {{otheradmin.username}} <br>    
+      Center: {{otheradmin.center}} <br> Permissions: Admin - Create : {{otheradmin.adminuser_create}}, Modify : {{otheradmin.adminuser_modify}}, Delete :
+      {{otheradmin.adminuser_delete}} <br> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp; Book - Create : {{otheradmin.book_add}}, Approve : {{otheradmin.book_approve}}, Delete
+      : {{otheradmin.book_delete}}
+      <br>
+      <input type="button" *ngIf="adminuser.adminuser_modify" (click)="toggleEditUser(otheradmin._id)" value="Edit User">
+      <div *ngIf="editUser[otheradmin._id]">
+        <form (submit)="updateUserSubmit(otheradmin._id)">
+          <div>
+            <label>Name</label>
+            <input type="text" value="{{otheradmin.name}}" name="name" [(ngModel)]="name">
+          </div>
+          <div>
+            <label>Designation</label>
+            <select name="designation" value="{{otheradmin.designation}}" name="designation" [(ngModel)]="designation"> 
+            <option *ngFor="let d of designationsToDisplay">{{d}}</option>
+          </select>
+          </div>
+          <div class="form-group">
+            <label>Center</label>
+            <ul>
+              <li *ngFor="let c of adminuser.center;let i=index">
+                <input type="checkbox" [checked]="selectedCenters[i]" (click)="selectedCenters[i]==true?selectedCenters[i]=null:selectedCenters[i]=true">{{c}}
+              </li>
+            </ul>
+           </div>
+          <div>
+            Edit Permission(s) <br>
+            <ul>
+              <li *ngIf="adminuser['book_approve']"><input type="checkbox" value="{{otheradmin.book_approve}}" name="book_approve" [(ngModel)]="book_approve">Approve Booking </li>
+              <li *ngIf="adminuser['book_add']"><input type="checkbox" value="{{otheradmin.book_add}}" name="book_add" [(ngModel)]="book_add"> Add Booking</li>
+              <li *ngIf="adminuser['book_delete']"><input type="checkbox" value="{{otheradmin.book_delete}}" name="book_delete" [(ngModel)]="book_delete"> Delete Booking</li>
+              <li *ngIf="adminuser['adminuser_create']"><input type="checkbox" value="{{otheradmin.adminuser_create}}" name="adminuser_create" [(ngModel)]="adminuser_create"> Create Admin User</li>
+              <li *ngIf="adminuser['adminuser_modify']"><input type="checkbox" value="{{otheradmin.adminuser_modify}}" name="adminuser_modify" [(ngModel)]="adminuser_modify"> Modify Admin User</li>
+              <li *ngIf="adminuser['adminuser_delete']"><input type="checkbox" value="{{otheradmin.adminuser_delete}}" name="adminuser_delete" [(ngModel)]="adminuser_delete"> Delete Admin User</li>
+              <li *ngIf="adminuser['reports_view']"><input type="checkbox" value="{{otheradmin.reports_view}}" name="reports_view" [(ngModel)]="reports_view"> View Reports</li>
+              <li *ngIf="adminuser['manage_inventory']"><input type="checkbox"  name="reports_view" value="manage_inventory" [(ngModel)] = "manage_inventory" > Manage Inventory</li>         
+            </ul>
+          </div>
+          <input type="submit" value="Update">
+        </form>
+        <input type="button" (click)="toggleEditUser(otheradmin._id)" value="Cancel">
+      </div>
+      
+      <input type="button" *ngIf="adminuser.adminuser_delete" (click)="delete_otheradmin(otheradmin._id)" value="Delete User">
+    </li>
+  </ol> -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-success">
+        <!-- <div class="box-header">
+          <h3 class="box-title"> Meeting Bookings (Total {{meetingroombookings.length}} Bookings)</h3>
+        </div> -->
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Designation</th>
+                <th>Locations</th>
+                <th>Permissions</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let otheradmin of otheradmins;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{otheradmin.name}}</td>
+                <td>{{otheradmin.username}}</td>
+                <td>{{otheradmin.designation}}</td>
+                <td>{{otheradmin.center}}</td>
+                <td class="text-center">
+                  <!-- <div class="box-header">
+                    <h3 class="box-title">Admin</h3>
+                  </div> -->
+                  <!-- Admin -->
+
+                  <table class="table table-bordered table-striped">
+                    <thead>
+                      <th></th>
+                      <th>Create</th>
+                      <th>Modify</th>
+                      <th>Delete</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Admin</td>
+                        <td>
+                          <span *ngIf="otheradmin.adminuser_create==true" class="label label-success bg-logo">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.adminuser_create==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                        <td>
+                          <span *ngIf="otheradmin.adminuser_modify==true" class="label label-success bg-logo">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.adminuser_modify==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                        <td>
+                          <span *ngIf="otheradmin.adminuser_delete==true" class="label label-success bg-logo">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.adminuser_delete==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Bookings</td>
+                        <td>
+                          <span *ngIf="otheradmin.book_add==true" class="label label-success bg-logo">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.book_add==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                        <td>
+                          <span *ngIf="otheradmin.book_approve==true" class="label label-success bg-logo">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.book_approve==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                        <td>
+                          <span *ngIf="otheradmin.book_delete==true" class="label label-success bg-logo">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.book_delete==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <!-- <b>Admin - Create :</b> 
+                  <span *ngIf="otheradmin.adminuser_create==true" class="label label-success">
+                    <i class="fa fa-check text-white"></i>
+                  </span>
+                  <span *ngIf="otheradmin.adminuser_create==false" class="label label-danger">
+                    <i class="fa fa-remove text-white"></i>
+                  </span>,
+                  
+                  <b>Modify :</b> 
+                  <span *ngIf="otheradmin.adminuser_modify==true" class="label label-success">
+                    <i class="fa fa-check text-white"></i>
+                  </span>
+                  <span *ngIf="otheradmin.adminuser_modify==false" class="label label-danger">
+                    <i class="fa fa-remove text-white"></i>
+                  </span>, 
+                  
+                  <b>Delete :</b> 
+                  <span *ngIf="otheradmin.adminuser_delete==true" class="label label-success">
+                    <i class="fa fa-check text-white"></i>
+                  </span>
+                  <span *ngIf="otheradmin.adminuser_delete==false" class="label label-danger">
+                    <i class="fa fa-remove text-white"></i>
+                  </span> -->
+                  
+                  <!-- <br>  -->
+                  
+                  <!-- <div class="box-header">
+                    <h3 class="box-title">Bookings</h3>
+                  </div> -->
+                  <!-- Bookings -->
+
+                  <!-- <table class="table table-bordered table-striped">
+                    <thead>
+                      <th></th>
+                      <th>Create</th>
+                      <th>Approve</th>
+                      <th>Delete</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Bookings</td>
+                        <td>
+                          <span *ngIf="otheradmin.book_add==true" class="label label-success">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.book_add==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                        <td>
+                          <span *ngIf="otheradmin.book_approve==true" class="label label-success">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.book_approve==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                        <td>
+                          <span *ngIf="otheradmin.book_delete==true" class="label label-success">
+                            <i class="fa fa-check text-white"></i>
+                          </span>
+                          <span *ngIf="otheradmin.book_delete==false" class="label label-danger">
+                            <i class="fa fa-remove text-white"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table> -->
+
+                  <!-- <b>Book - Create :</b>
+                  <span *ngIf="otheradmin.book_add==true" class="label label-success">
+                    <i class="fa fa-check text-white"></i>
+                  </span>
+                  <span *ngIf="otheradmin.book_add==false" class="label label-danger">
+                    <i class="fa fa-remove text-white"></i>
+                  </span>, 
+                  
+                  <b>Approve :</b> 
+                  <span *ngIf="otheradmin.book_approve==true" class="label label-success">
+                    <i class="fa fa-check text-white"></i>
+                  </span>
+                  <span *ngIf="otheradmin.book_approve==false" class="label label-danger">
+                    <i class="fa fa-remove text-white"></i>
+                  </span>,
+                  
+                  <b>Delete :</b> 
+                  <span *ngIf="otheradmin.book_delete==true" class="label label-success">
+                    <i class="fa fa-check text-white"></i>
+                  </span>
+                  <span *ngIf="otheradmin.book_delete==false" class="label label-danger">
+                    <i class="fa fa-remove text-white"></i>
+                  </span> -->
+
+                  
+                </td>
+                <td style="vertical-align:middle;">
+                  <div class="">
+                    <button type="button" *ngIf="adminuser.adminuser_modify" (click)="toggleEditUser(otheradmin._id)" class="btn btn-logo d-block w-100">Edit User</button>
+                    <button type="button" *ngIf="adminuser.adminuser_delete" (click)="delete_otheradmin(otheradmin._id)" class="btn btn-secondary d-block w-100 mt-3">Delete User</button>
+                  </div>
+                </td>
+                <div class="fixed bring-front left-0 top-0 bottom-0 right-0 bg-gradient" *ngIf="editUser[otheradmin._id]">
+                  <!-- Edit User Form -->
+                  <div class="box box-info fixed bring-front absolute-center w-40">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Edit User</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" (submit)="updateUserSubmit(otheradmin._id)">
+                      <div class="box-body">
+                        <div class="form-group">
+                          <label for="inputname" class="col-sm-2 control-label">Name</label>
+                  
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputname" placeholder="Name" value="{{otheradmin.name}}" name="name" [(ngModel)]="name">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputdesignnation" class="col-sm-2 control-label">Designation</label>
+                  
+                          <div class="col-sm-10">
+                            <!-- <input type="password" class="form-control" id="inputdesignnation"> -->
+                            <select name="designation" value="{{otheradmin.designation}}" name="designation" [(ngModel)]="designation" class="form-control">
+                              <option class="form-control" *ngFor="let d of designationsToDisplay">{{d}}</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Locations</h3>
+                        </div>
+
+                        <div class="form-group">
+                          <!-- <label for="inputcenter" class="col-sm-2 control-label">Locations</label> -->
+                        
+                          <div class="col-sm-12 px-0">
+                            <div class="col-md-4" *ngFor="let c of adminuser.center;let i = index">
+                              <h5>
+                                <input type="checkbox" class="flat-green icheckbox_flat-green" [checked]="selectedCenters[i]" (click)="selectedCenters[i]==true?selectedCenters[i]=null:selectedCenters[i]=true">{{c}}
+                              </h5>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Grant Permission(s)</h3>
+                        </div>
+
+                        <div class="form-group">
+                          <!-- <label for="permission" class="control-label col-sm-2">Grant Permission(s)</label> -->
+
+                          <div *ngIf="adminuser['book_approve']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="book_approve" value="{{otheradmin.book_approve}}" [(ngModel)]="book_approve"> Approve Bookings
+                            </h5>
+                          </div>
+                        
+                          <div *ngIf="adminuser['book_add']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="book_add" value="{{otheradmin.book_add}}" [(ngModel)]="book_add"> Add Booking
+                            </h5>
+                          </div>
+                        
+                          <div *ngIf="adminuser['book_delete']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="book_delete" value="{{otheradmin.book_delete}}" [(ngModel)]="book_delete"> Delete Booking
+                            </h5>
+                          </div>
+                        
+                          <div *ngIf="adminuser['adminuser_create']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="adminuser_create" value="{{otheradmin.adminuser_create}}" [(ngModel)]="adminuser_create"> Create Admin User
+                            </h5>
+                          </div>
+                        
+                          <div *ngIf="adminuser['adminuser_modify']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="adminuser_modify" value="{{otheradmin.adminuser_modify}}" [(ngModel)]="adminuser_modify"> Modify Admin User
+                            </h5>
+                          </div>
+                        
+                          <div *ngIf="adminuser['adminuser_delete']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="adminuser_delete" value="{{otheradmin.adminuser_delete}}" [(ngModel)]="adminuser_delete"> Delete Admin User
+                            </h5>
+                          </div>
+                        
+                          <div *ngIf="adminuser['reports_view']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="reports_view" value="{{otheradmin.reports_view}}" [(ngModel)]="reports_view"> View Reports
+                            </h5>
+                          </div>
+                        
+                          <div *ngIf="adminuser['manage_inventory']" class="col-md-5 col-md-push-1">
+                            <h5>
+                              <input type="checkbox" class="flat-green icheckbox_flat-green" name="reports_view" value="{{otheradmin.manage_inventory}}" [(ngModel)]="manage_inventory"> Manage Inventory
+                            </h5>
+                          </div>
+                        </div>
+                        <!-- /form-group -->
+
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer">
+                        <button type="button" class="btn btn-secondary btn-w-md" (click)="toggleEditUser(otheradmin._id)">Cancel</button>
+                        <button type="submit" class="btn btn-logo btn-w-md pull-right">Update</button>
+                      </div>
+                      <!-- /.box-footer -->
+                    </form>
+                  </div>
+                  <!-- /.box -->
+                  <!-- <form (submit)="updateUserSubmit(otheradmin._id)">
+                    <div>
+                      <label>Name</label>
+                      <input type="text" value="{{otheradmin.name}}" name="name" [(ngModel)]="name">
+                    </div>
+                    <div>
+                      <label>Designation</label>
+                      <select name="designation" value="{{otheradmin.designation}}" name="designation" [(ngModel)]="designation">
+                        <option *ngFor="let d of designationsToDisplay">{{d}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Center</label>
+                      <ul>
+                        <li *ngFor="let c of adminuser.center;let i=index">
+                          <input type="checkbox" [checked]="selectedCenters[i]" (click)="selectedCenters[i]==true?selectedCenters[i]=null:selectedCenters[i]=true">{{c}}
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      Edit Permission(s)
+                      <br>
+                      <ul>
+                        <li *ngIf="adminuser['book_approve']">
+                          <input type="checkbox" value="{{otheradmin.book_approve}}" name="book_approve" [(ngModel)]="book_approve">Approve Booking </li>
+                        <li *ngIf="adminuser['book_add']">
+                          <input type="checkbox" value="{{otheradmin.book_add}}" name="book_add" [(ngModel)]="book_add"> Add Booking</li>
+                        <li *ngIf="adminuser['book_delete']">
+                          <input type="checkbox" value="{{otheradmin.book_delete}}" name="book_delete" [(ngModel)]="book_delete"> Delete Booking</li>
+                        <li *ngIf="adminuser['adminuser_create']">
+                          <input type="checkbox" value="{{otheradmin.adminuser_create}}" name="adminuser_create" [(ngModel)]="adminuser_create"> Create Admin User</li>
+                        <li *ngIf="adminuser['adminuser_modify']">
+                          <input type="checkbox" value="{{otheradmin.adminuser_modify}}" name="adminuser_modify" [(ngModel)]="adminuser_modify"> Modify Admin User</li>
+                        <li *ngIf="adminuser['adminuser_delete']">
+                          <input type="checkbox" value="{{otheradmin.adminuser_delete}}" name="adminuser_delete" [(ngModel)]="adminuser_delete"> Delete Admin User</li>
+                        <li *ngIf="adminuser['reports_view']">
+                          <input type="checkbox" value="{{otheradmin.reports_view}}" name="reports_view" [(ngModel)]="reports_view"> View Reports</li>
+                        <li *ngIf="adminuser['manage_inventory']">
+                          <input type="checkbox" name="reports_view" value="manage_inventory" [(ngModel)]="manage_inventory"> Manage Inventory</li>
+                      </ul>
+                    </div>
+                    <input type="submit" value="Update" class="btn btn-primary">
+                  </form> -->
+                  <!-- <input type="button" (click)="toggleEditUser(otheradmin._id)" value="Cancel" class="btn btn-default"> -->
+                </div>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Designation</th>
+                <th>Locations</th>
+                <th>Permissions</th>
+                <th>Action</th>                
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.content -->

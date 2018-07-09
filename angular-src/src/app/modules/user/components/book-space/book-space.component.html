@@ -1,0 +1,151 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">Book Space</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="bookSpaceForm" (ngSubmit)="submitForm(bookSpaceForm.value)">
+                    <div class="row">
+                        <div class="col-md-6 pr-1">
+                            <div class="form-group">
+                                <label>Choose Location</label>
+                                <div class="center">
+                                    <select class="form-control" placeholder="Choose Location" [formControl]="bookSpaceForm.controls['location']">
+                                        <option [value]='' [selected]="true" [disabled]="true">
+                                            <h6 class="pad-tb-15">Select Location</h6>
+                                        </option>
+                                        <option *ngFor="let location of locations" [value]="location.code">
+                                            <h6 class="pad-tb-15">{{location.value}}</h6>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <input type="text" bsDatepicker class="form-control date-picker" [formControl]="bookSpaceForm.controls['startDate']" value="10/05/2016" data-datepicker-color="primary">
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-1">
+                            <div class="package_wrap form-group">
+                                <label>Select Package</label>
+                                <div class="btn-group packageBtnGroup btn-group-justified form-control" id="select-package">
+
+                                    <label *ngFor="let package of packages" class="btn packageMethod" [ngClass]="bookSpaceForm.controls['packageType'].value==package.code?'active':''">
+                                        <div class="method visa">
+                                            <h5 class="radio-head">{{package.title}}</h5>
+                                        </div>
+                                        <input type="radio" [(ngModel)]="packageTypeValue" [formControl]="bookSpaceForm.controls['packageType']" [value]="package.code"
+                                            class="package-radio" name="options" checked>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div *ngIf="bookSpaceForm.controls['location'].value&&bookSpaceForm.controls['packageType'].value&&bookSpaceForm.controls['subscription'].value&&bookSpaceForm.controls['seats'].value" class="col-sm-4 col-md-6">
+                            <div class="form-group">
+                                <label>End Date</label>
+                                <p class="col-md-12">{{endDate | date: 'MM/dd/yyyy'}}</p> -->
+                                <!-- <input type="text" class="form-control" [(ngModel)]="endDate" [disabled]="true" [formControl]="bookSpaceForm.controls['endDate']"> -->
+                                <!-- <input type="text" [readonly]="true" bsDatepicker class="form-control date-picker" [formControl]="bookSpaceForm.controls['endDate']" value="10/05/2016" data-datepicker-color="primary"> -->
+                            <!-- </div>
+                        </div> -->
+                        <div class="col-sm-4 col-md-3 subscription-tab-view">
+                            <div class="form-group">
+                                <label>Subscription Period (months)</label>
+                                <select class="form-control" [(ngModel)]="subscriptionValue" [formControl]="bookSpaceForm.controls['subscription']" [formControl]="bookSpaceForm.controls['subscription']">
+                                    <option [value]='' [selected]="true" [disabled]="true">
+                                        <h6 class="pad-tb-15">Select</h6>
+                                    </option>
+                                    <option *ngFor="let duration of subscriptionDuration" [value]="duration">
+                                        <h6 class="pad-tb-15">{{duration}}</h6>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-3 seats-tab-view">
+                            <div class="form-group">
+                                <label>Number of Seats</label>
+                                <input type="number" class="form-control" [formControl]="bookSpaceForm.controls['seats']" min="1" (focusout)="checkNegativeValue($event.target.value)">
+                            </div>
+                        </div>
+
+                        <div *ngIf="bookSpaceForm.controls['location'].value&&bookSpaceForm.controls['packageType'].value&&bookSpaceForm.controls['subscription'].value&&bookSpaceForm.controls['seats'].value" class="col-sm-4 col-md-3 seats-tab-view">
+                            <div class="form-group">
+                                <p class="col-md-12">{{"Total Amount: Rs."+calcAmount()+"/-"}}</p>
+                            </div>
+                        </div>
+                        
+                        <div *ngIf="bookSpaceForm.controls['location'].value&&bookSpaceForm.controls['packageType'].value&&bookSpaceForm.controls['subscription'].value&&bookSpaceForm.controls['seats'].value" class="col-sm-4 col-md-3 seats-tab-view">
+                            <div class="form-group">
+                                <p class="col-md-12">{{"End Date: "+(endDate | date: 'MM/dd/yyyy')}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary btn-round btn-color" [(disabled)]="!bookSpaceForm.valid" type="submit">Book Now</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-round btn-color" data-toggle="modal" data-target="#test-modal">Test Modal</button>
+                    </div>
+                </div> -->
+                <!-- <div class="modal" id="test-modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content ">
+                            <div class="modal-header text-center">
+                                <h6 class="modal-title">Test Modal</h6>
+                                <button type="button" class="close comment-close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                            </div>
+                            <div class="modal-footer comment-modal-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h1>Test Modal</h1>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-round btn-color float-right">Add Comment</button>
+                                <button class="btn btn-secondary btn-round float-right modal-cancel-btn" data-toggle="modal" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal" [ngClass]="(success||error)?'show':'hide'" id="test-modal" tabindex="-1" *ngIf="(success||error)" role="dialog"
+    style="display:block;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <h6 class="modal-title">{{success?'Success':error?'Error':''}}</h6>
+                <button type="button" class="close comment-close" (click)="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer comment-modal-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{msg}}
+                    </div>
+                </div>
+                <!-- <button type="button" class="btn btn-primary btn-round btn-color float-right">Add Comment</button> -->
+                <button class="btn btn-secondary btn-round float-right modal-cancel-btn" data-toggle="modal" (click)="closeModal()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

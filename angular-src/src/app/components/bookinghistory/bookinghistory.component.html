@@ -1,0 +1,198 @@
+<div class="container-page ">
+  <div class="container">
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <nav id="spy">
+          <ul class="sidebar-nav nav">
+
+            <li>
+              <a routerLink="/profile" data-scroll>
+                <span>
+                  <i class="fa fa-user solo"></i>Profile</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/membersfeeds" data-scroll>
+                <span>
+                  <i class="fa fa-home solo"></i>Feeds</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/bookroom" data-scroll>
+                <span>
+                  <i class="fa fa-briefcase solo"></i>Book a Room</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/bookspace" data-scroll>
+                <span>
+                  <i class="fa fa-briefcase solo"></i>Book a Space</span>
+              </a>
+            </li>
+            
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-anchor solo"></i>My Plans</span>
+              </a>
+            </li> -->
+            <li class="active">
+              <a routerLink="/bookinghistory" data-scroll>
+                <span>
+                  <i class="fa fa-book solo"></i>My Bookings</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-file solo"></i> My Documents</span>
+              </a>
+            </li> -->
+            <li>
+              <a routerLink="/accountsetting">
+                <span>
+                  <i class="fa fa-cogs solo"></i>Account Settings</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-users solo"></i>My Team Members</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-address-book solo"></i>Add/Delete member</span>
+              </a>
+            </li> -->
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Page content -->
+      <div id="page-content-wrapper ">
+
+
+        <div class="page-content inset">
+
+          <div class="row">
+            <div class="text-center ">
+              <div class="container-box">
+                <div class="heading-center">
+                  <h2>Booking History</h2>
+                  <hr>
+                  <div>
+                    <div>
+                      <ul class="nav nav-pills">
+                        <li class="active"><a data-toggle="pill" href="#bookings" class="text-uppercase" (click)="getHotdeskBookings()">Hot Desk <span *ngIf="listInView=='hotdesk'&&!waitingForDB">({{bookings.length}})</span></a></li>
+                        <li><a data-toggle="pill" href="#bookings" class="text-uppercase" (click)="getPermanentBookings()">Dedicated <span *ngIf="listInView=='permanent'&&!waitingForDB">({{bookings.length}})</span></a></li>
+                        <li><a data-toggle="pill" href="#bookings" class="text-uppercase" (click)="getMeetingRoomBookings()">Meeting <span *ngIf="listInView=='meeting'&&!waitingForDB">({{bookings.length}})</span></a></li>
+                        <!-- <button data-toggle="pill" class="text-uppercase" (click)="generateCSV()">Generate CSV</button> -->
+                      </ul>
+                    </div><!-- booking history pills ends -->
+                
+                
+                    <div class="tab-content">
+                      <div class="no-data-message" *ngIf="!bookings.length">
+                        <ng-container *ngIf="!waitingForDb">No data to display</ng-container>
+                        <ng-container *ngIf="waitingForDb">Please Wait...</ng-container>
+                      </div>
+                      <div id="bookings" class="tab-pane active" [@listAnimation]="bookings.length">
+                        <div class="col-sm-4 col-xs-12 topmargin-xs" *ngFor="let booking of bookings">
+                          <div class="panel panel-default text-center">
+                            <div class="panel-heading">
+                              <h3 class="nomargin">{{booking.plan}}</h3>
+                            </div><!-- panel heading ends -->
+                            <div class="panel-body">
+                                <p><strong>Center: </strong><span>{{booking.center}}</span></p>
+                                <ng-container *ngIf="listInView!='meeting'">
+                                  <p><strong>Start Date: </strong><span>{{booking.startdate | date:'d MMM y'}}</span></p>
+                                  <p><strong>End Date: </strong><span>{{booking.enddate | date:'d MMM y'}} </span></p>
+                                </ng-container>
+                                <ng-container *ngIf="listInView=='meeting'">
+                                    <p><strong>Date: </strong><span>{{booking.startdate | date:'d MMM y'}} </span></p>
+                                    <p><strong>Start Time: </strong><span>{{booking.startdate | date:'hh:mm:ss a'}}</span></p>
+                                    <p><strong>End Time: </strong><span>{{booking.enddate | date:'hh:mm:ss a'}} </span></p>
+                                </ng-container>
+                                <ng-container *ngIf="listInView=='permanent'">
+                                  <p><strong>Fixed Seat Number(s): </strong><span>{{booking.seatsNumber}} </span></p>
+                                </ng-container>
+                
+                                
+                            </div><!-- panel body ends -->
+                            <div class="panel-footer">
+                              <p><strong>Status: </strong><span class="text-info text-bold" *ngIf="booking.isPendingApproval">Pending</span><span class="text-danger text-bold" *ngIf="!booking.isApproved && !booking.isPendingApproval"> Declined</span><span class="text-success text-bold" *ngIf="booking.isApproved && !booking.isPendingApproval">Approved</span></p>
+                            </div>
+                          </div><!--  panel ends -->
+                        </div><!-- col ends -->
+                
+                      </div>
+                
+                      <div id="dedicated" class="tab-pane fade">
+                
+                        <div class="col-sm-4 col-xs-12 topmargin-xs" [@fadeInDashboard]='' *ngFor="let pbooking of bookings">
+                          <div class="panel panel-default text-center">
+                            <div class="panel-heading">
+                              <h3 class="nomargin">{{pbooking.plan}}</h3>
+                            </div><!-- panel heading ends -->
+                            <div class="panel-body">
+                                <p><strong>Center: </strong><span>{{pbooking.center}}</span></p>
+                                <p><strong>Start Date: </strong><span>{{pbooking.startdate}}</span></p>
+                                <p><strong>End Date: </strong><span>{{pbooking.enddate}}</span></p>
+                                <p><strong>Fixed Seat Number(s): </strong><span>{{pbooking.seatsNumber}}</span></p>
+                                  
+                            </div><!-- panel body ends -->
+                            <div class="panel-footer">
+                              <p><strong>Status: </strong><span class="text-info text-bold" *ngIf="pbooking.isPendingApproval">Pending</span><span class="text-danger text-bold" *ngIf="!pbooking.isApproved && !pbooking.isPendingApproval"> Declined</span><span class="text-success text-bold" *ngIf="pbooking.isApproved && !pbooking.isPendingApproval">Approved</span></p>
+                            </div>
+                          </div><!--  panel ends -->
+                        </div><!-- col ends -->
+                
+                      </div>
+                
+                      <div id="meeting" class="tab-pane fade">
+                
+                        <div class="col-sm-4 col-xs-12 topmargin-xs" *ngFor="let mbooking of bookings">
+                          <div class="panel panel-default text-center">
+                            <div class="panel-heading">
+                              <h3 class="nomargin">{{mbooking.startdate | date:'MMM d, y'}}</h3>
+                            </div><!-- panel heading ends -->
+                            <div class="panel-body">
+                                <p><strong>Center: </strong><span>{{mbooking.center}}</span></p>
+                                <p><strong>Start Time: </strong><span>{{mbooking.startdate | date:'hh:mm:ss a'}}</span></p>
+                                <p><strong>End Time: </strong><span>{{mbooking.enddate | date:'hh:mm:ss a'}}</span></p>
+                                
+                            </div><!-- panel body ends -->
+                            <div class="panel-footer">
+                              <p><strong>Status: </strong><span class="text-info text-bold" *ngIf="mbooking.isPendingApproval">Pending</span><span class="text-danger text-bold" *ngIf="!mbooking.isApproved && !mbooking.isPendingApproval"> Declined</span><span class="text-success text-bold" *ngIf="mbooking.isApproved && !mbooking.isPendingApproval">Approved</span></p>
+                            </div>
+                          </div><!--  panel ends -->
+                        </div><!-- col ends -->
+                
+                      </div>
+                    </div><!-- booking history tab-content ends -->
+                
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="user" class="maxwidth600 profile">
+
+              
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>

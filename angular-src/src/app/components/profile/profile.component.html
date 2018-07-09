@@ -1,0 +1,103 @@
+<div *ngIf="user" class="topmargin-lg container">
+  
+  <h2 class="page-header"><img src="https://virgin.i.lithium.com/t5/image/serverpage/avatar-name/profile_146x146/avatar-theme/candy/avatar-collection/Transformative/avatar-display-size/message/version/2">{{user.name}}'s Profile</h2>
+  <div *ngIf="!editProfile && !editpw">
+    <input type="button" (click)="toggleEditProfile(user)" value="Edit Profile" class="btn btn-primary">
+    <input type="button" (click)="toggleEditpw()" value="Change Password" class="btn btn-primary">
+  </div>
+  <br>
+  <div *ngIf="!editProfile&&!editpw" class="">
+      <p class="lead"><strong class="text-uppercase">Username:</strong> {{user.username}}</p>
+      <p class="lead"><strong class="text-uppercase">Name:</strong> {{user.name}}</p>
+      <p class="lead"><strong class="text-uppercase">Email:</strong> {{user.email}}</p>
+      <p class="lead"><strong class="text-uppercase">Contact Number:</strong> {{user.phone}}</p>
+  </div>
+  <!-- <ul *ngIf="!editProfile&&!editpw" class="list-group">
+    <li class="list-group-item"><strong>Username:</strong> {{user.username}}</li>
+    <li class="list-group-item"><strong>Name:</strong> {{user.name}}</li>
+    <li class="list-group-item"><strong>Email:</strong> {{user.email}}</li>
+    <li class="list-group-item"><strong>Contact Number:</strong> {{user.phone}}</li>
+  </ul> -->
+  <!-- <div>{{user._id}}</div> -->
+  <!-- <div>{{getAllActivities(user._id)}}</div> -->
+  
+  <div *ngIf="editProfile" class="col-sm-6 col-sm-push-3">
+    <form (submit)="updateProfile(user._id)">
+        <input type="text" value="{{user.name}}" name="name" [(ngModel)]="name" class="form-control input-lg topmargin-xxs" placeholder="Name">
+        <input type="text" value="{{user.email}}" name="email" [(ngModel)]="email" class="form-control input-lg topmargin-xxs" placeholder="Email">
+        <input type="tel" value="{{user.phone}}" name="phone" [(ngModel)]="phone" class="form-control input-lg topmargin-xxs" placeholder="Contact Number">
+        <!-- <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" value="{{user.name}}" name="name" [(ngModel)]="name" class="form-control input-lg topmargin-xxs" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" value="{{user.email}}" name="email" [(ngModel)]="email" class="form-control input-lg topmargin-xxs" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="phone">Contact Number:</label>
+            <input type="tel" value="{{user.phone}}" name="phone" [(ngModel)]="phone" class="form-control input-lg topmargin-xxs" placeholder="Contact Number">
+        </div> -->
+      <!-- <ul class="list-group">
+        <li class="list-group-item">Name:
+          <input type="text" value="{{user.name}}" name="name" [(ngModel)]="name">
+        </li>
+        <li class="list-group-item">Email:
+          <input type="text" value="{{user.email}}" name="email" [(ngModel)]="email">
+        </li>
+        <li class="list-group-item">Contact Number:
+          <input type="tel" value="{{user.phone}}" name="phone" [(ngModel)]="phone">
+        </li>
+      </ul> -->
+      
+      <input type="submit" value="Update" class="btn btn-success topmargin-xs">
+      <input type="button" value="Cancel" (click)="toggleEditProfile()" class="btn btn-danger topmargin-xs">
+    </form>
+    
+  </div>
+  
+  <div *ngIf="editpw" class="col-sm-6 col-sm-push-3">
+    <form (submit)="updatePassword(user._id)">
+        <input type="password" name="currentPassword" [(ngModel)]="currentPassword" class="form-control input-lg topmargin-xxs" placeholder="Current Password">
+        <input type="password" name="newPassword" [(ngModel)]="newPassword" class="form-control input-lg topmargin-xxs" placeholder="New Password">
+        <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="form-control input-lg topmargin-xxs" placeholder="Confirm Password">
+        <!-- <div class="form-group">
+            <label for="currentPassword">Current Password:</label>
+            <input type="password" name="currentPassword" [(ngModel)]="currentPassword" class="form-control input-lg" placeholder="Current Password">
+        </div>
+        <div class="form-group">
+            <label for="newPassword">New Password:</label>
+            <input type="password" name="newPassword" [(ngModel)]="newPassword" class="form-control input-lg" placeholder="New Password">
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="form-control input-lg" placeholder="Confirm Password">
+        </div> -->
+      <!-- <ul class="list-group">
+        <li class="list-group-item">Current Password:
+          <input type="password" name="currentPassword" [(ngModel)]="currentPassword" class="form-control input-lg">
+        </li>
+        <li class="list-group-item">New Password:
+          <input type="password" name="newPassword" [(ngModel)]="newPassword" class="form-control input-lg">
+        </li>
+        <li class="list-group-item">Confirm Password:
+          <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="form-control input-lg">
+        </li>
+      </ul> -->
+      
+      <input type="submit" value="Update" class="btn btn-success topmargin-xs">
+      <input type="button" value="Cancel" (click)="toggleEditpw()" class="btn btn-danger topmargin-xs">
+    </form>
+    
+  </div>
+  <!-- <input type="button" (click)="getAllActivities(user._id)" value="My Activities"> -->
+  <div *ngIf="!editpw&&!editProfile">
+    <h3>My Activity Logs:</h3>
+    <ol *ngIf="allActivities.length>0">
+      <li *ngFor="let activity of allActivities.reverse()">
+        <div>{{activity.timestamp}}</div>
+        <div>{{activity.content}}</div>
+      </li>
+    </ol>
+  </div>
+</div>

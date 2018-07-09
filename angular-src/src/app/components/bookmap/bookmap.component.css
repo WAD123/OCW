@@ -1,0 +1,48 @@
+.seat-lr{
+    width: 80px;
+    height: auto;
+    transform: rotate(180deg);
+    cursor: pointer;
+    background-size: 100% auto;
+    /* position: fixed; */
+    display: inline-block;
+}
+.seat-not-selected{
+    background-image: url(../../../assets/images/booking-map/seat.png);
+}
+.seat-selected{
+    background-image: url(../../../assets/images/booking-map/seat-booked.png);
+}
+.seat-disabled{
+    background-image: url(../../../assets/images/booking-map/seat-booked.png);
+    opacity: 0.6;
+}
+.seat-rl {
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+    /* transform: rotate(90deg); */
+    /* position: fixed; */
+    /* top: 50%; */
+    /* left: 60.5%; */
+    background-size: 100% auto;
+    z-index: 6;
+    display: inline-block;
+}
+.desk-v{
+    /* position: fixed; */
+    /* width: 400px; */
+    /* height: 200px; */
+    box-shadow: inset 0px 0px 0px 2px #B0B0B0;
+    background-color: white;
+    display: inline-block;
+    /* transform: rotate(90deg); */
+}
+.desk-map{
+    /* transform: rotate(90deg); */
+    /* position:fixed; */
+    float: left;
+    padding: 20px;
+    /* top: 50%; */
+    /* left: 50%; */
+}

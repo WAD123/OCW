@@ -1,0 +1,14 @@
+<div class="desk-map">
+  <ng-container *ngFor="let seatNum of seatsArr;let i=index;">
+    <div [id]="seatsArr[i]" (click)="seatsArr[i]=!seatsArr[i]" [ngClass]="seatsArr[i]==true?'seat-selected':'seat-not-selected'" class="seat-rl" [style.width]="seat.width + 'px'" [style.height]="seat.height + 'px'" *ngIf="i<(seats/2)"></div>
+  </ng-container>
+  <!-- <img [style.width]="seat.width + 'px'" *ngFor="let seatNum of seatsArr" class="seat-rl" src="../../../assets/images/booking-map/seat.png"> -->
+  <br>
+  <div [style.width]="getDeskWidth() + 'px'" [style.height]="getDeskHeight() + 'px'" [style.maxHeight]="300+'px'" #desk class="desk-v"></div>
+  <br>
+  <ng-container *ngFor="let seatNum of seatsArr;let i=index;">
+    <div [id]="seatsArr[i]" (click)="seatsArr[i]=!seatsArr[i]" [ngClass]="seatsArr[i]==true?'seat-selected':'seat-not-selected'" class="seat-lr" [style.width]="seat.width + 'px'" [style.height]="seat.height + 'px'" *ngIf="i>=(seats/2)"></div>
+  </ng-container>
+  <!-- <img [style.width]="seat.width + 'px'" *ngFor="let seatNum of seatsArr" class="seat-lr" src="../../../assets/images/booking-map/seat.png"> -->
+
+</div>

@@ -1,0 +1,351 @@
+<div class="container-page ">
+  <div class="container">
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <nav id="spy">
+          <ul class="sidebar-nav nav">
+
+            <li>
+              <a routerLink="/profile" data-scroll>
+                <span>
+                  <i class="fa fa-user solo"></i>Profile</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/membersfeeds" data-scroll>
+                <span>
+                  <i class="fa fa-home solo"></i>Feeds</span>
+              </a>
+            </li>
+            <li class="active">
+              <a routerLink="/bookroom" data-scroll>
+                <span>
+                  <i class="fa fa-briefcase solo"></i>Book a Room</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/bookspace" data-scroll>
+                <span>
+                  <i class="fa fa-briefcase solo"></i>Book a Space</span>
+              </a>
+            </li>
+            
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-anchor solo"></i>My Plans</span>
+              </a>
+            </li> -->
+            <li>
+              <a routerLink="/bookinghistory" data-scroll>
+                <span>
+                  <i class="fa fa-book solo"></i>My Bookings</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-file solo"></i> My Documents</span>
+              </a>
+            </li> -->
+            <li>
+              <a routerLink="/accountsetting">
+                <span>
+                  <i class="fa fa-cogs solo"></i>Account Settings</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-users solo"></i>My Team Members</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-address-book solo"></i>Add/Delete member</span>
+              </a>
+            </li> -->
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Page content -->
+      <div id="page-content-wrapper ">
+
+
+        <div class="page-content inset">
+
+          <div class="row">
+            <div class="text-center ">
+              <div class="container-box">
+                <div class="heading-center">
+                  <h2>Book Space</h2>
+                  <hr>
+
+                </div>
+              </div>
+            </div>
+            <div class="maxwidth800">
+              <div>
+                <form #bookingForm="ngForm" (submit)="bookingform()">
+                  
+                  <div id="location"  *ngIf="stepNumber>=1">
+                    <h2 class="text-center text-bold text-uppercase">Choose Location</h2>
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-push-3"  *ngIf="centers.length">
+                       
+                        <select class="form-control input-lg" name="center" [(ngModel)]="center" (ngModelChange)="center!='0'?stepNumber=2:null" (change)=updateCenter()> 
+                          
+                          <option disabled>Choose suitable Location</option>
+                          <option>Connaught Place</option>
+                          <option>Netaji Shubhash Place</option>
+                          <option>Gurugram</option>
+                          <!-- <option *ngFor="let c of centers">{{c}}</option> -->
+                        </select>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <!-- location ends -->
+        
+                  <!-- <div id="bookingtype"  *ngIf="stepNumber>=2">
+                    <h2 class="text-center text-bold text-uppercase">Space Type</h2>
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-push-3"  *ngIf="centers.length">
+                        <select [(ngModel)]="subStepNumber" (ngModelChange)="subStepNumber!=0?stepNumber=3:null" name="subStepNumber" class="form-control input-lg">
+                            
+                            <option [value]="0" disabled>Choose suitable Space</option>
+                            <option [value]="1">Hot Desk</option>
+                            <option [value]="2">Permanent</option>
+                            
+                        </select>
+                        
+                      </div>
+                    </div>
+                  </div> -->
+                  <!-- booking type ends -->
+        
+                  
+        
+                  <div id="meetingpackage" *ngIf="stepNumber>=2">
+                    <h2 class="text-center text-bold text-uppercase">Select Package</h2>
+                    <div class="btn-group">
+                      <button type="button" (click)="plan='MTR';stepNumber=4" class="btn btn-primary btn-lg">Meeting Rooms</button>
+                      <button type="button" (click)="plan='VO';stepNumber=4" class="btn btn-primary btn-lg">Virtual Office</button>
+                      <button type="button" (click)="plan='VO+';stepNumber=4" class="btn btn-primary btn-lg">Virtual Office Plus</button>
+                      <button type="button" (click)="plan='TS';stepNumber=4" class="btn btn-primary btn-lg">Training Sessions</button>
+                    </div>
+                    
+                  </div>
+                  <!-- meetingpakcage ends -->
+        
+                             
+        
+                  <!-- <div id="fourdaypass">
+                               <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+                    <div class="row">
+                      <div class="col-sm-4 col-sm-push-1">
+                        <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+                      </div>
+                      <div class="col-sm-4 col-sm-push-1">
+                        <select class="form-control input-lg">
+                            <optgroup label="Subscription Period (in Months)">
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                              <option>6</option>
+                              <option>7</option>
+                              <option>8</option>
+                              <option>9</option>
+                              <option>10</option>
+                              <option>11</option>
+                              <option>12</option>
+                            </optgroup>
+                        </select>
+                      </div>
+                      <div class="col-sm-2 col-sm-push-1">
+                        <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required">
+                      </div>
+                    </div>
+                    
+                    <button class="btprimary btn-lg topmargin-xxs center-block">Book Now</button>
+                    
+                  </div>fourdaypass ends -->
+        
+                  <!-- <div id="tendaypass">
+                    <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+                    <div class="row">
+                      <div class="col-sm-4 col-sm-push-1">
+                        <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+                      </div>
+                      <div class="col-sm-4 col-sm-push-1">
+                        <select class="form-control input-lg">
+                            <optgroup label="Subscription Period (in Months)">
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                              <option>6</option>
+                              <option>7</option>
+                              <option>8</option>
+                              <option>9</option>
+                              <option>10</option>
+                              <option>11</option>
+                              <option>12</option>
+                            </optgroup>
+                        </select>
+                      </div>
+                      <div class="col-sm-2 col-sm-push-1">
+                        <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required">
+                      </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-lg topmargin-xxs center-block">Book Now</button>
+                    
+                  </div>tendaypass ends -->
+        
+                  <div id="otherpackage" *ngIf="stepNumber==4">
+                    <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+                    <div class="row">
+                      <div class="datepicker-bootstrap-style" class="col-sm-4">
+                          <ng-datepicker [(ngModel)]="startdate" name="startdate" (ngModelChange)="calculateEndDateAndPrice(startdate,selected_plan_duration)"></ng-datepicker>
+                          <!-- <input type="date" [(ngModel)]="startdate" name="startdate" class="form-control input-lg" required="required"> -->
+                        <!-- <input type="date" name="txtmonth" class="form-control input-lg" required="required"> -->
+                      </div>
+                      <div class="col-sm-4">
+                          <select class="form-control input-lg" [(ngModel)]="mtrid" name="mtrid">
+                            <option disabled>Select Meeting room</option>
+                            <option *ngFor="let mtr of totalMtrArray">{{mtr}}</option>
+                          </select>
+                      </div>
+                      <div class="col-sm-2">
+                        <!-- <button class="btn btn-info btn-lg">Check Availibility</button> -->
+                        <input [ngClass]="{'disabled': startdate==null }" type="button" (click)="checkmeetingroomavailability()" class="btn btn-primary btn-lg" value="Check Availability">
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="topmargin-xxs">
+                            <li class="list-group-item meeting-slot" [ngClass]="{'slotNotAvailable disabled':(bookedTime.indexOf(bookSlot)+1)!=0}" (click)="checkMeetingRoomSlots(bookSlot,i)" [class.active]="slotsChecked[i]==true" style="display:inline-block;" *ngFor="let bookSlot of slotsAvailable;let i=index">
+                              {{bookSlot}}
+                            </li>
+                            <a *ngIf="slotsAvailable.length>0" class="btn btn-danger" (click)="checkMeetingRoomSlots(0,0,1)">Reset</a>
+                        </div>
+                    </div>
+                    <div class="text-center topmargin-xxs">Total Amount to be Paid: {{amount}}</div>
+                    <button class="btn btn-primary btn-lg topmargin-xxs center-block">Book Now</button>
+        
+                  </div><!-- meetingroom ends -->
+        
+        
+        
+        
+        
+        
+        
+                  <!-- <div id="30daysdedicated">
+                    <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+                    <div class="row">
+                      <div class="col-sm-4 col-sm-push-1">
+                        <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+                      </div>
+                      <div class="col-sm-4 col-sm-push-1">
+                        <select class="form-control input-lg">
+                            <optgroup label="Subscription Period (in Months)">
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                              <option>6</option>
+                              <option>7</option>
+                              <option>8</option>
+                              <option>9</option>
+                              <option>10</option>
+                              <option>11</option>
+                              <option>12</option>
+                            </optgroup>
+                        </select>
+                      </div>
+                      <div class="col-sm-2 col-sm-push-1">
+                        <input type="number" name="txtseats" placeholder="Seats" class="form-control input-lg" required="required">
+                      </div>
+                    </div>
+                    
+                    <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+                    
+                  </div>30daysdedicated ends -->
+        
+        
+                  <!-- meetingroom ends -->
+        
+                  <!-- <div id="virtualoffice">
+                    <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-push-2">
+                        <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+                      </div>
+                      <div class="col-sm-2 col-sm-push-2">
+                        <button class="btn btn-info btn-lg">Check Availibility</button>
+                      </div>
+                    </div>
+        
+                    <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+        
+                  </div>virtualoffice ends -->
+        
+                  <!-- <div id="virtualofficeplus">
+                    <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-push-2">
+                        <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+                      </div>
+                      <div class="col-sm-2 col-sm-push-2">
+                        <button class="btn btn-info btn-lg">Check Availibility</button>
+                      </div>
+                    </div>
+        
+                    <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+        
+                  </div>virtualofficeplus ends -->
+        
+                  <!-- <div id="trainingsession">
+                    <h2 class="text-center text-bold text-uppercase">Provide Details</h2>
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-push-2">
+                        <input type="date" name="txtmonth" class="form-control input-lg" required="required">
+                      </div>
+                      <div class="col-sm-2 col-sm-push-2">
+                        <button class="btn btn-info btn-lg">Check Availibility</button>
+                      </div>
+                    </div>
+        
+                    <button class="btn btn-success btn-lg topmargin-xxs center-block">Book Now</button>
+        
+                  </div>trainingsession ends -->
+        
+        
+        
+                 
+        
+        
+        
+        
+        
+                
+                </form><!-- bookspace form ends -->
+              </div>
+              
+            </div>
+            <!-- maxwidth800 ends -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>

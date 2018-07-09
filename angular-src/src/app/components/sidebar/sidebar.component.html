@@ -1,0 +1,26 @@
+<div id="sidebar" class="col-sm-2 full-page bg-black nopadding text-center">
+  <a [routerLink]="['/']"><img src="http://www.oneinternet.in/img/logo_new.png" width="55%" class="center-block page-header"></a>
+  
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myPanel">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+  <ul class="nav nav-pills nav-stacked collapse navbar-collapse nopadding" id="myPanel">
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/feeds']">
+        Member Feeds
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/newbook']">
+        Book Now
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/my-bookings']">
+        My Bookings
+      </a>
+    </li>
+  </ul>
+</div>

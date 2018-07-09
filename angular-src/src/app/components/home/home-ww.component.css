@@ -1,0 +1,19 @@
+#section-intro{
+    background-position: 50% 0px;
+    background: #222 url("../../../assets/images/bg/bg1.jpg") no-repeat fixed 50% 50% / cover;
+    padding: 0px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    max-height: 100%;
+}
+.intro-caption {
+    width: 100%;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    /* padding: 160px 0px 0px 45px; */
+    position: absolute;
+    color: #fff;
+}

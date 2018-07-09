@@ -1,0 +1,20 @@
+<img src="assets/img/login-back.jpg" class="blur back-img">
+<section class="login-section">
+	<div class="form-structor">
+		<div class="signup">
+			<h2 class="form-title" id="signup">Login</h2>
+			<form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+				<div class="form-holder">
+				<input type="email" name="email" [formControl]="loginForm.controls['email']" class="form-control b-1 bg-transparent border-logo mar-t-10 text-white"
+					placeholder="Email" required="required">
+				<input type="password" name="password" [formControl]="loginForm.controls['password']" class="form-control b-1 bg-transparent border-logo mar-t-10 text-white"
+					placeholder="password" required="required">
+				</div>
+				<div class="text-center">
+					<button class="btn btn-logo btn-outline mar-t-25" [disabled]="!loginForm.valid">Login</button>
+					<button class="btn btn-logo btn-outline mar-t-25" (click)="routrURL('')">Sign Up</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>

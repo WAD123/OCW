@@ -1,0 +1,49 @@
+<app-loader [loading]="loading"></app-loader>
+<h2 class="page-header">Create New User</h2>
+<div *ngIf="adminuser">
+<form (submit)="onCreateSubmit()">
+  <div class="form-group col-md-6">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="name" name="name" class="form-control">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Username</label>
+    <input type="text" [(ngModel)]="username" name="username" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Designation</label>
+    <select name="designation" [(ngModel)]="designation" class="form-control"> 
+      <option *ngFor="let d of designationsToDisplay">{{d}}</option>
+    </select>
+  </div>
+  <div class="form-group col-md-6">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="password" name="password" class="form-control">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Confirm Password</label>
+    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control">
+  </div>
+  <div class="form-group">
+    <h3>
+    <label>Center</label>
+    <li *ngFor="let c of centers;let i = index">
+      <input type="checkbox" name="selectedCenters[i]" value="selectedCenters[i]" [(ngModel)] = "selectedCenters[i]"> {{c}}
+    </li>
+    </h3>
+  </div>
+   <div class="form-group">
+    <h3>  <label>Grant Permission(s) </label>
+    <li *ngIf="adminuser['book_approve']"><input type="checkbox" name="book_approve" value="book_approve" [(ngModel)] = "book_approve" > Approve Bookings </li>
+    <li *ngIf="adminuser['book_add']"><input type="checkbox" name="book_add" value="book_add" [(ngModel)] = "book_add" > Add Booking</li>
+    <li *ngIf="adminuser['book_delete']"><input type="checkbox"  name="book_delete" value="book_delete" [(ngModel)] = "book_delete" > Delete Booking</li>
+    <li *ngIf="adminuser['adminuser_create']"><input type="checkbox" name="adminuser_create" value="adminuser_create" [(ngModel)] = "adminuser_create" > Create Admin User</li>
+    <li *ngIf="adminuser['adminuser_modify']"><input type="checkbox"  name="adminuser_modify" value="adminuser_modify" [(ngModel)] = "adminuser_modify" > Modify Admin User</li>
+    <li *ngIf="adminuser['adminuser_delete']"><input type="checkbox" name="adminuser_delete" value="adminuser_delete" [(ngModel)] = "adminuser_delete" > Delete Admin User</li>
+    <li *ngIf="adminuser['reports_view']"><input type="checkbox"  name="reports_view" value="reports_view" [(ngModel)] = "reports_view" > View Reports</li>
+    <li *ngIf="adminuser['manage_inventory']"><input type="checkbox"  name="reports_view" value="manage_inventory" [(ngModel)] = "manage_inventory" > Manage Inventory</li>
+    </h3>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Create">
+</form>
+</div>

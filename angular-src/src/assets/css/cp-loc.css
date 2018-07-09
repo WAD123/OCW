@@ -1,0 +1,33 @@
+/*piyush css starts*/
+
+.desktopform{
+	position: fixed;
+    z-index: 90;
+    width: 40%;
+    bottom: 0;
+    background: black;
+    right: 5%;
+}
+
+.description p{
+	font-size: 1.1em;
+
+}
+@media (min-width: 1200px){
+
+	.description p{
+		font-size: 18px;
+		line-height: 1.5;
+
+	}
+	h5{
+		line-height: 1.5;
+	}	
+}
+.location-map{
+	height: 30em;
+}
+/*.private-office-table tr td + td{
+	text-align: right;
+}*/
+/*piyush css ends*/

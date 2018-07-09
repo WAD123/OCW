@@ -1,0 +1,285 @@
+  @charset "UTF-8";
+  /* CSS Document */
+
+#current-enterprise-title{
+  padding-bottom: 0px;
+}
+  /****** :: ENTERPRICES :: **********/
+  .m-top-5{
+  margin-top:5% !important;
+  }
+/*
+article.tailor-made-article {
+    width:80%;
+}*/
+  section#our-story {
+    padding-bottom: 0px;
+}
+
+  .page-title h2{
+    margin-bottom: 0px;
+    text-transform: uppercase !important;
+  }
+
+  .enterprices-caption {
+  position: absolute;
+  z-index: 99;
+  left: 15%;
+  bottom: 30px;
+  }
+
+  .enterprices-article-child h2,
+  .enterprices-article-child p{
+  color: #fff;
+  text-align: left;
+  font-weight: normal;
+  }
+
+  .enterprices-article-child p{
+  opacity:0;
+  visibility: hidden;
+  }
+
+  .enterprices-article-child h2{
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  /*font-family: 'Conv_texgyreadventor-bold';*/
+  }
+
+  .enterprices-caption h2{
+  color: #fff;
+  text-align: left;
+  }
+
+  figcaption.enterprices-article-child>.btn {
+  display: block;
+  float: left;
+  }
+
+  body .teams-overview .enterprices-article-parent{
+  -webkit-transform: translateY(65%);
+          transform: translateY(65%);
+  -webkit-transition: all 0.5s ease-in-out 0s, visibility 0s linear 0.5s, z-index 0s linear 0.5s;
+  transition: all 0.5s ease-in-out 0s, visibility 0s linear 0.5s, z-index 0s linear 0.5s;
+  visibility:visible;
+  opacity:1;
+  background-color:rgba(118, 184, 56, 0);
+  }
+
+  figcaption.enterprices-article-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 80%;
+  }
+
+  body .teams-overview:hover .enterprices-article-parent{
+      background-color: rgba(118, 184, 56, 0.7490196078431373);
+      transform: translate(0);
+  }
+
+  body .teams-overview:hover .img-scale-over img{
+  -webkit-transform: scale3d(1.1, 1.1, 1);
+  transform: scale3d(1.1, 1.1, 1);
+  }
+
+  body .teams-overview .enterprices-article-parent .enterprices-article-child h2{
+  margin-top: 0px;
+  -webkit-transform: translateY(-0.5em);
+          transform: translateY(-0.5em);
+  -webkit-transition: all 0.5s ease-in-out 0s, visibility 0s linear 0.5s, z-index 0s linear 0.5s;
+  transition: all 0.5s ease-in-out 0s, visibility 0s linear 0.5s, z-index 0s linear 0.5s;
+  }
+
+  body .teams-overview:hover .enterprices-article-parent .enterprices-article-child h2{
+  -webkit-transform: translateY(0%);
+  transform: translateY(0%);
+  -webkit-transition-delay: 0s, 0s, 0.7s;
+  transition-delay: 0s, 0s, 0.7s;
+  }
+
+  body .teams-overview:hover .enterprices-article-parent .enterprices-article-child p {
+  -webkit-animation: 1s .2s fadeInUp both;
+          animation: 1s .2s fadeInUp both;
+  }
+
+  body .teams-overview:hover .enterprices-article-parent .enterprices-article-child .btn {
+  -webkit-animation: 1s .2s fadeInUp both;
+          animation: 1s .2s fadeInUp both;
+  }
+
+  /***** :: TAILOR MADE STANDARD :: **********/
+
+  .sec-titl>h2 {
+   display:block !important;
+   }
+
+  section.standard-article>.row {
+  margin-top: 30px;
+  }
+
+  body section#tailor-made {
+  background-color: #f2f2f2;
+  }
+
+  body .standard-article figure{
+  float: left;
+ }
+
+
+  /*GET IN TOUCH*/
+
+  #getin-touch-bg#getin-touch-bg {
+  background-image: url(../img/enterprices/get-bg.jpg);
+  background-size: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  padding: 30px 0px;
+
+  background-position: center;
+  height:100%;
+  }
+
+  section#getin-touch-bg::after {
+  content: "";
+  background-color:rgba(0, 0, 0, 0.58);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  }
+
+  .btn-get {
+  float: right;
+  margin-top: 12%;
+  position: relative;
+  z-index: 9;
+  }
+
+/*  .btn-get  .btn-lg{
+    height: 60px;
+    width: 200px;
+    line-height: 57px;
+    font-size: 28px;
+    color: #75ba43;
+}*/
+
+  article.co-work-article-title {
+  display: inline-block;
+  position: relative;
+  z-index: 9;
+  }
+
+  article.co-work-article-title h1{
+    border-top:2px solid #fff;   
+    border-bottom:2px solid #fff;
+    font-size:56px;
+    line-height: 1;
+    padding:0px 0px 10px;
+    margin: 0px!important;
+    margin-bottom: 5px!important;
+  }
+  article.co-work-article-title h2{ 
+     margin-top:0px!important; 
+  }
+
+  /*************** :: CURRENT ENTERPRISE :: *************/
+
+
+  .current-enterprices-galry{
+  height: 15em !important;
+  /*border-right: 1px solid #ccc;*/
+  /*border-bottom: 1px solid #ccc;*/
+  border: none;
+  margin-bottom: 0px !important;
+  }
+
+  #current-enter [class*="col-"]:last-child>.current-enterprices-galry,
+  #current-enter [class*="col-"]:nth-last-of-type(2)>.current-enterprices-galry,
+  #current-enter [class*="col-"]:nth-last-of-type(3)>.current-enterprices-galry,
+  #current-enter [class*="col-"]:nth-last-of-type(4)>.current-enterprices-galry{
+  border-bottom:0px solid #ccc;
+  }
+/*
+  #current-enter [class*="col-"]:last-child>.current-enterprices-galry,
+  #current-enter [class*="col-"]:nth-first-of-type(4).current-enterprices-galry{
+    border-right: none;
+  }*/
+
+  #current-enter [class*="col-md-"]{
+  padding-left:0px;
+  padding-right:0px;
+  }
+
+  .page-sec-title{padding:30px 0px;}
+
+  .sec-title{position:relative;}
+  .sec-title::after{
+  width: 60px;
+  height:8px;
+  background-color: #70bd36;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  content:"";
+  position:absolute;
+  bottom: -30px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  }
+  article.co-work-article-title * {
+  color: #fff;
+  text-align: center;
+  display: block;
+  /*text-transform: uppercase;*/
+  }
+  article.teams-detail-overview.current-entr-parent {
+  background-color: rgba(0, 0, 0, 0.7490196078431373);
+  }
+  article.teams-detail-overview.current-entr-parent .current-enter-article-child {
+  width:80%;
+  }
+
+  .current-enter-article-child *{
+  color: #fff !important;
+  }
+
+  .current-enter-article-child h2{
+  text-transform:uppercase;
+      margin-bottom: 10px;
+  }
+
+  .current-entr-figr{
+  position:absolute;
+  left:50%;
+  top:50%;
+  -webkit-transform:translate(-50%,-50%);
+          transform:translate(-50%,-50%);
+  width:100%;
+  }
+  .current-entr-figr>img {
+  width: 50% !important;
+  margin: 0 auto;
+  display: block;
+  height: auto !important;
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  max-width: 100%;
+  }
+
+  @media (min-width:1440px){
+  figure.standard-img-text>figcaption>h2 {
+     font-size: 20px;
+    margin-top: 0px;
+  }
+
+  }

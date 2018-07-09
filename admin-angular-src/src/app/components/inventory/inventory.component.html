@@ -1,0 +1,134 @@
+<app-loader [loading]="loading"></app-loader>
+<!-- <h3> Inventory </h3> -->
+
+<div>
+
+    <div class="list-group col-sm-6" *ngFor="let eachinventory of inventory">
+
+        <div>
+            
+            <li class="list-group-item col-sm-12 active">
+                <div [ngClass]="{'col-sm-11':!editInventory[eachinventory._id],'col-sm-10':editInventory[eachinventory._id]}">
+                    <strong> {{eachinventory.center}} </strong>
+                </div>
+                <a *ngIf="!editInventory[eachinventory._id]&&adminuser['manage_inventory']" class="col-sm-1" href="javascript:void(0)" (click)="toggleEditInventory(eachinventory._id)">
+                    <i style="color:white" class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a *ngIf="editInventory[eachinventory._id]" class="col-sm-1" href="javascript:void(0)" (click)="updateInventory(eachinventory._id)">
+                    <i style="color:white" class="glyphicon glyphicon-ok"></i>
+                </a>
+                <a *ngIf="editInventory[eachinventory._id]" class="col-sm-1" href="javascript:void(0)" (click)="toggleEditInventory(eachinventory._id)">
+                    <i style="color:white" class="glyphicon glyphicon-remove"></i>
+                </a>
+            </li>
+            <li class="list-group-item col-sm-6"> Minimum subscription duration </li>
+            <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6"> {{eachinventory.plan_duration}} months</li>
+            <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                <input value="{{eachinventory.plan_duration}}" [(ngModel)]="plan_duration" name="plan_duration" class="form-control-static">
+            </div>
+            <li class="list-group-item col-sm-12"> Hotdesk Pricing </li>
+            <li class="list-group-item col-sm-12">
+                <ul class="list-group">
+                    <li class="list-group-item col-sm-6"> One day pass </li>
+                    <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6">
+                        Rs {{eachinventory.hotdesk_price._1DP}}/-
+                    </li>
+                    <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                        <input value="{{eachinventory.hotdesk_price._1DP}}" [(ngModel)]="hotdesk_price._1DP" name="hotdesk_price._1DP" class="form-control-static">
+                    </div>
+                    <li class="list-group-item col-sm-6"> Four Days Pass </li>
+                    <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6">
+                        Rs {{eachinventory.hotdesk_price._4DP}}/- 
+                    </li>
+                    <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                        <input value="{{eachinventory.hotdesk_price._4DP}}" [(ngModel)]="hotdesk_price._4DP" name="hotdesk_price._4DP" class="form-control-static">
+                    </div>
+                    <li class="list-group-item col-sm-6"> Ten Days Pass </li>
+                    <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6">
+                        Rs {{eachinventory.hotdesk_price._10DP}}/-
+                    </li>
+                    <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                        <input value="{{eachinventory.hotdesk_price._10DP}}" [(ngModel)]="hotdesk_price._10DP" name="hotdesk_price._10DP" class="form-control-static">
+                    </div>
+                </ul>
+            </li>
+            <li class="list-group-item col-sm-6"> Meeting Room Rate (Hourly)</li>
+            <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6"> {{eachinventory.meetingroom_price.price}}/- </li>
+            <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                <input value="{{eachinventory.meetingroom_price.price}}" [(ngModel)]="meetingroom_price.price" name="meetingroom_price.price" class="form-control-static">
+            </div>
+            <li class="list-group-item col-sm-6"> Total Meeting Rooms</li>
+            <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6"> {{eachinventory.meetingroom_price.total}} </li>
+            <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                <input value="{{eachinventory.meetingroom_price.total}}" [(ngModel)]="meetingroom_price.total" name="meetingroom_price.total" class="form-control-static">
+            </div>
+            <li class="list-group-item col-sm-12"> Dedicated Seats Pricing </li>
+            <li class="list-group-item col-sm-12">
+                <ul class="list-group">
+                    <li class="list-group-item col-sm-6"> 18 days pass </li>
+                    <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6">
+                        Rs {{eachinventory.permanentbook_price._18DP}}/-
+                    </li>
+                    <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                        <input value="{{eachinventory.permanentbook_price._18DP}}" [(ngModel)]="permanentbook_price._18DP" name="permanentbook_price._18DP" class="form-control-static">
+                    </div>
+                    <li class="list-group-item col-sm-6"> 30 days pass </li>
+                    <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6">
+                        Rs {{eachinventory.permanentbook_price._30DP}}/-
+                    </li>
+                    <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                        <input value="{{eachinventory.permanentbook_price._30DP}}" [(ngModel)]="permanentbook_price._30DP" name="permanentbook_price._30DP" class="form-control-static">
+                    </div>
+                </ul>
+            </li>
+            <li class="list-group-item col-sm-6"> Total Seats </li>
+            <li *ngIf="!editInventory[eachinventory._id]" class="list-group-item col-sm-6"> {{eachinventory.total_seats}} </li>
+            <div class="py-2px col-sm-6" *ngIf="editInventory[eachinventory._id]">
+                <input value="{{eachinventory.total_seats}}" [(ngModel)]="total_seats" name="total_seats" class="form-control-static">
+            </div>
+        </div>
+<!-- 
+        <div *ngIf="editInventory[eachinventory._id] && adminuser['manage_inventory']">
+
+            <form (submit)="updateInventory(eachinventory._id)">
+                <div>
+                    <h3> {{eachinventory.center}} </h3>
+                    <br>
+                    <label> Minimum duration of plan:  </label>
+                    <input type="number" value="{{eachinventory.plan_duration}}" name="plan_duration"
+                                [(ngModel)]="plan_duration" min="1"> (months)
+                    <br>
+                    <label>Hotdesk</label>
+                    <ul>
+                        <li> One day pass : Rs <input type="number" value="{{eachinventory.hotdesk_price._1DP}}" name="hotdesk_price._1DP"
+                                [(ngModel)]="hotdesk_price._1DP"></li>
+                        <li> Four days pass : Rs <input type="number" value="{{eachinventory.hotdesk_price._4DP}}" name="hotdesk_price._4DP"
+                                [(ngModel)]="hotdesk_price._4DP"></li>
+                        <li> Ten Days Pass : Rs <input type="number" value="{{eachinventory.hotdesk_price._10DP}}" name="hotdesk_price._10DP"
+                                [(ngModel)]="hotdesk_price._10DP"></li>
+                    </ul>
+                    <label> Meeting Room </label>
+                    <ul>
+                        <li> Hourly Rate : Rs <input type="number" value="{{eachinventory.meetingroom_price.price}}" name="meetingroom_price.price"
+                                [(ngModel)]="meetingroom_price.price"> </li>
+                    </ul>
+                    <label> Dedicated Seats </label>
+                    <ul>
+                        <li> 18 days pass : Rs <input type="number" value="{{eachinventory.permanentbook_price._18DP}}" name="permanentbook_price._18DP"
+                                [(ngModel)]="permanentbook_price._18DP"></li>
+                        <li> 30 days pass : Rs <input type="number" value="{{eachinventory.permanentbook_price._30DP}}" name="permanentbook_price._30DP"
+                                [(ngModel)]="permanentbook_price._30DP"></li>
+                    </ul>
+                    <label> Seats </label>
+                    <ul>
+                        <li> Total :<input type="number" value="{{eachinventory.total_seats}}" name="total_seats"
+                                [(ngModel)]="total_seats"></li>
+                    </ul>
+                </div>
+                <input type="submit" value="Update">
+            </form> <br>
+            <input type="button" (click)="toggleEditInventory(eachinventory._id)" value="Cancel Update">
+        </div>
+    </div> -->
+
+</div>

@@ -1,0 +1,56 @@
+<div id="sidebar" class="col-sm-2bg-black nopadding text-center">
+  <!-- <a [routerLink]="['/']"><img src="http://www.oneinternet.in/img/logo_new.png" width="55%" class="center-block page-header"></a> -->
+  
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myPanel">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+  <ul class="nav nav-pills nav-stacked collapse navbar-collapse nopadding" id="myPanel">
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/profile']">
+        Profile
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/feeds']">
+        Feeds
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/newbook']">
+        Book a Space
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/feeds']">
+        My Plans
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/my-bookings']">
+        My Bookings
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/feeds']">
+        My Documents
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/feeds']">
+        Account Settings
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/feeds']">
+        My Team Members
+      </a>
+    </li>
+    <li role="presentation" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+      <a class="text-uppercase text-white" [routerLink]="['/dashboard/feeds']">
+        Add/Delete member
+      </a>
+    </li>
+  </ul>
+</div>

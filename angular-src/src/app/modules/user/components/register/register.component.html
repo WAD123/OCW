@@ -1,0 +1,23 @@
+<img src="assets/img/login-back.jpg" class="blur back-img">
+<section class="login-section">
+	<div class="form-structor">
+		
+		<div class="login">
+			<div class="center">
+				<h2 class="form-title" id="login">Sign Up</h2>
+				<span ng-if="isError">{{errMsg}}</span>
+				<form [formGroup]="registerForm" (ngSubmit)="submitForm(registerForm.value)">
+					<div class="form-holder">
+						<input type="text" name="username" [formControl]="registerForm.controls['username']" class="form-control b-1 bg-transparent border-black mar-t-10 text-black" placeholder="Username" required="required">
+						<input type="email" name="email" [formControl]="registerForm.controls['email']" class="form-control b-1 bg-transparent border-black mar-t-10 text-black" placeholder="Email" required="required">
+						<input type="password" name="password" [formControl]="registerForm.controls['password']"  class="form-control b-1 bg-transparent border-black mar-t-10 text-black" placeholder="password" required="required">
+					</div>
+					<div class="text-center">
+						<button class="btn btn-logo login-btn-black mar-t-25" [disabled]="!registerForm.valid">Sign Up</button>
+						<button class="btn btn-logo login-btn-black mar-t-25" (click)="routrURL('/login')">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>

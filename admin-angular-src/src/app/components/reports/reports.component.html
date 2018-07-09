@@ -1,0 +1,166 @@
+<app-loader [loading]="loading"></app-loader>
+<h2 class="page-header">Reports</h2>
+<form (submit)="onFilterSubmit()">
+
+  <!-- <div class="form-group col-lg-12">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="name" name="name" class="form-control">
+  </div> -->
+
+  <div class="form-group col-md-6">
+    <label>Username</label>
+    <input type="text" [(ngModel)]="username" name="username" class="form-control">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Email</label>
+    <input type="text" [(ngModel)]="email" name="email" class="form-control">
+  </div>
+
+  <div class="form-group col-md-12">
+    <div>Center</div>
+    <div class="btn-group">
+      <button *ngFor="let c of centers;let i = index" [ngClass]="{disabled:selectedCenters[i]==true}" type="button" class="btn btn-primary"
+        name="selectedCenters[i]" (click)="selectedCenters[i]==true?selectedCenters[i]=false:selectedCenters[i]=true"><i *ngIf="selectedCenters[i]==true" class="glyphicon glyphicon-ok"></i>  {{c}}</button>
+    </div>
+  </div>
+
+
+  <div class="form-group col-md-12">
+
+    <h4> Select Package </h4>
+    <button [ngClass]="{disabled:hotdesk==true}" type="button" class="btn btn-primary" name="hotdesk" (click)="hotdesk==true?hotdesk=false:hotdesk=true"><i *ngIf="hotdesk==true" class="glyphicon glyphicon-ok"></i>  Hotdesk</button>
+    <div *ngIf="hotdesk">
+      <div class="col-sm-4">
+        Plan :
+        <select class="form-control" name="hotdeskplan" [(ngModel)]="hotdeskplan"> 
+            <option *ngFor="let displayplan of hotdeskplansToShow">{{displayplan}}</option>
+          </select>
+      </div>
+      <div class="col-sm-4">
+        StartDate <br> From
+        <input class="form-control" type="date" [(ngModel)]="hotdeskstartfromdate" name="hotdeskstartfromdate"> To
+        <input class="form-control" type="date" [(ngModel)]="hotdeskstarttodate" name="hotdeskstarttodate">
+      </div>
+      <div class="col-sm-4">
+        EndDate <br> From
+        <input class="form-control" type="date" [(ngModel)]="hotdeskendfromdate" name="hotdeskendfromdate"> To
+        <input class="form-control" type="date" [(ngModel)]="hotdeskendtodate" name="hotdeskendtodate">
+        <br>
+      </div>
+    </div>
+
+    <button [ngClass]="{disabled:permanent==true}" type="button" class="btn btn-primary" name="permanent" (click)="permanent==true?permanent=false:permanent=true"><i *ngIf="permanent==true" class="glyphicon glyphicon-ok"></i>  Permanent</button>
+    <div *ngIf="permanent">
+      <div class="col-sm-4">
+        Plan :
+        <select class="form-control" name="permanentplan" [(ngModel)]="permanentplan"> 
+            <option *ngFor="let displayplan of permanentplansToShow">{{displayplan}}</option>
+          </select>
+      </div>
+      <div class="col-sm-4">
+        StartDate <br> From
+        <input class="form-control" type="date" [(ngModel)]="permanentstartfromdate" name="permanentstartfromdate"> To
+        <input class="form-control" type="date" [(ngModel)]="permanentstarttodate" name="permanentstarttodate">
+      </div>
+      <div class="col-sm-4">
+        EndDate <br> From
+        <input class="form-control" type="date" [(ngModel)]="permanentendfromdate" name="permanentendfromdate"> To
+        <input class="form-control" type="date" [(ngModel)]="permanentendtodate" name="permanentendtodate">
+        <br>
+      </div>
+    </div>
+
+
+    <button [ngClass]="{disabled:meetingroom==true}" type="button" class="btn btn-primary" name="meetingroom" (click)="meetingroom==true?meetingroom=false:meetingroom=true"><i *ngIf="meetingroom==true" class="glyphicon glyphicon-ok"></i>  Meeting Room</button>
+    <div *ngIf="meetingroom">
+      <div class="col-sm-6">
+        Date <br> From
+        <input type="date" class="form-control" [(ngModel)]="meetingroomdatefrom" name="meetingroomdatefrom"> To
+        <input type="date" class="form-control" [(ngModel)]="meetingroomdateto" name="meetingroomdateto">
+        <br>
+      </div>
+    </div>
+
+
+  </div>
+
+  <input type="submit" class="btn btn-primary" value="Generate Report">
+  <input type="reset" class="btn btn-primary" value="Reset">
+</form>
+<div *ngIf="hotdeskbookings.length">
+  <h3> Hotdesk Bookings (Total {{hotdeskbookings.length}} Bookings)</h3>
+  <!-- <div class="col-sm-4"> -->
+  <li class="col-sm-1 list-group-item active"><strong>S.No.</strong></li>
+  <li class="col-sm-2 list-group-item active"><strong>Username</strong></li>
+  <!-- <li class="col-sm-2 list-group-item active"><strong>Email</strong></li> -->
+  <li class="col-sm-2 list-group-item active"><strong>Plan</strong></li>
+  <li class="col-sm-2 list-group-item active"><small>StartDate</small></li>
+  <li class="col-sm-2 list-group-item active"><small>EndDate</small></li>
+  <li class="col-sm-2 list-group-item active"><strong>Center</strong></li>
+  <li class="col-sm-1 list-group-item active"><strong>Status</strong></li>
+  <div *ngFor="let booking of hotdeskbookings;let i=index;">
+    <li class="col-sm-1 list-group-item">{{i+1}}</li>
+    <li class="col-sm-2 list-group-item">{{booking.username}}</li>
+    <!-- <li class="col-sm-2 list-group-item">{{booking.email}}</li> -->
+    <li class="col-sm-2 list-group-item">{{booking.plan}}</li>
+    <li class="col-sm-2 list-group-item"><small>{{booking.startdate}}</small></li>
+    <li class="col-sm-2 list-group-item"><small>{{booking.enddate}}</small></li>
+    <li class="col-sm-2 list-group-item">{{booking.center}}</li>
+    <li *ngIf="booking.isPendingApproval" class="col-sm-1 list-group-item">Pending</li>
+    <li *ngIf="!booking.isPendingApproval && booking.isApproved" class="col-sm-1 list-group-item">Approved</li>
+    <li *ngIf="!booking.isPendingApproval && !booking.isApproved" class="col-sm-1 list-group-item">Declined</li>
+  </div>
+  <div style="visibility:hidden;" class="jumbotron">piyush sucks</div>
+</div>
+
+<div *ngIf="permanentbookings.length">
+  <h3> Dedicated Bookings (Total {{permanentbookings.length}} Bookings)</h3>
+  <!-- <div class="col-sm-4"> -->
+  <li class="col-sm-1 list-group-item active"><strong>S.No.</strong></li>
+  <li class="col-sm-1 list-group-item active"><strong>Username</strong></li>
+  <!-- <li class="col-sm-2 list-group-item active"><strong>Email</strong></li> -->
+  <li class="col-sm-2 list-group-item active"><strong>Plan</strong></li>
+  <li class="col-sm-2 list-group-item active"><small>StartDate</small></li>
+  <li class="col-sm-2 list-group-item active"><small>EndDate</small></li>
+  <li class="col-sm-2 list-group-item active"><strong>Center</strong></li>
+  <li class="col-sm-1 list-group-item active"><strong>Seats</strong></li>
+  <li class="col-sm-1 list-group-item active"><strong>Status</strong></li>
+  <div *ngFor="let booking of permanentbookings;let i=index;">
+    <li class="col-sm-1 list-group-item">{{i+1}}</li>
+    <li class="col-sm-1 list-group-item">{{booking.username}}</li>
+    <!-- <li class="col-sm-2 list-group-item">{{booking.email}}</li> -->
+    <li class="col-sm-2 list-group-item">{{booking.plan}}</li>
+    <li class="col-sm-2 list-group-item"><small>{{booking.startdate}}</small></li>
+    <li class="col-sm-2 list-group-item"><small>{{booking.enddate}}</small></li>
+    <li class="col-sm-2 list-group-item">{{booking.center}}</li>
+    <li class="col-sm-1 list-group-item">{{booking.seatsNumber}}</li>
+    <li *ngIf="booking.isPendingApproval" class="col-sm-1 list-group-item">Pending</li>
+    <li *ngIf="!booking.isPendingApproval && booking.isApproved" class="col-sm-1 list-group-item">Approved</li>
+    <li *ngIf="!booking.isPendingApproval && !booking.isApproved" class="col-sm-1 list-group-item">Declined</li>
+  </div>
+  <div style="display: block">
+    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"></canvas>
+  </div>
+  <div style="visibility:hidden;" class="jumbotron">piyush sucks</div>
+</div>
+
+<div *ngIf="meetingroombookings.length">
+  <h3> Meeting Room Bookings </h3>
+  <ol>
+    <li *ngFor="let booking of meetingroombookings">
+      <strong> Username </strong> : {{booking.username}} <br>
+      <strong>  Email </strong> : {{booking.email}}<br>
+      <strong>  Date </strong> : {{booking.startdate.toLocaleDateString()}}<br>
+      <strong>  Start Time </strong> : {{booking.startdate.toLocaleTimeString()}}<br>
+      <strong>  End Time  </strong> : {{booking.enddate.toLocaleTimeString()}}<br>
+      <strong>  Center </strong> : {{booking.center}}<br>
+      <p *ngIf="booking.isApproved"> <strong>  Status </strong> : Approved </p>
+      <p *ngIf="!booking.isApproved"> <strong>  Status </strong> : Not Approved </p> <br>
+
+    </li>
+  </ol>
+  <br>
+  <br>
+</div>

@@ -1,0 +1,57 @@
+<div id="login-register-popup">
+  <div class="popup-overlay-bg" [routerLink]="['/']"></div>
+  <div class="modal-content">
+    <div class="modal-header">
+        <span class="close" [routerLink]="['/']">&times;</span>
+      <ul class="nav nav-pills btn-lg width-max-content center-block">
+              <li class="active"><a data-toggle="pill" href="#login" class="text-uppercase">Login</a></li>
+              <li><a data-toggle="pill" href="#signup" class="text-uppercase">Register</a></li>
+      </ul>
+    </div>
+    <div class="modal-body">
+      <div class="tab-content">
+
+            <div id="login" class="tab-pane fade in active">
+              <form (submit)="onLoginSubmit()">
+                <input type="text" [(ngModel)]="username" name="username" placeholder="Username *" class="form-control input-lg login-custom-inputs">
+                <input type="password" [(ngModel)]="password" name="password" placeholder="Password *" class="form-control input-lg topmargin-xxs login-custom-inputs">
+                
+                <input type="submit" class="btn btn-success btn-lg topmargin-xs btn-block login-custom-inputs" value="Login">
+              </form>
+              
+            </div>
+
+            <div id="signup" class="tab-pane fade">
+              <form (submit)="onRegisterSubmit()">
+                
+                  <!-- <div class="col-sm-6">
+                    <input type="text" [(ngModel)]="name" name="name" placeholder="Name *" required="required" class="form-control input-lg login-custom-inputs">
+                    <input type="text" name="txtcompany" placeholder="Company Name" class="form-control input-lg topmargin-xxs login-custom-inputs">
+                    <input type="email" [(ngModel)]="email" name="email" placeholder="Email *" required="required" class="form-control input-lg topmargin-xxs login-custom-inputs" (blur)="validateEmail(email)">
+                    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirm Password *" required="required" class="form-control input-lg topmargin-xxs login-custom-inputs">
+                  </div>
+                  <div class="col-sm-6"> -->
+                      <input type="text" [(ngModel)]="username" name="username" placeholder="Username *" class="form-control input-lg login-custom-inputs" required="required">
+                      <input type="email" [(ngModel)]="email" name="email" placeholder="Email *" required="required" class="form-control input-lg topmargin-xxs login-custom-inputs">
+                      <!-- <input type="tel" [(ngModel)]="phone" name="phone" placeholder="Contact Number *" maxlength="10" required="required" class="form-control input-lg topmargin-xxs login-custom-inputs"> -->
+                      <input type="password" [(ngModel)]="password" name="password" placeholder="Password *" required="required" class="form-control input-lg topmargin-xxs login-custom-inputs">
+                  <!-- </div> -->
+                  
+                
+
+                
+                <!-- <div class="row">
+                  <div class="col-sm-4 col-sm-push-4"> -->
+                      <input [ngClass]="{disabled:disabled==true}" type="submit" class="btn btn-success btn-lg topmargin-xs login-custom-inputs btn-block" value="Register">
+                  <!-- </div>
+                </div> -->
+                
+              </form>
+            </div>
+
+           
+      </div>
+    </div>
+    
+  </div>
+</div>

@@ -1,0 +1,15 @@
+/* @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~open-iconic/font/css/open-iconic-bootstrap.css'; */
+.bs-datepicker-container{
+    background-color: #75B844 !important;
+}
+.bs-calendar-container{
+    background-color: #75B844 !important;
+}
+.button[class="current"]{
+    padding:10px;
+}
+.bs-datepicker-body{
+    border:none;
+    background-color: #75B844;
+}

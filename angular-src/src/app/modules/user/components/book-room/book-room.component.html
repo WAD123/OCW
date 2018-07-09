@@ -1,0 +1,232 @@
+<!-- End Navbar -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">Book Room </h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="bookRoomForm" (ngSubmit)="submitForm(bookRoomForm.value)">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Choose Location</label>
+                <select class="form-control" [formControl]="bookRoomForm.controls['location']">
+                  <option [value]='' [selected]="true" [disabled]="true">
+                    <h6 class="pad-tb-15">Select Location</h6>
+                  </option>
+                  <option *ngFor="let location of locations" [value]="location">
+                    <h6 class="pad-tb-15">{{location}}</h6>
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Select Date</label>
+                <!-- <input type="text" bsDatepicker class="form-control date-picker" value="10/05/2016" / data-datepicker-color="primary"> -->
+                <input type="text" bsDatepicker class="form-control date-picker" value="10/05/2016" data-datepicker-color="primary" [formControl]="bookRoomForm.controls['date']">
+              </div>
+            </div>
+            <div class="col-md-6 px-1">
+              <div class="package_wrap form-group">
+                <label>Select Package</label>
+                <div class="btn-group packageBtnGroup btn-group-justified form-control" id="select-package">
+                  <label class="btn packageMethod" *ngFor="let packageType of packages;let index;" [ngClass]="bookRoomForm.controls['packageType'].value==packageType.planType?'active':''">
+                    <div class="method visa">
+                      <h5 class="radio-head">{{packageType.title.split(' ')[0]}}
+                        <br>room</h5>
+                    </div>
+                    <input type="radio" [formControl]="bookRoomForm.controls['packageType']" [value]="packageType.planType" class="package-radio"
+                      name="options" checked>
+                  </label>
+                </div>
+                <p *ngIf="bookRoomForm.controls['location'].value&&bookRoomForm.controls['packageType'].value&&bookRoomForm.controls['timeRange'].value"
+                  class="form-group" class="col-md-12">{{"Total Amount: Rs."+getAmount()+"/-"}}</p>
+              </div>
+              <!-- <span *ngIf="bookRoomForm.controls['location'].value&&bookRoomForm.controls['packageType'].value&&bookRoomForm.controls['timeRange'].value">
+                Amount to be paid {{getAmount() }}</span> -->
+
+              <!-- commented -->
+              <!-- <div class="package_wrap form-group">
+                    <label>Select Package</label>
+                    <div class="btn-group packageBtnGroup btn-group-justified form-control" id="select-package">
+                            <label class="btn packageMethod active">
+                              <div class="method visa"><h5 class="radio-head">meeting <br>room</h5></div>
+                                <input type="radio" class="package-radio" name="options" checked> 
+                            </label>
+                            <label class="btn packageMethod">
+                              <div class="method vishwa"><h5 class="radio-head">training <br>session</h5></div>
+                                <input type="radio" class="package-radio" name="options"> 
+                            </label>
+                        </div>        
+                  </div>
+                </div> -->
+              <!-- comme -->
+            </div>
+          </div>
+          <div class="row">
+            <!-- <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>No. of Rooms</label>
+                  <input type="number" class="form-control" [formControl]="bookRoomForm.controls['rooms']">
+                </div>
+              </div> -->
+            <!-- <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Amenities</label>
+                  <div>
+                    <div class="checkbox inline">
+                      <input id="checkbox1" type="checkbox" [formControl]="bookRoomForm.controls['lcdAmenity']">
+                      <label for="checkbox1">
+                        LCD Screen
+                      </label>
+                    </div>
+                    <div class="checkbox inline">
+                      <input id="checkbox2" type="checkbox"  [formControl]="bookRoomForm.controls['projectorAmenity']">
+                      <label for="checkbox2">
+                        Projector
+                      </label>
+                    </div>
+                    <div class="checkbox inline">
+                      <input id="checkbox3" type="checkbox" [formControl]="bookRoomForm.controls['otherAmenity']">
+                      <label for="checkbox3">
+                        Other
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Select Time</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5 time-tab" *ngIf="bookRoomForm.controls['location'].value==''||bookRoomForm.controls['location'].value=='Netaji Subhash Place'">
+              <div class="form-group" id="blur-tab-1">
+                <img id="cowork-img-1" class="img-radius-10" src="../assets/img/cowork1.jpg">
+                <h3 id="bookaroom-cards-head-1" class="bookaroom-cards-head hidden">Cowork Space</h3>
+              </div>
+              <div class="form-group">
+                <nouislider name="selectTimeRangee" [config]="someRange2config" [formControl]="bookRoomForm.controls['timeRange']"></nouislider>
+              </div>
+              <div class="col-md-12 pr-1 no-pad-lf">
+                <button class="btn btn-primary btn-round btn-color" [(disabled)]="!bookRoomForm.valid" type="submit">Book Now</button>
+              </div>
+            </div>
+            <div class="col-md-5 time-tab" *ngIf="bookRoomForm.controls['location'].value==''||bookRoomForm.controls['location'].value=='Gurgaon'">
+              <div class="form-group" id="blur-tab-2">
+                <img id="cowork-img-2" class="img-radius-10 " src="../assets/img/cowork1.jpg">
+                <h3 id="bookaroom-cards-head-2" class="bookaroom-cards-head hidden">Cowork Space</h3>
+              </div>
+              <div class="form-group">
+                <nouislider name="selectTimeRangee" [config]="someRange2config" [formControl]="bookRoomForm.controls['timeRange']"></nouislider>
+                <!-- <div class='time-selection'>
+                    <div class='time-selection__cell'>9 AM</div>
+                    <div class='time-selection__cell'>10 AM</div>
+                    <div class='time-selection__cell'>11 AM</div>
+                    <div class='time-selection__cell'>12 AM</div>
+                    <div class='time-selection__cell'>1 PM</div>
+                    <div class='time-selection__cell'>2 PM</div>
+                    <div class='time-selection__cell'>3 PM</div>
+                    <div class='time-selection__cell'>4 PM</div>
+                    <div class='time-selection__cell'>5 PM</div>
+                    <div class='time-selection__cell'>6 PM</div>
+                    <div class='time-selection__cell'>7 PM</div>
+                    <div class='time-selection__cell'>8 PM</div>
+                    <div class='time-selection__cell'>9 PM</div>
+                  </div> -->
+              </div>
+              <div class="col-md-12 pr-1 no-pad-lf">
+                <button class="btn btn-primary btn-round btn-color" [(disabled)]="!bookRoomForm.valid" type="submit">Book Now</button>
+              </div>
+            </div>
+            <div class="col-md-5 time-tab" *ngIf="bookRoomForm.controls['location'].value==''||bookRoomForm.controls['location'].value=='Bengaluru'">
+              <div class="form-group" id="blur-tab-3">
+                <img id="cowork-img-3" class="img-radius-10 " src="../assets/img/cowork1.jpg">
+                <h3 id="bookaroom-cards-head-3" class="bookaroom-cards-head hidden">Cowork Space</h3>
+              </div>
+              <div class="form-group">
+                <!-- <div class='time-selection'>
+                    <div class='time-selection__cell'>9 AM</div>
+                    <div class='time-selection__cell'>10 AM</div>
+                    <div class='time-selection__cell'>11 AM</div>
+                    <div class='time-selection__cell'>12 AM</div>
+                    <div class='time-selection__cell'>1 PM</div>
+                    <div class='time-selection__cell'>2 PM</div>
+                    <div class='time-selection__cell'>3 PM</div>
+                    <div class='time-selection__cell'>4 PM</div>
+                    <div class='time-selection__cell'>5 PM</div>
+                    <div class='time-selection__cell'>6 PM</div>
+                    <div class='time-selection__cell'>7 PM</div>
+                    <div class='time-selection__cell'>8 PM</div>
+                    <div class='time-selection__cell'>9 PM</div>
+                  </div> -->
+                <nouislider name="selectTimeRangee" [config]="someRange2config" [formControl]="bookRoomForm.controls['timeRange']"></nouislider>
+              </div>
+              <div class="col-md-12 pr-1 no-pad-lf">
+                <button class="btn btn-primary btn-round btn-color" [(disabled)]="!bookRoomForm.valid" type="submit">Book Now</button>
+              </div>
+            </div>
+            <div class="col-md-5 time-tab" *ngIf="bookRoomForm.controls['location'].value==''||bookRoomForm.controls['location'].value=='Connaught Place'">
+              <div class="form-group" id="blur-tab-4">
+                <img id="cowork-img-4" class="img-radius-10 " src="../assets/img/cowork1.jpg">
+                <h3 id="bookaroom-cards-head-4" class="bookaroom-cards-head hidden">Cowork Space</h3>
+              </div>
+              <div class="form-group">
+                <!-- <div class='time-selection'>
+                    <div class='time-selection__cell'>9 AM</div>
+                    <div class='time-selection__cell'>10 AM</div>
+                    <div class='time-selection__cell'>11 AM</div>
+                    <div class='time-selection__cell'>12 AM</div>
+                    <div class='time-selection__cell'>1 PM</div>
+                    <div class='time-selection__cell'>2 PM</div>
+                    <div class='time-selection__cell'>3 PM</div>
+                    <div class='time-selection__cell'>4 PM</div>
+                    <div class='time-selection__cell'>5 PM</div>
+                    <div class='time-selection__cell'>6 PM</div>
+                    <div class='time-selection__cell'>7 PM</div>
+                    <div class='time-selection__cell'>8 PM</div>
+                    <div class='time-selection__cell'>9 PM</div>
+                  </div> -->
+                <nouislider name="selectTimeRangee" [config]="someRange2config" [formControl]="bookRoomForm.controls['timeRange']"></nouislider>
+              </div>
+              <div class="col-md-12 pr-1 no-pad-lf">
+                <button class="btn btn-primary btn-round btn-color" [(disabled)]="!bookRoomForm.valid" type="submit">Book Now</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal" [ngClass]="(success||error)?'show':'hide'" id="test-modal" tabindex="-1" *ngIf="(success||error)" role="dialog"
+  style="display:block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content ">
+      <div class="modal-header text-center">
+        <h6 class="modal-title">{{success?'Success':error?'Error':''}}</h6>
+        <button type="button" class="close comment-close" (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer comment-modal-footer">
+        <div class="row">
+          <div class="col-md-12">
+            {{msg}}
+          </div>
+        </div>
+        <!-- <button type="button" class="btn btn-primary btn-round btn-color float-right">Add Comment</button> -->
+        <button class="btn btn-secondary btn-round float-right modal-cancel-btn" data-toggle="modal" (click)="closeModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+.event-intro-bg{
+	background-image: url('../img/home/home-enterprise-intro-bg.jpg');
+}
+.gallery-wrapper{
+	min-height: 31em;
+}
+.gallery-wrapper .panel{
+	min-height: 31em;
+}

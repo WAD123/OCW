@@ -1,0 +1,231 @@
+<!-- <p>
+  account-settings works!
+</p> -->
+
+<!-- End Navbar -->
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body no-pad">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs posts-header-pills" role="tablist">
+                <li role="presentation" (click)="switchTab(1)">
+                  <a  (click)="switchTab(1)">Reset Password</a>
+                </li>
+                <li role="presentation" (click)="switchTab(2)">
+                  <a (click)="switchTab(2)">Profile Edit</a>
+                </li>
+                <li role="presentation" (click)="switchTab(3)">
+                  <a (click)="switchTab(3)">Upload KYC</a>
+                </li>
+                
+              </ul>
+            </div>
+            <div class="col-md-12 post-panel">
+              <!-- Tab panes -->
+              <div class="tab-content post-panel-inner">
+                <div role="tabpanel" class="tab-pane" [ngClass]="showTab==1?'active':''" *ngIf="showTab==1" id="reset">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Old Password</label>
+                        <input type="password" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button class="btn btn-primary btn-round btn-color" type="submit">Save</button>
+                    </div>
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" [ngClass]="showTab==2?'active':''" *ngIf="showTab==2||showTab=='2'" id="profile-edit">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label>Company (disabled)</label>
+                          <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Username</label>
+                          <input type="text" class="form-control" placeholder="Username" value="michael23">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Email address</label>
+                          <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>First Name</label>
+                          <input type="text" class="form-control" placeholder="Company" value="Mike">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Last Name</label>
+                          <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Address</label>
+                          <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>City</label>
+                          <input type="text" class="form-control" placeholder="City" value="Mike">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Country</label>
+                          <input type="text" class="form-control" placeholder="Country" value="Andrew">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Postal Code</label>
+                          <input type="number" class="form-control" placeholder="ZIP Code">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>About Me</label>
+                          <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-primary btn-round btn-color" type="submit">Save</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" [ngClass]="showTab==3?'active':''" *ngIf="showTab==3" id="upload-kyc">
+                  <app-kyc></app-kyc>
+                </div>
+                <div class="modal" id="comment-modal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content ">
+                      <div class="modal-header text-center">
+                        <h6 class="modal-title">Comments</h6>
+                        <button type="button" class="close comment-close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="no-comment-exist text-center">
+                          <p>No comments yet! Be the first one to comment.</p>
+                        </div>
+                        <div class="comment-exist">
+                          <div class="row">
+                            <div class="col-md-9">
+                              <h6 class="mar-b-0 comment-name">Priyanka</h6>
+                              <p class="mar-b-0 comment-time">June 1 2018, 1:49:40 PM</p>
+                              <p class="mar-b-0 comment-para">Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american </p>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="dropdown">
+                                <a href="#" class="comment-option-btn dropdown-toggle" data-toggle="dropdown">
+                                  Option
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li class="dropdown-item">
+                                    <a href="#">Edit</a>
+                                  </li>
+                                  <li class="dropdown-item">
+                                    <a href="#">Delete</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="comment-exist">
+                          <div class="row">
+                            <div class="col-md-9">
+                              <h6 class="mar-b-0 comment-name">Priyanka</h6>
+                              <p class="mar-b-0 comment-time">June 1 2018, 1:49:40 PM</p>
+                              <p class="mar-b-0 comment-para">Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american </p>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="dropdown">
+                                <a href="#" class="comment-option-btn dropdown-toggle" data-toggle="dropdown">
+                                  Option
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li class="dropdown-item">
+                                    <a href="#">Edit</a>
+                                  </li>
+                                  <li class="dropdown-item">
+                                    <a href="#">Delete</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="modal-footer comment-modal-footer">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Add Comment">
+                            </div>
+                          </div>
+                        </div>
+                        <button type="button" class="btn btn-primary float-right">Add Comment</button>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>

@@ -1,0 +1,18 @@
+<div class="jumbotron">
+  <h2>OneCo.Work ERP</h2>
+  <p>Manage everything at one place.</p>
+  <ul *ngIf="!isLoggedIn" class="list-group">
+      <a [routerLink]="['/login']" class="btn btn-primary">Login</a>
+  </ul>
+</div>
+<div *ngIf="isLoggedIn">
+<h4><strong>FEATURES</strong></h4>
+<ul class="list-group">
+  <li class="list-group-item col-sm-4"><div class="col-sm-8 py-2px">View/Edit Profile</div><div class="col-sm-4"><a [routerLink]="['/profile']" class="btn btn-primary">Select</a></div></li>
+  <li class="list-group-item col-sm-4"><div class="col-sm-8 py-2px">Create New Admin</div><div class="col-sm-4"><a [routerLink]="['/createuser']" class="btn btn-primary">Select</a></div></li>
+  <li class="list-group-item col-sm-4"><div class="col-sm-8 py-2px">Manage Bookings</div><div class="col-sm-4"><a [routerLink]="['/managebookings']" class="btn btn-primary">Select</a></div></li>
+  <li class="list-group-item col-sm-4"><div class="col-sm-8 py-2px">View/Edit Inventory</div><div class="col-sm-4"><a [routerLink]="['/inventory']" class="btn btn-primary">Select</a></div></li>
+  <li class="list-group-item col-sm-4"><div class="col-sm-8 py-2px">Manage Admins</div><div class="col-sm-4"><a [routerLink]="['/edituser']" class="btn btn-primary">Select</a></div></li>
+  <li class="list-group-item col-sm-4"><div class="col-sm-8 py-2px">View Reports</div><div class="col-sm-4"><a [routerLink]="['/reports']" class="btn btn-primary">Select</a></div></li>
+</ul>
+</div>

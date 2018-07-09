@@ -1,0 +1,161 @@
+
+
+
+  <!-- new page  -->
+  <form [formGroup]="kycForm" (ngSubmit)="submitForm(kycForm.value)" >
+      <div class="row">
+        <div class="col-md-12">
+            <div class="inline col-md-3">
+              <label>Address Proof <span>:</span></label>
+            </div>
+            <div class="inline option-1-xs">
+              <div class="form-group">
+                <select class="form-control" [formControl]="kycForm.controls['addressProofType']">
+                    <option value="">Options</option>
+                    <option value="1">Aadhar Card</option>
+                    <option value="2">ID Card</option>
+                    <option value="3">Driving License</option>
+                    <option value="4">Passport</option>
+                    <option value="5">Utility Bill</option>
+                  </select>
+              </div>
+            </div>
+            <div class="inline">
+              <div class="input-group image-preview" >
+                
+                <input type="text" class="form-control image-preview-filename" [value]="fileNames[0]" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                <span class="input-group-btn" (mouseenter)="focusFunction(true,0)" (mouseleave)="focusFunction(false,0)">
+                    <!-- image-preview-clear button -->
+                    <button type="button" class="btn btn-default image-preview-clear btn-round btn-color" *ngIf="addressProof" (click)="clearImage(0)">
+                        <span class="glyphicon glyphicon-remove"></span> Clear
+                    </button>
+                    <!-- image-preview-input -->
+                    <div class="btn btn-default image-preview-input" style="margin-top: 0px;" >
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                        <span class="image-preview-input-title btn-round btn-color">Browse</span>
+                        <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" (change)="onChangePreview($event,1)"/> <!-- rename it -->
+                    </div>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="showImagePopup[0]" class="popover fade bs-popover-bottom" [ngClass]="showImagePopup[0]?'show':'hide'" role="tooltip" id="popover279498" x-placement="bottom" style="position: fixed; transform: translate3d(437px, 244px, 0px); top: 0px; left: 50px; will-change: transform;">
+              <div class="arrow" style="left: 107px;"></div>
+              <h3 class="popover-header">
+                <strong>Preview</strong>
+                <button type="button" id="close-preview" style="font-size: initial;" (click)="focusFunction(false,0)" class="close pull-right">x</button>
+              </h3>
+              <div class="popover-body">
+                <img *ngIf="addressProof" id="dynamic" src="{{addressProof}}" style="width: 250px; height: 200px;">
+                <span *ngIf="!addressProof">No Preview found</span>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-12 mar-t-20">
+            <div class="inline col-md-3">
+              <label>Identity Proof <span>:</span></label>
+            </div>
+            <div class="inline option-1-xs">
+              <div class="form-group">
+                <select class="form-control" [formControl]="kycForm.controls['identityProofType']">
+                    <option value="">Options</option>
+                    <option value="1">Aadhar Card</option>
+                    <option value="2">ID Card</option>
+                    <option value="3">Driving License</option>
+                    <option value="4">Passport</option>
+                  </select>
+              </div>
+            </div>
+            <div class="inline">
+              <div class="input-group image-preview-1">
+                <input type="text" class="form-control image-preview-filename-1" [value]="fileNames[1]" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                <span class="input-group-btn" (mouseenter)="focusFunction(true,1)" (mouseleave)="focusFunction(false,1)">
+                    <!-- image-preview-clear button -->
+                    <button type="button" class="btn btn-default image-preview-clear-1 btn-round btn-color" *ngIf="identityProof" (click)="clearImage(1)">
+                        <span class="glyphicon glyphicon-remove"></span> Clear
+                    </button>
+                    <!-- image-preview-input -->
+                    <div class="btn btn-default image-preview-input-1" style="margin-top: 11px;" >
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                        <span class="image-preview-input-title-1 btn-round btn-color">Browse</span>
+                        <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview-1" (change)="onChangePreview($event,2)"/> <!-- rename it -->
+                    </div>
+                </span>
+              </div>
+            </div>
+          <div *ngIf="showImagePopup[1]" class="popover fade bs-popover-bottom" [ngClass]="showImagePopup[1]?'show':'hide'"  role="tooltip" id="popover279491" x-placement="bottom" style="position: fixed; transform: translate3d(437px, 244px, 0px); top: 56px; left: 50px; will-change: transform;">
+                <div class="arrow" style="left: 107px;"></div>
+                <h3 class="popover-header">
+                  <strong>Preview</strong>
+                  <button type="button" id="close-preview" style="font-size: initial;" (click)="focusFunction(false,2)" class="close pull-right">x</button>
+                </h3>
+                <div class="popover-body">
+                  <img *ngIf="identityProof" id="dynamic" src="{{identityProof}}" style="width: 250px; height: 200px;">
+                  <span *ngIf="!identityProof">No Preview found</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mar-t-20">
+            <div class="inline col-md-3">
+              <label>Photo <span>:</span></label>
+            </div>
+            <div class="inline option-1-xs" >
+              <div class="input-group image-preview-2">
+                <input type="text" class="form-control image-preview-filename-2" [value]="fileNames[2]" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                <span class="input-group-btn" (mouseenter)="focusFunction(true,2)" (mouseleave)="focusFunction(false,2)">
+                    <!-- image-preview-clear button -->
+                    <button type="button" class="btn btn-default image-preview-clear-2 btn-round btn-color" *ngIf="photo" (click)="clearImage(2)">
+                        <span class="glyphicon glyphicon-remove"></span> Clear
+                    </button>
+                    <!-- image-preview-input -->
+                    <div class="btn btn-default image-preview-input-2" style="margin-top: 11px;" >
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                        <span class="image-preview-input-title-2 btn-round btn-color">Browse</span>
+                        <input  type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview-2" (change)="onChangePreview($event,3)"/> <!-- rename it -->
+                    </div>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="showImagePopup[2]" class="popover fade bs-popover-bottom" [ngClass]="showImagePopup[2]?'show':'hide'" role="tooltip" id="popover2" x-placement="bottom" style="position: fixed; transform: translate3d(437px, 244px, 0px);     top: 114px;
+            left: 0px; will-change: transform;">
+                <div class="arrow" style="left: 107px;"></div>
+                <h3 class="popover-header">
+                  <strong>Preview</strong>
+                  <button type="button" id="close-preview" style="font-size: initial;" (click)="focusFunction(false,2)" class="close pull-right">x</button>
+                </h3>
+                <div class="popover-body">
+                  <img *ngIf="photo" id="dynamic" src="{{photo}}" style="width: 250px; height: 200px;">
+                  <span *ngIf="!photo">No Preview found</span>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-primary btn-color btn-round btn-kyc-submit" [disabled]="!kycForm.valid || !addressProof || !identityProof || !photo">Submit</button>
+            </div>
+        </div>
+      </div>
+      </form>
+      <div class="modal" [ngClass]="(success||error)?'show':'hide'" id="test-modal" tabindex="-1" *ngIf="(success||error)" role="dialog" style="display:block;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content ">
+            <div class="modal-header text-center">
+              <h6 class="modal-title">{{success?'Success':error?'Error':''}}</h6>
+              <button type="button" class="close comment-close" (click)="closeModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer comment-modal-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  {{msg}}
+                </div>
+              </div>
+              <!-- <button type="button" class="btn btn-primary btn-round btn-color float-right">Add Comment</button> -->
+              <button class="btn btn-secondary btn-round float-right modal-cancel-btn" data-toggle="modal" (click)="closeModal()" >OK</button>
+            </div>
+          </div>
+        </div>
+</div>

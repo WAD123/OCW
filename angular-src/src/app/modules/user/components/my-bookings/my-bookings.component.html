@@ -1,0 +1,61 @@
+<!-- <p>
+  my-bookings works!
+</p> -->
+<!-- End Navbar -->
+
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">Booking History</h5>
+      </div>
+      <div class="card-body no-pad">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs posts-header-pills" role="tablist">
+              <li *ngFor="let subHeader of subHeaderValueArray;let index = index;">
+                <a href="javascript:void(0);" aria-controls="home" [ngClass]="tabSelectStatus && index==0 ? 'active show' : ''" (click)="setMyBookingsArray(index);" role="tab" data-toggle="tab">{{subHeader.text}} ({{subHeader.count}})</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-12 post-panel">
+            <!-- Tab panes -->
+            <div class="tab-content post-panel-inner">
+              <div role="tabpanel" class="tab-pane active" id="stream">
+                <div class="row">
+                  <div class="col-md-4" *ngFor="let bookings of myBookingsArray;">
+                    <div class="card booking-card">
+                      <div class="image">
+                        <div class="gradient">
+                          <img src="../assets/img/cowork1.jpg" alt="...">
+                          <h3 class="mybookings-cards-head">{{bookings.plan.replace('_', '')}} Pass</h3>
+                        </div>
+                        <h1></h1>
+                      </div>
+                      <div class="card-body margin-t--20">
+                        <h6 class="normal-font">
+                          <b>Center</b> : {{bookings.center}}</h6>
+                        <h6 class="normal-font">
+                          <b>Start Date</b> : {{bookings.startdate | date: 'd MMM y'}}</h6>
+                        <h6 class="normal-font">
+                          <b>End Date</b> : {{bookings.enddate | date: 'd MMM y'}}</h6>
+                      </div>
+                      <hr>
+                      <div class="button-container text-left card-body">
+                        <h6 class="normal-font">
+                          <b>Status</b> :
+                          <b class="text-red">{{bookings.isPendingApproval ? "Pending" : bookings.isApproved ? "Approved" : "Declined"}}</b>
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>

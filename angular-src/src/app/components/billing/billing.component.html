@@ -1,0 +1,96 @@
+<div *ngIf="bookingData">
+    <div>{{bookingData.username}}</div>
+    <div>{{bookingData.email}}</div>
+    <div>{{bookingData.startdate}}</div>
+    <div>{{bookingData.enddate}}</div>
+    <div>{{bookingData.plan}}</div>
+    <div>{{bookingData.seats}}</div>
+    <div>{{bookingData.amount}}</div>
+    <h1>PayUMoney Payment Request Form </h1>
+    <form #myForm action="https://test.payu.in/_payment" name="payuform" method=POST >
+    <input type="hidden" [(ngModel)]="key" name="key" value="" />
+    <!-- <input type="hidden" [(ngModel)]="hash_string" name="hash_string" /> -->
+    <input type="hidden" [(ngModel)]="hash" name="hash"/>
+    <input type="hidden" [(ngModel)]="txnid" name="txnid"/>
+    <input type="hidden" [(ngModel)]="productinfo" name="productinfo"/>
+    <table>
+    <tr>
+    <td>Mandatory Parameters</td>
+    </tr>
+    <tr>
+    <td>Amount: </td>
+    <td><input type="text" [(ngModel)]="amount" name="amount"></td>
+    <td>First Name: </td>
+    <td><input type="text" [(ngModel)]="firstname" name="firstname" id="firstname"></td>
+    </tr>
+    <tr>
+    <td>Email: </td>
+    <td><input [(ngModel)]="email" name="email" id="email"></td>
+    <td>Phone: </td>
+    <td><input [(ngModel)]="phone" name="phone" value="8802525672"></td>
+    </tr>
+    <!-- <tr> -->
+    <!-- <td>Product Info: </td> -->
+    <!-- <td colspan="3"><textarea [(ngModel)]="productinfo" name="productinfo"></textarea></td> -->
+    <!-- </tr> -->
+    <tr>
+    <td>Success URI: </td>
+    <td colspan="3"><input [(ngModel)]="surl" name="surl"  size="64"></td>
+    </tr>
+    <tr>
+    <td>Failure URI: </td>
+    <td colspan="3"><input [(ngModel)]="furl" name="furl"  size="64"></td>
+    </tr>
+    <tr>
+    <!-- <td colspan="3"><input type="hidden" name="service_provider" value="payu_paisa"></td> -->
+    </tr>
+    <tr>
+    <td><b>Optional Parameters</b></td>
+    </tr>
+    <td>Last Name: </td>
+    <td><input [(ngModel)]="lastname" name="lastname" id="lastname"></td>
+    <!-- <td>Cancel URI: </td>
+    <tr>
+    <td><input name="curl" value=""></td>
+    </tr>
+    <tr>
+    <td>Address1: </td>
+    <td><input name="address1"></td>
+    <td>Address2: </td>
+    <td><input name="address2"></td>
+    </tr>
+    <tr>
+    <td>City: </td>
+    <td><input name="city"></td>
+    <td>State: </td>
+    <td><input name="state"></td>
+    </tr>
+    <tr>
+    <td>Country: </td>
+    <td><input name="country"></td>
+    <td>Zipcode: </td>
+    <td><input name="zipcode"></td>
+    </tr> -->
+    <tr>
+    <td>UDF1: </td>
+    <td><input [(ngModel)]="udf1" name="udf1"></td>
+    <td>UDF2: </td>
+    <td><input [(ngModel)]="udf2" name="udf2"></td>
+    </tr>
+    <tr>
+    <td>UDF3: </td>
+    <td><input [(ngModel)]="udf3" name="udf3"></td>
+    <td>UDF4: </td>
+    <td><input [(ngModel)]="udf4" name="udf4"></td>
+    </tr>
+    <tr>
+    <td>UDF5: </td>
+    <td><input [(ngModel)]="udf5" name="udf5"></td>
+    <td>PG: </td>
+    <td><input [(ngModel)]="pg" name="pg"></td>
+    </tr>
+    </table>
+    <input (click)="bookNow(myForm)" type="button" class="btn btn-primary btn-block" value="Book Now">
+    <input type="submit" (click)="myForm.submit()" class="btn btn-primary btn-block" value="Book Now">
+    </form>
+</div>

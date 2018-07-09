@@ -1,0 +1,22 @@
+#careerCarousel .carousel-indicators{
+	top: 110%;
+}
+.career-slider-card{
+	box-shadow: 0px 0px 10px 0px;
+	background: #fff;
+}
+
+.open-position-card{
+	transition: all 0.5s;
+	cursor: pointer;
+}
+.open-position-card:hover span{
+	color: #8dc63f!important;
+}
+.open-position-card:hover{
+	border-color: #000;
+	box-shadow: 0px 0px 10px 1px grey;
+}
+.open-position-card:hover p{
+	color: #000!important;
+}

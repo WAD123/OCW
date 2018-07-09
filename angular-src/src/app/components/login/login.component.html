@@ -1,0 +1,40 @@
+<div class="container-page">
+  <section class="common bg-col2">
+    <div class="container">
+      <div class="clearfix login">
+        <h1 class="text-center">Log in</h1>
+        <form (submit)="onLoginSubmit()">
+          <div class="form-group">
+            
+            <input type="text" [(ngModel)]="username" name="username" placeholder="Username *" class="form-control" id="exampleInputEmail1">
+          </div>
+          <div class="form-group">
+
+            <input type="password" [(ngModel)]="password" name="password" placeholder="Password *" class="form-control" id="exampleInputPassword1">
+          </div>
+          <!-- <div class="checkbox">
+            <label>
+              <input type="checkbox"> Remember me
+            </label>
+          </div> -->
+
+
+          <div class="form-group">
+            <div class="">
+              
+              <input type="submit" class="btn btn-primary btn-block" value="Login">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="">
+              <a routerLink="/register" class="btn btn-primary black btn-block">Signup</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<div class="clearfix"></div>

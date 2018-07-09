@@ -1,0 +1,45 @@
+<app-loader [loading]="loading"></app-loader>
+<div class="jumbotron" *ngIf="adminuser">
+  <div>
+    <h2>Welcome, {{adminuser.username | uppercase}}</h2>
+    {{adminuser.designation}} for centers: {{adminuser.center}} <br>
+    <br>
+  </div>
+  <strong>PRIVILEGES:</strong><br>
+  <ul class="list-group">
+    <li [ngClass]="{'btn-primary':adminuser.book_approve,'btn-danger':!adminuser.book_approve}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.book_approve,'glyphicon-remove':!adminuser.book_approve}" class="glyphicon"> Approve-Booking</i></li>&nbsp;&nbsp;
+    <li [ngClass]="{'btn-primary':adminuser.book_add,'btn-danger':!adminuser.book_add}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.book_add,'glyphicon-remove':!adminuser.book_add}" class="glyphicon"> Create-Booking</i></li>&nbsp;&nbsp;
+    <li [ngClass]="{'btn-primary':adminuser.book_delete,'btn-danger':!adminuser.book_delete}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.book_delete,'glyphicon-remove':!adminuser.book_delete}" class="glyphicon"> Delete-Booking</i></li>&nbsp;&nbsp;
+    <br>
+    <br>
+    <li [ngClass]="{'btn-primary':adminuser.adminuser_create,'btn-danger':!adminuser.adminuser_create}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.adminuser_create,'glyphicon-remove':!adminuser.adminuser_create}" class="glyphicon"> Create-Admin</i></li>&nbsp;&nbsp;
+    <li [ngClass]="{'btn-primary':adminuser.adminuser_modify,'btn-danger':!adminuser.adminuser_modify}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.adminuser_modify,'glyphicon-remove':!adminuser.adminuser_modify}" class="glyphicon"> Modify-Admin</i></li>&nbsp;&nbsp;
+    <li [ngClass]="{'btn-primary':adminuser.adminuser_delete,'btn-danger':!adminuser.adminuser_delete}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.adminuser_delete,'glyphicon-remove':!adminuser.adminuser_delete}" class="glyphicon"> Delete-Admin</i></li>&nbsp;&nbsp;
+    <br>
+    <br>
+    <li [ngClass]="{'btn-primary':adminuser.reports_view,'btn-danger':!adminuser.reports_view}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.reports_view,'glyphicon-remove':!adminuser.reports_view}" class="glyphicon"> View-Reports</i></li>&nbsp;&nbsp;
+    <li [ngClass]="{'btn-primary':adminuser.manage_inventory,'btn-danger':!adminuser.manage_inventory}" class="btn"><i [ngClass]="{'glyphicon-ok':adminuser.manage_inventory,'glyphicon-remove':!adminuser.manage_inventory}" class="glyphicon"> Manage Inventory </i></li>&nbsp;&nbsp;
+  </ul>
+
+  <div *ngIf="!editpw">
+    <input type="button" (click)="toggleEditpw()" value="Change Password">
+  </div>
+  
+  <div *ngIf="editpw">
+    <form (submit)="updatePassword()">
+      <ul class="list-group">
+        <li class="list-group-item">Current Password:
+          <input type="password" name="currentPassword" [(ngModel)]="currentPassword">
+        </li>
+        <li class="list-group-item">New Password:
+          <input type="password" name="newPassword" [(ngModel)]="newPassword">
+        </li>
+        <li class="list-group-item">Confirm Password:
+          <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword">
+        </li>
+      </ul>
+      <input type="button" value="Cancel" (click)="toggleEditpw()"> ----
+      <input type="submit" value="Update">
+    </form>
+  </div>
+</div>

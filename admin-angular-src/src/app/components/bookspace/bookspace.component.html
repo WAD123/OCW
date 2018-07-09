@@ -1,0 +1,100 @@
+<!-- <app-loader [loading]="loading"></app-loader> -->
+
+<div>
+    <section class="content-header">
+      <h1>
+        Book Space for User
+        <!-- <small>Preview</small> -->
+      </h1>
+    </section>
+  
+    <!-- Horizontal Form -->
+  
+    <div class="box box-success">
+      <!-- /.box-header -->
+      <!-- form start --> 
+      <form name="form" class="form-horizontal" [formGroup]="bookSpaceForm" (ngSubmit)="submitForm(bookSpaceForm.value)">
+        <!-- <div class=""> -->
+        <div class="box-body">
+  
+          <div class="form-group">
+            <label for="user" class="col-sm-2 control-label">User</label>
+            <div class="col-sm-10">
+              <select name="user" class="form-control" [formControl]="bookSpaceForm.controls['user']">
+                <option value="" [disabled]="true" [selected]="true">Select User</option>
+                <option *ngFor="let user of users" [value]="user._id">{{user.username}}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group ">
+            <label for="location " class="col-sm-2 control-label">Location</label>
+            <div class="col-sm-10">
+              <select class="form-control" name="location" [formControl]="bookSpaceForm.controls['location']">
+                <option [value]='' [disabled]="true" [selected]="true">Select Location</option>
+                <option *ngFor="let location of locations" [value]="location.value">{{location.value}}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="startDate" class="col-sm-2 control-label">Start Date</label>
+            <div class="col-sm-10">
+              <input type="text" name="date" [minDate]="todayDate" #dpYMD="bsDatepicker" [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker class="form-control date-picker" value="06/20/2018" data-datepicker-color="primary" [formControl]="bookSpaceForm.controls['startDate']">
+            </div>
+          </div>
+  
+          <div class="form-group ">
+            <label for="packageType" class="col-sm-2 control-label">Package</label>
+            <div class="col-sm-10">
+              <select class="form-control" name="packageType" [formControl]="bookSpaceForm.controls['packageType']">
+                <option [value]='' [disabled]="true" [selected]="true">Select Package</option>
+                <option *ngFor="let package of packages" [value]="package.code">{{package.value}}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group ">
+            <label for="subscription" class="col-sm-2 control-label">Subscription Period (months)</label>
+            <div class="col-sm-10">
+              <select class="form-control" name="subscription" [formControl]="bookSpaceForm.controls['subscription']" >
+                <option [value]='' [disabled]="true" [selected]="true">Select Subscription Period</option>
+                <option *ngFor="let duration of subscriptionDuration" [value]="duration">{{duration}}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="seats" class="col-sm-2 control-label">Number of Seats</label>
+            <div class="col-sm-10">
+              <input type="number" name="seats" class="form-control" value="" min="1" [formControl]="bookSpaceForm.controls['seats']" (focusout)="checkNegativeValue($event.target.value)">
+            </div>
+          </div>
+  
+        </div>
+        <div *ngIf="bookSpaceForm.controls['location'].value&&bookSpaceForm.controls['packageType'].value&&bookSpaceForm.controls['subscription'].value&&bookSpaceForm.controls['seats'].value" class="form-group">
+          <label for="amount" class="col-sm-2 control-label">Total Amount</label>
+          <div class="col-sm-10">
+             <span>{{"Total Amount: Rs."+calcAmount()+"/-"}}</span>
+          </div>
+        </div>
+        <div *ngIf="bookSpaceForm.controls['location'].value&&bookSpaceForm.controls['packageType'].value&&bookSpaceForm.controls['subscription'].value&&bookSpaceForm.controls['seats'].value" class="form-group">
+          <label for="endDate" class="col-sm-2 control-label">Total Amount</label>
+          <div class="col-sm-10">
+             <span>{{"End Date: "+(endDate | date: 'MM/dd/yyyy')}}</span>
+          </div>
+        </div>
+  
+      <!-- </div> -->
+  
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!bookSpaceForm.valid">Book</button>
+        </div>
+        <!-- /.box-footer -->
+        <!-- </div> -->
+      </form>
+    </div>
+    <!-- /.box -->
+  
+  </div>

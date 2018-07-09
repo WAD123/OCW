@@ -1,0 +1,55 @@
+<app-loader [loading]="loading"></app-loader>
+<h3> List of Admins </h3>
+
+<div *ngIf="otheradmins">
+  <ol>
+    <li *ngFor="let otheradmin of otheradmins">
+      Designation : {{otheradmin.designation}} <br> Name: {{otheradmin.name}} <br> Username: {{otheradmin.username}} <br>    
+      Center: {{otheradmin.center}} <br> Permissions: Admin --- Create : {{otheradmin.adminuser_create}}, Modify : {{otheradmin.adminuser_modify}}, Delete :
+      {{otheradmin.adminuser_delete}} <br> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp; Book --- Create : {{otheradmin.book_add}}, Approve : {{otheradmin.book_approve}}, Delete
+      : {{otheradmin.book_delete}}
+      <br>
+      <input type="button" *ngIf="adminuser.adminuser_modify" (click)="toggleEditUser(otheradmin._id)" value="Edit User">
+      <div *ngIf="editUser[otheradmin._id]">
+        <form (submit)="updateUserSubmit(otheradmin._id)">
+          <div>
+            <label>Name</label>
+            <input type="text" value="{{otheradmin.name}}" name="name" [(ngModel)]="name">
+          </div>
+          <div>
+            <label>Designation</label>
+            <select name="designation" value="{{otheradmin.designation}}" name="designation" [(ngModel)]="designation"> 
+            <option *ngFor="let d of designationsToDisplay">{{d}}</option>
+          </select>
+          </div>
+          <div class="form-group">
+            <label>Center</label>
+            <ul>
+              <li *ngFor="let c of adminuser.center;let i=index">
+                <input type="checkbox" [checked]="selectedCenters[i]" (click)="selectedCenters[i]==true?selectedCenters[i]=null:selectedCenters[i]=true">{{c}}
+              </li>
+            </ul>
+           </div>
+          <div>
+            Edit Permission(s) <br>
+            <ul>
+              <li *ngIf="adminuser['book_approve']"><input type="checkbox" value="{{otheradmin.book_approve}}" name="book_approve" [(ngModel)]="book_approve">Approve Booking </li>
+              <li *ngIf="adminuser['book_add']"><input type="checkbox" value="{{otheradmin.book_add}}" name="book_add" [(ngModel)]="book_add"> Add Booking</li>
+              <li *ngIf="adminuser['book_delete']"><input type="checkbox" value="{{otheradmin.book_delete}}" name="book_delete" [(ngModel)]="book_delete"> Delete Booking</li>
+              <li *ngIf="adminuser['adminuser_create']"><input type="checkbox" value="{{otheradmin.adminuser_create}}" name="adminuser_create" [(ngModel)]="adminuser_create"> Create Admin User</li>
+              <li *ngIf="adminuser['adminuser_modify']"><input type="checkbox" value="{{otheradmin.adminuser_modify}}" name="adminuser_modify" [(ngModel)]="adminuser_modify"> Modify Admin User</li>
+              <li *ngIf="adminuser['adminuser_delete']"><input type="checkbox" value="{{otheradmin.adminuser_delete}}" name="adminuser_delete" [(ngModel)]="adminuser_delete"> Delete Admin User</li>
+              <li *ngIf="adminuser['reports_view']"><input type="checkbox" value="{{otheradmin.reports_view}}" name="reports_view" [(ngModel)]="reports_view"> View Reports</li>
+              <li *ngIf="adminuser['manage_inventory']"><input type="checkbox"  name="reports_view" value="manage_inventory" [(ngModel)] = "manage_inventory" > Manage Inventory</li>         
+            </ul>
+          </div>
+          <input type="submit" value="Update">
+        </form>
+        <input type="button" (click)="toggleEditUser(otheradmin._id)" value="Cancel">
+      </div>
+      ----
+      <input type="button" *ngIf="adminuser.adminuser_delete" (click)="delete_otheradmin(otheradmin._id)" value="Delete User">
+    </li>
+  </ol>
+</div>

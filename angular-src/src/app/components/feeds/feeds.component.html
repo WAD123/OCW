@@ -1,0 +1,286 @@
+<div class="container-page ">
+  <div class="container">
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <nav id="spy">
+          <ul class="sidebar-nav nav">
+
+            <li>
+              <a routerLink="/profile" data-scroll>
+                <span>
+                  <i class="fa fa-user solo"></i>Profile</span>
+              </a>
+            </li>
+            <li class="active">
+              <a routerLink="/membersfeeds" data-scroll>
+                <span>
+                  <i class="fa fa-home solo"></i>Feeds</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/bookroom" data-scroll>
+                <span>
+                  <i class="fa fa-briefcase solo"></i>Book a Room</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/bookspace" data-scroll>
+                <span>
+                  <i class="fa fa-briefcase solo"></i>Book a Space</span>
+              </a>
+            </li>
+            
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-anchor solo"></i>My Plans</span>
+              </a>
+            </li> -->
+            <li>
+              <a routerLink="/bookinghistory" data-scroll>
+                <span>
+                  <i class="fa fa-book solo"></i>My Bookings</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-file solo"></i> My Documents</span>
+              </a>
+            </li> -->
+            <li>
+              <a routerLink="/accountsetting">
+                <span>
+                  <i class="fa fa-cogs solo"></i>Account Settings</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-users solo"></i>My Team Members</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/" data-scroll>
+                <span>
+                  <i class="fa fa-address-book solo"></i>Add/Delete member</span>
+              </a>
+            </li> -->
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Page content -->
+      <div id="page-content-wrapper ">
+
+
+        <div class="page-content inset">
+
+          <div class="row">
+            <div class="text-center ">
+              <div class="container-box">
+                <div class="heading-center">
+                  <h2>Members Feeds</h2>
+                  <hr>
+
+                </div>
+              </div>
+            </div>
+            <div>
+            <div class="col-md-7">
+
+              <div>
+                <div id="new-feed">
+                  <form (submit)="addPost()">
+                    <textarea class="form-control" name="content" [(ngModel)]="postcontent" required="required" rows="5" placeholder="What's on your mind...">
+                    </textarea>
+                    <input type="reset" class="btn btn-primary btn-shadow topmargin-xxs">
+                    <input type="submit" class="btn btn-primary btn-shadow topmargin-xxs" value="Add Post">
+                  </form>
+                </div>
+            
+                <div id="feeds" *ngIf="allposts" [@listAnimation]="allposts.length">
+                  
+                    <li class="post" *ngFor="let post of allposts; let i=index;">
+                      <div class="row">
+                        <div class="col-sm-1 nopadding">
+                          <img src="https://virgin.i.lithium.com/t5/image/serverpage/avatar-name/profile_146x146/avatar-theme/candy/avatar-collection/Transformative/avatar-display-size/message/version/2"
+                           width="100%">
+                        </div>
+                        <div class="col-sm-11">
+                          <div>
+                            <h4>
+                              <strong>{{post.username}}</strong>
+                              <small> @ Bangalore, India</small>
+                            </h4>
+                          </div>
+                          <small>{{post.timestamp | date:'medium'}}</small>
+                          <!-- <small>{{post.timestamp | time}}</small> -->
+                          <!-- <hr> -->
+                          <p class="lead topmargin-xxs"><small> {{post.content}} </small></p>
+                          <a class="cross-btn btn" *ngIf="post.username==username" (click)="deletePost(post,i)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                          </a>
+                          <!-- <div class="dropdown cross-btn" *ngIf="post.username==username">
+                              <a class="dropdown-toggle nopadding" data-toggle="dropdown" href="javascript:void(0)"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                              <ul class="dropdown-menu dropdown-left nopadding bg-alter-logo nomargin noborder">
+                              <li><a  href="javascript:void(0)" class="text-white">Edit</a></li>
+                              <li><a (click)="deletePost(post)" href="javascript:void(0)" class="text-white">Delete</a></li>
+                              </ul>
+                            </div> -->
+                          <div>
+                            <h3 class="topmargin-xxs">
+                              <a href="javascript:void(0)" (click)="updateLikes(post._id,i)" value="Like" class="padding-xxxs nopadding-left">
+                                <span data-toggle="tooltip" data-placement="top" title="Like" *ngIf="likes[i]==false" class="glyphicon glyphicon-heart-empty "></span>
+                                <span data-toggle="tooltip" data-placement="top" title="Unlike" *ngIf="likes[i]==true" class="glyphicon glyphicon-heart "></span>
+                              </a>
+                              <a (click)="post.comments.visible=true" href="javascript:void(0)" class="padding-xxxs nopadding-left">
+                                <span data-toggle="tooltip" data-placement="top" title="Add Comment" class="glyphicon glyphicon-comment "></span>
+                              </a>
+                            </h3>
+                  
+                  
+                            <div id="add_comment" *ngIf="post.comments.visible">
+                              <div class="modal-dialog topmargin-lg">
+                  
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header text-center">
+                                    <button type="button" class="close" (click)="post.comments.visible=false">&times;</button>
+                                    <h3 class="modal-title">Comments</h3>
+                                  </div>
+                                  <div class="allpadding height-20 modal-with-scroll">
+                                    <div class="list-group-item" *ngFor="let comment of post.comments.commentArray;let j=index;">
+                                      <div class="cross-btn" *ngIf="comment.by==username">
+                                        <ul *ngIf="commentEditMode.menu_id==comment._id" class="cross-btn">
+                                          <!-- FOR GAP -->
+                                          <li class="editmenu-item text-right invisible">.</li>
+                                          <li class="editmenu-item text-right">
+                                            <a (click)="commentEditMode.edit_id=comment._id;commentEditMode.menu_id=null" class="btn-sm">EDIT</a>
+                                          </li>
+                                          <li class="editmenu-item text-right">
+                                            <a (click)="modifyComment(0,i,j)" class="btn-sm">DELETE</a>
+                                          </li>
+                                        </ul>
+                                        <a class="edit-btn btn" (click)="(commentEditMode.menu_id==comment._id)?commentEditMode.menu_id=null:commentEditMode.menu_id=comment._id">
+                                          <span class="caret"></span>
+                                        </a>
+                                      </div>
+                                      <!-- <a class="cross-btn btn" *ngIf="post.username==username" (click)="deleteComment(post)">Delete?</a> -->
+                                      <small>{{comment.by}}</small>
+                                      <li>{{comment.timestamp | date:'medium'}}</li>
+                                      <h5 *ngIf="commentEditMode.edit_id!=comment._id">{{comment.content}}</h5>
+                                      <div *ngIf="comment.by==username&&commentEditMode.edit_id==comment._id">
+                                        <input type="text" class="form-control" [(ngModel)]="allposts[i].comments.commentArray[j].content" value="{{comment.content}}">
+                                        <input type="button" (click)="modifyComment(1,i,j)" class="btn btn-primary" value="Update">
+                                        <input type="button" (click)="commentEditMode.edit_id=null" class="btn btn-primary" value="Cancel">
+                                      </div>
+                                    </div>
+                  
+                                    <div *ngIf="!post.comments.commentArray.length">
+                                      <h4 class="text-center text-bold">No comments yet! Be the first one to comment.</h4>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <input type="text" [(ngModel)]="newComment[i]" class="form-control input-lg" placeholder="Add Comment...">
+                                    <input type="button" (click)="addComment(post._id,i)" class="btn button-success btn-primary btn-sm btn-shadow topmargin-xs"
+                                     value="Add Comment">
+                                    <button type="button" class="btn btn-primary black topmargin-xs" (click)="post.comments.visible=false">Cancel</button>
+                                  </div>
+                                </div>
+                  
+                              </div>
+                            </div>
+                  
+                  
+                          </div>
+                          <!-- <div *ngIf="post.comments.commentCount">
+                            Total Comments ({{post.comments.commentCount}})
+                            <hr>
+                          </div> -->
+                        </div>
+                      </div>
+                      <!-- <hr>       -->
+                      <!-- 
+                        <div>
+                          <input type="text" [(ngModel)]="newComment[i]" class="form-control input-lg" placeholder="What do you think about this post">
+                          <div>
+                          Likes({{post.likes.count}})
+                          <input type="checkbox" (click)="updateLikes(post._id,i)" value="Like" [(ngModel)]="likes[i]" name="likes[i]">
+                          
+                          <span *ngIf="likes[i]==true">
+                            <span *ngIf="post.likes.count==1">&nbsp;&nbsp;(You like this)</span>
+                            <span *ngIf="post.likes.count>1">&nbsp;&nbsp;(You and {{post.likes.count-1}} more like this)</span>
+                          </span>
+                          <span *ngIf="likes[i]==false">
+                            <span>&nbsp;&nbsp;({{post.likes.count}} like this)</span>
+                          </span>
+                          </div>
+                          <input style="cursor: pointer" class="btn bg-alter-logo btn-sm topmargin-xxs" type="button" [ngClass]="{colored: likes[i]==true}" (click)="updateLikes(post._id,i)" value="Like">
+                          <div class="list-group-item" *ngFor="let comment of post.comments.commentArray;let j=index;">
+                          <div class="cross-btn" *ngIf="comment.by==username">
+                            <ul *ngIf="commentEditMode.menu_id==comment._id" class="cross-btn">
+                        
+                            <li class="editmenu-item text-right invisible">.</li>
+                            <li class="editmenu-item text-right">
+                              <a (click)="commentEditMode.edit_id=comment._id;commentEditMode.menu_id=null" class="btn-sm">EDIT</a>
+                            </li>
+                            <li class="editmenu-item text-right">
+                              <a (click)="modifyComment(0,i,j)" class="btn-sm">DELETE</a>
+                            </li>
+                            </ul>
+                            <a class="edit-btn btn" (click)="(commentEditMode.menu_id==comment._id)?commentEditMode.menu_id=null:commentEditMode.menu_id=comment._id">
+                            <span class="caret"></span>
+                            </a>
+                          </div>
+                          <a class="cross-btn btn" *ngIf="post.username==username" (click)="deleteComment(post)">Delete?</a>
+                          <small>{{comment.by}}</small>
+                          <li>{{comment.timestamp}}</li>
+                          <li *ngIf="commentEditMode.edit_id!=comment._id">{{comment.content}}</li>
+                          <div *ngIf="comment.by==username&&commentEditMode.edit_id==comment._id">
+                            <input type="text" class="form-control" [(ngModel)]="allposts[i].comments.commentArray[j].content" value="{{comment.content}}">
+                            <input type="button" (click)="modifyComment(1,i,j)" class="btn bg-alter-logo" value="Update">
+                            <input type="button" (click)="commentEditMode.edit_id=null" class="btn bg-alter-logo" value="Cancel">
+                          </div>
+                          </div>
+                        </div> -->
+                    </li>
+                    <!-- <button *ngIf="!noMorePosts" class="btn btn-sm btn-block bg-alter-logo btn-success" (click)="fetchNextPosts()">Load More</button> -->
+                  </div>
+                  <!-- feeds ends-->
+              </div>
+              
+              
+            </div>
+            <!-- maxwidth500 ends-->
+            <div class="col-md-5">
+              <div class="feedsbar">
+                <div class="feedsbar-feeds">
+                  <h4 class="text-center page-header topmargin-xxs">Events</h4>
+                  <img src="../../assets/images/feeds-event1.jpg" class="img-responsive">
+                  
+                </div>
+          
+                <!-- <div class="feedsbar-feeds">
+                  <h4 class="text-center page-header topmargin-xxs">Heading</h4>
+                  <img src="http://via.placeholder.com/332x400" class="img-responsive">
+                  
+                </div> -->
+              </div>
+            </div>
+            <!-- maxwidth500 ends-->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>

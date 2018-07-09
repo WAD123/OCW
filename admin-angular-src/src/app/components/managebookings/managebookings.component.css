@@ -1,0 +1,191 @@
+body {
+  background-color: #006064;
+}
+
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+.box {
+  position: absolute;
+  width: 16em;
+  height: 16em;
+  border: solid #fff;
+  background-color: #1B609B;
+  opacity: 0.11765;
+  -webkit-animation: ba 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite alternate;
+          animation: ba 2s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite alternate;
+}
+.box:nth-child(1) {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+  -webkit-transform: translate(-50%, -50%) scale(0) rotate(360deg);
+          transform: translate(-50%, -50%) scale(0) rotate(360deg);
+}
+.box:nth-child(2) {
+  -webkit-animation-delay: 0.05882s;
+          animation-delay: 0.05882s;
+  -webkit-transform: translate(-50%, -50%) scale(0.05882) rotate(381.17647deg);
+          transform: translate(-50%, -50%) scale(0.05882) rotate(381.17647deg);
+}
+.box:nth-child(3) {
+  -webkit-animation-delay: 0.11765s;
+          animation-delay: 0.11765s;
+  -webkit-transform: translate(-50%, -50%) scale(0.11765) rotate(402.35294deg);
+          transform: translate(-50%, -50%) scale(0.11765) rotate(402.35294deg);
+}
+.box:nth-child(4) {
+  -webkit-animation-delay: 0.17647s;
+          animation-delay: 0.17647s;
+  -webkit-transform: translate(-50%, -50%) scale(0.17647) rotate(423.52941deg);
+          transform: translate(-50%, -50%) scale(0.17647) rotate(423.52941deg);
+}
+.box:nth-child(5) {
+  -webkit-animation-delay: 0.23529s;
+          animation-delay: 0.23529s;
+  -webkit-transform: translate(-50%, -50%) scale(0.23529) rotate(444.70588deg);
+          transform: translate(-50%, -50%) scale(0.23529) rotate(444.70588deg);
+}
+.box:nth-child(6) {
+  -webkit-animation-delay: 0.29412s;
+          animation-delay: 0.29412s;
+  -webkit-transform: translate(-50%, -50%) scale(0.29412) rotate(465.88235deg);
+          transform: translate(-50%, -50%) scale(0.29412) rotate(465.88235deg);
+}
+.box:nth-child(7) {
+  -webkit-animation-delay: 0.35294s;
+          animation-delay: 0.35294s;
+  -webkit-transform: translate(-50%, -50%) scale(0.35294) rotate(487.05882deg);
+          transform: translate(-50%, -50%) scale(0.35294) rotate(487.05882deg);
+}
+.box:nth-child(8) {
+  -webkit-animation-delay: 0.41176s;
+          animation-delay: 0.41176s;
+  -webkit-transform: translate(-50%, -50%) scale(0.41176) rotate(508.23529deg);
+          transform: translate(-50%, -50%) scale(0.41176) rotate(508.23529deg);
+}
+.box:nth-child(9) {
+  -webkit-animation-delay: 0.47059s;
+          animation-delay: 0.47059s;
+  -webkit-transform: translate(-50%, -50%) scale(0.47059) rotate(529.41176deg);
+          transform: translate(-50%, -50%) scale(0.47059) rotate(529.41176deg);
+}
+.box:nth-child(10) {
+  -webkit-animation-delay: 0.52941s;
+          animation-delay: 0.52941s;
+  -webkit-transform: translate(-50%, -50%) scale(0.52941) rotate(550.58824deg);
+          transform: translate(-50%, -50%) scale(0.52941) rotate(550.58824deg);
+}
+.box:nth-child(11) {
+  -webkit-animation-delay: 0.58824s;
+          animation-delay: 0.58824s;
+  -webkit-transform: translate(-50%, -50%) scale(0.58824) rotate(571.76471deg);
+          transform: translate(-50%, -50%) scale(0.58824) rotate(571.76471deg);
+}
+.box:nth-child(12) {
+  -webkit-animation-delay: 0.64706s;
+          animation-delay: 0.64706s;
+  -webkit-transform: translate(-50%, -50%) scale(0.64706) rotate(592.94118deg);
+          transform: translate(-50%, -50%) scale(0.64706) rotate(592.94118deg);
+}
+.box:nth-child(13) {
+  -webkit-animation-delay: 0.70588s;
+          animation-delay: 0.70588s;
+  -webkit-transform: translate(-50%, -50%) scale(0.70588) rotate(614.11765deg);
+          transform: translate(-50%, -50%) scale(0.70588) rotate(614.11765deg);
+}
+.box:nth-child(14) {
+  -webkit-animation-delay: 0.76471s;
+          animation-delay: 0.76471s;
+  -webkit-transform: translate(-50%, -50%) scale(0.76471) rotate(635.29412deg);
+          transform: translate(-50%, -50%) scale(0.76471) rotate(635.29412deg);
+}
+.box:nth-child(15) {
+  -webkit-animation-delay: 0.82353s;
+          animation-delay: 0.82353s;
+  -webkit-transform: translate(-50%, -50%) scale(0.82353) rotate(656.47059deg);
+          transform: translate(-50%, -50%) scale(0.82353) rotate(656.47059deg);
+}
+.box:nth-child(16) {
+  -webkit-animation-delay: 0.88235s;
+          animation-delay: 0.88235s;
+  -webkit-transform: translate(-50%, -50%) scale(0.88235) rotate(677.64706deg);
+          transform: translate(-50%, -50%) scale(0.88235) rotate(677.64706deg);
+}
+.box:nth-child(17) {
+  -webkit-animation-delay: 0.94118s;
+          animation-delay: 0.94118s;
+  -webkit-transform: translate(-50%, -50%) scale(0.94118) rotate(698.82353deg);
+          transform: translate(-50%, -50%) scale(0.94118) rotate(698.82353deg);
+}
+
+@-webkit-keyframes ba {
+  to {
+    -webkit-transform: translate(-50%, -50%) scale(1) rotate(0);
+            transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
+}
+
+@keyframes ba {
+  to {
+    -webkit-transform: translate(-50%, -50%) scale(1) rotate(0);
+            transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
+}
+.bookinfo-btn{
+        position: fixed;
+        top: 50%;
+        left: 5%;
+        transform:translateY(-50%);
+}
+
+.invoice-popup{
+        color:black;
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    z-index: 100;
+    /* display: none; */
+    /* margin: 30%; */
+    /* transform: translate(-50%, -50%); */
+    /* border: solid 3px; */
+    padding: 20px;
+    font-size: 1.2em;
+    overflow: hidden;
+}
+
+.invoice-overlay{
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.4);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99;
+}
+.invoice-close-btn{
+        position: fixed;
+        top: 5%;
+        right: 6%;
+        font-size: 2em;
+        cursor: pointer;
+        z-index: 101;
+}
+.invoice-title{
+        font-size: 2em;
+        font-weight: bold;
+        text-align: center;
+}
+.invoice-tagline{
+        font-style: italic;
+        font-weight: light;
+        text-align: center;
+}
+.invoice-bold-style{
+        font-weight: bold;
+}

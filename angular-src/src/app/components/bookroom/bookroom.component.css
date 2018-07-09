@@ -1,0 +1,336 @@
+#step-bar .progress{
+	position: relative;
+	height: 25px;
+}
+#step-bar .progress > .progress-bar{
+	position: absolute;
+}
+.meeting-slot{
+    cursor: pointer;
+    /*width: 25px;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    /*background-color: #2a4b6d;*/
+}
+.slotNotAvailable{
+	/*background-color: grey;*/
+	cursor: no-drop;
+}
+
+#dip{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 20;
+}
+.overlay{
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index: 9;
+	margin: 0;
+	display: none;
+}
+#old-forms{
+	display: none;
+}
+#packages{
+	margin: 30px;
+}
+#newbook-content > div > div{
+	/* padding: 10px; */
+	/* font-size: 1.5em; */
+}
+.space-out{
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+#hotdesking-form,#permanentbooking-form,#otherbooking-form{
+	position: fixed;
+    background-color: #665d5d;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 99999999;
+    display: none;
+    min-width: 75%;
+	/* z-index: 20; */
+    /*min-height: %;*/
+}
+:target{
+	display: block !important;
+}
+:target ~ div.overlay{
+	display: block;
+}
+.padding-4px{
+	padding: 3px!important;
+}
+.booking-first-look{
+	visibility: visible;
+}
+.booking-anim {display: none;}
+.book-fade-in {
+	animation-name: bookfadein;
+	-webkit-animation-name: bookfadein;
+	animation-duration: 1s;
+	-webkit-animation-duration: 1s;
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	/* display: none; */
+}
+@keyframes bookfadein {
+  0% {
+	/* display:block; */
+	opacity: 0;
+	transform: translateX(-20px);
+  }
+  100% {
+	opacity: 1;
+	transform: translateX(0px);
+	/* display:block; */
+  }
+}
+@-webkit-keyframes bookfadein {
+  0% {
+	opacity: 0;
+	-webkit-transform: translateX(-20px);
+  } 
+  100% {
+	opacity: 1;
+	-webkit-transform: translateX(0px);
+  }
+}
+
+/* .booking-fade-out-anim {visibility:visible;} */
+.book-fade-out {
+	animation-name: bookfadeout;
+	-webkit-animation-name: bookfadeout;
+	animation-duration: 1s;
+	-webkit-animation-duration: 1s;
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	/* transform: translateX(-70%); */
+}
+@keyframes bookfadeout {
+	0% {
+		opacity: 1;
+		transform: translateX(0%);
+  } 
+  100% {
+		opacity: 0;
+		transform: translateX(-20px);
+  }
+}
+@-webkit-keyframes bookfadeout {
+  0% {
+	opacity: 1;
+	-webkit-transform: translateX(0%);
+  } 
+  99% {
+	opacity: 0;
+	-webkit-transform: translateX(-20px);
+	}
+	100%{
+		display: none;
+	}
+}
+/* .booking-fade-in-anim {visibility:hidden;} */
+.book-fade-in-inverse {
+	animation-name: bookfadeininverse;
+	-webkit-animation-name: bookfadeininverse;
+	animation-duration: 1s;
+	-webkit-animation-duration: 1s;
+	display: block;
+}
+@keyframes bookfadeininverse {
+  0% {
+	opacity: 0;
+	transform: translateX(-20px);
+  } 
+  100% {
+	opacity: 1;
+	transform: translateX(0%);
+  }
+}
+@-webkit-keyframes bookfadeininverse {
+  0% {
+	opacity: 0;
+	-webkit-transform: translateX(-20px);
+  } 
+  100% {
+	opacity: 1;
+	-webkit-transform: translateX(0%);
+  }
+}
+
+.book-fade-out-inverse {
+	animation-name: bookfadeoutinverse;
+	-webkit-animation-name: bookfadeoutinverse;
+	animation-duration: 1s;
+	-webkit-animation-duration: 1s;
+	display: none;
+}
+@keyframes bookfadeoutinverse {
+  0% {
+	opacity: 1;
+	transform: translateX(0%);
+  } 
+  100% {
+	opacity: 0;
+	transform: translateX(20px);
+  }
+}
+@-webkit-keyframes bookfadeoutinverse {
+  0% {
+	opacity: 1;
+	-webkit-transform: translateX(0%);
+  } 
+  100% {
+	opacity: 0;
+	-webkit-transform: translateX(20px);
+  }
+}
+.step-group{
+	position: relative;
+}
+.step-group-item{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: auto;
+	z-index: -1;
+}
+.steps{
+	/* font-size: 14px; */
+	cursor: pointer;
+	transition: all 0.5s;
+}
+
+.nextstep:before{
+	content: "";
+	position: absolute;
+	background: #4CAF50;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	left: 0;
+	animation-name: nextstep;
+	animation-duration: 1s;
+}
+
+.color-white{
+	color: black;
+}
+.color-white{
+	color: white;
+}
+@keyframes nextstep {
+  0% {
+		width: 0;
+  } 
+  100% {
+		width: 100%;
+		
+  }
+}
+.prevstep:before{
+	content: "";
+	position: absolute;
+	background: #4CAF50;
+	top: 0;
+	z-index: -1;
+	width: 00%;
+	height: 100%;
+	
+	left: 0;
+	animation-name: prevstep;
+	animation-duration: 1s;
+}
+@keyframes prevstep {
+  0% {
+		width: 100%;
+  } 
+  100% {
+		width: 00%;
+		
+  }
+}
+
+.panel {
+	border: hidden; 
+	
+	border-radius:0 !important;
+	transition: box-shadow 0.5s;
+	/* box-shadow: 0px 0px 20px 8px rgba(0,0,0, .2); */
+	box-shadow: 0px 0px 20px rgba(0,0,0, .3);
+}
+.panel:hover {
+	/* box-shadow: 5px 0px 40px rgba(0,0,0, .2); */
+	box-shadow: 0px 0px 20px 5px rgba(0,0,0, .25);
+}
+.panel-footer .btn:hover {
+	border: 1px solid #4CAF50;
+	background:	none;
+	color: #4CAF50;
+}
+.panel-heading {
+	color: #fff !important;
+	background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url(http://www.coworkofficemumbai.com/images/coworking.jpeg);
+	background-size: cover;
+	padding: 90px 15px;
+	border-bottom: 1px solid transparent;
+	border-radius: 0px;
+	border: hidden;
+}
+.panel-body{
+	overflow-y: auto;
+	height: 16em;
+}
+.panel-footer {
+	background:	none;
+	border:	hidden;
+	padding: 0;
+}
+.panel-footer h3 {
+	font-size: 32px;
+}
+.panel-footer h4 {
+	color: #aaa;
+	font-size: 14px;
+}
+.panel-footer .btn {
+	margin: 0;
+	margin-top: 1em;
+	border-radius: 0;
+	background-color: #4CAF50;
+	color: #fff;
+}
+
+.title-transition{
+	transition: all 0.3s;
+}
+.push-top{
+	position: absolute;
+	top: -100%;
+	left: 50%;
+	transform: translateX(-50%);
+	color: black;
+}
+.progress{
+	overflow: inherit;
+}
+/* .datepicker-bootstrap-style{
+	padding: 10px 16px;
+	font-size: 14px;
+	width: 100%;
+	outline: none;
+	border: 1px solid #cacaca;
+	border-radius: 6px;
+} */

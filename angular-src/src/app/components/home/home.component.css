@@ -1,0 +1,260 @@
+.plan-column{
+	background-color: #303030;
+	padding: 10px;
+	min-height: 200px;
+}
+.plan-column li{
+	text-align: center;
+	margin: 5px;
+}
+.align-center{
+	text-align: center;
+}
+.stick-to-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 10px;
+}
+
+/* piyush css starts here */
+body {
+	font: 400 15px Lato, sans-serif;
+	line-height: 1.8;
+	color: #818181;
+}
+.home-section1{
+  background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(http://www.coworkofficemumbai.com/images/coworking.jpeg);
+  width: 100%;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  background-position: center;
+}
+.vertical-middle {
+	position: absolute;
+	top: 40%;
+	width: 100%;
+	color:white;
+}
+.vertical-middle h1 {
+  font-size: 55px;
+}
+
+.servicebox {
+  
+  padding: 0px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+.servicebox img{
+  transition: 0.5s all;
+  box-shadow: 0px 0px 20px rgba(0,0,0, .3);  
+}
+
+.servicebox .servicebox-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  bottom: 1.7em;
+  color: white;
+  font-size: 1.2em;
+  left: 0px;
+  padding: 10px 15px;
+  position: absolute;
+  transition: 0.5s all;
+  visibility: hidden;
+  text-align: center;
+  width: 100%;
+  top: 70%;
+}
+.servicebox:hover img{
+	filter: blur(3px);
+	box-shadow: 0px 0px 20px 6px rgba(0,0,0, .4);
+}
+
+.servicebox:hover .servicebox-overlay {
+  
+  visibility: visible;
+  top: 0;
+}
+
+.container-fluid {
+	padding: 30px 50px;
+}
+.bg-grey {
+	background-color: #f6f6f6;
+}
+/* .logo-small {
+	color: #76b838;
+	font-size: 50px;
+}
+.logo {
+	color: #76b838;
+	font-size: 200px;
+} */
+.thumbnail {
+	
+	border: none;
+	
+}
+.thumbnail img {
+	width: 100%;
+	height: 100%;
+	margin-bottom: 10px;
+}
+.carousel-control.right, .carousel-control.left {
+	background-image: none;
+	color: #76b838;
+}
+.carousel-indicators li {
+	border-color: #76b838;
+}
+.carousel-indicators li.active {
+	background-color: #76b838;
+}
+.item h4 {
+	font-size: 19px;
+	line-height: 1.375em;
+	font-weight: 400;
+	font-style: italic;
+	margin: 70px 0;
+}
+.item span {
+	font-style: normal;
+}
+.panel {
+	border: hidden; 
+	border-radius:0 !important;
+	transition: box-shadow 0.5s;
+	/* box-shadow: 0px 0px 20px 8px rgba(0,0,0, .2); */
+	box-shadow: 0px 0px 20px rgba(0,0,0, .3);
+}
+.panel:hover {
+	/* box-shadow: 5px 0px 40px rgba(0,0,0, .2); */
+	box-shadow: 0px 0px 20px 6px rgba(0,0,0, .25);
+}
+.panel-footer .btn:hover {
+	border: 1px solid #76b838;
+	background-color: #fff !important;
+	color: #76b838;
+}
+.panel-heading {
+	color: #fff !important;
+	background-color: #76b838 !important;
+	padding: 25px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+.panel-footer {
+	background-color: white !important;
+}
+.panel-footer h3 {
+	font-size: 32px;
+}
+.panel-footer h4 {
+	color: #aaa;
+	font-size: 14px;
+}
+.panel-footer .btn {
+	margin: 15px 0;
+	background-color: #76b838;
+	color: #fff;
+}
+
+
+
+/* piyush css ends here */
+
+.popup-overlay{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	z-index: 99998;
+}
+/* .popup{
+	position: fixed;
+    background: rgba(0, 0, 0, 0.6);
+    transition: all 0.3s;
+    visibility: visible;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+} */
+.hide{
+	visibility: hidden;
+	opacity: 0;
+}
+.popup-form{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transition:all 0.3s;
+	border-radius: 10px;
+    box-shadow: 0 2px 8px 0px black;
+	/* max-height: 400px; */
+	overflow: hidden;
+	/* width: 600px; */
+	padding: 2em;
+	background-color: white;
+	transform: translate(-50%,-50%);
+	z-index: 99999;
+}
+.testimonial-card{
+	transition: box-shadow 0.5s;
+	box-shadow: 0px 0px 20px rgba(0,0,0, .3);
+	height: 70vh;
+}
+.testimonial-card:hover {
+	
+	box-shadow: 0px 0px 20px 5px rgba(0,0,0, .25);
+}
+.card-up{
+	height: 150px;
+	background: #4CAF50;
+}
+.avatar{
+	background: #fff;
+    margin: auto;
+    height: 150px;
+    width: 150px;
+    margin-top: -20%;
+    border-radius: 100%;
+}
+.avatar img{
+	padding: 10px;
+}
+.card-body{
+	padding: 15px;
+}
+#about{
+	position: relative;
+	background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7));
+	background-size: 100% 100%;
+}
+.welcome-back{
+	background: white;
+    box-shadow: 0px 0px 13px 3px black;
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+.welcome-back > div:first-child{
+	padding: 20px 50px;
+}
+
+.section-bg{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	filter: blur(5px);
+	z-index: -1;
+}

@@ -1,0 +1,89 @@
+<!-- <app-loader [loading]="loading"></app-loader> -->
+
+<div>
+  <section class="content-header">
+    <h1>
+      Book Room for User
+      <!-- <small>Preview</small> -->
+    </h1>
+  </section>
+
+  <!-- Horizontal Form -->
+
+  <div class="box box-success">
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form name="form" class="form-horizontal" [formGroup]="bookRoomForm" (ngSubmit)="submitForm(bookRoomForm.value)">
+      <!-- <div class=""> -->
+      <div class="box-body">
+        <div class="form-group">
+          <label for="user" class="col-sm-2 control-label">User</label>
+
+          <div class="col-sm-10">
+            <select name="user" class="form-control" [formControl]="bookRoomForm.controls['user']">
+              <option value="" [disabled]="true" [selected]="true">Select User</option>
+              <option *ngFor="let user of users" [value]="user._id">{{user.username}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group ">
+          <label for="location " class="col-sm-2 control-label">Location</label>
+
+          <div class="col-sm-10">
+            <select class="form-control" name="location" [formControl]="bookRoomForm.controls['location']">
+              <option [value]='' [disabled]="true" [selected]="true">Select Location</option>
+              <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="date" class="col-sm-2 control-label">Select Date</label>
+
+          <div class="col-sm-10">
+            <!-- <input type="text" class="form-control" id="inputPassword3" placeholder="text"> -->
+            <input type="text" name="date" [minDate]="todayDate" #dpYMD="bsDatepicker" [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY' }"
+              bsDatepicker class="form-control date-picker" value="10/05/2016" data-datepicker-color="primary" [formControl]="bookRoomForm.controls['date']">
+          </div>
+        </div>
+
+        <div class="form-group ">
+          <label for="roomType" class="col-sm-2 control-label">Select Room Type</label>
+
+          <div class="col-sm-10">
+            <select class="form-control" name="roomType" [formControl]="bookRoomForm.controls['plan']">
+              <option [value]='' [disabled]="true" [selected]="true">Select Room Type</option>
+              <option *ngFor="let type of roomTypes" [value]="type.planType">{{type.title}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="selectTimeRangee" class="col-sm-2 control-label">Select Time range</label>
+          <div class="col-sm-10">
+            <nouislider name="selectTimeRangee" [config]="someRange2config" [formControl]="bookRoomForm.controls['timeRange']"></nouislider>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group"></div>
+
+      <div class="form-group" *ngIf="bookRoomForm.controls['location'].value&&bookRoomForm.controls['plan'].value&&bookRoomForm.controls['timeRange'].value" class="form-group">
+        <label for="amount" class="col-sm-2 control-label">Total Amount</label>
+        <div class="col-sm-10">
+          <span>{{"Total Amount: Rs."+calcAmount()+"/-"}}</span>
+        </div>
+      </div>
+
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!bookRoomForm.valid">Book</button>
+      </div>
+      <!-- /.box-footer -->
+      <!-- </div> -->
+    </form>
+  </div>
+  <!-- /.box -->
+
+</div>

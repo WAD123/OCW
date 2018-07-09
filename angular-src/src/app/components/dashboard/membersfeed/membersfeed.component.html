@@ -1,0 +1,88 @@
+<div id="feeds-container">
+  <!-- <h1 class="text-uppercase">Feeds</h1> -->
+  <div class="col-sm-6 col-sm-push-1">
+    <div id="new-feed">
+      <form (submit)="addPost()">
+        <textarea class="form-control" name="content" [(ngModel)]="postcontent" required="required" rows="5" placeholder="What's on your mind...">
+        </textarea>
+        <input type="reset" class="btn bg-alter-logo btn-shadow topmargin-xxs">
+        <input type="submit" class="btn bg-alter-logo btn-shadow topmargin-xxs" value="Add Post">
+      </form>
+    </div>
+
+    <div id="feeds" *ngIf="allposts" [@listAnimation]="allposts.length">
+
+      <li class="post" *ngFor="let post of allposts; let i=index;">
+        <div class="row">
+          <div class="col-sm-1 nopadding">
+              <img src="https://virgin.i.lithium.com/t5/image/serverpage/avatar-name/profile_146x146/avatar-theme/candy/avatar-collection/Transformative/avatar-display-size/message/version/2" width="100%">
+          </div>
+          <div class="col-sm-11">
+              <div><h4><strong>{{post.username}}</strong><small> @ Bangalore, India</small></h4></div>
+              <small>{{post.timestamp | date:'medium'}}</small>
+              <!-- <small>{{post.timestamp | time}}</small> -->
+              <!-- <hr> -->
+              <p class="lead topmargin-xxs"> {{post.content}} </p>
+              <a class="cross-btn btn" *ngIf="post.username==username" (click)="deletePost(post)"><span class="glyphicon glyphicon-trash"></span></a>
+              <div>
+                  <h3 class="topmargin-xxs"><a (click)="updateLikes(post._id,i)" value="Like" style="cursor: pointer;"><span *ngIf="likes[i]==false" class="glyphicon glyphicon-heart-empty text-alter-logo"></span><span *ngIf="likes[i]==true" class="glyphicon glyphicon-heart text-alter-logo"></span></a>
+                    <input type="button" (click)="addComment(post._id,i)" class="btn bg-alter-logo btn-sm btn-shadow" value="Add Comment"></h3>
+              </div>
+              <div *ngIf="post.comments.commentCount">
+                  Total Comments ({{post.comments.commentCount}})
+                  <hr>
+              </div>
+          </div>
+
+        </div>
+        
+        
+        <!-- <hr>       -->
+        <div>
+          <!-- <input type="text" [(ngModel)]="newComment[i]" class="form-control input-lg" placeholder="What do you think about this post"> -->
+          <!-- <div>
+            Likes({{post.likes.count}})
+            <input type="checkbox" (click)="updateLikes(post._id,i)" value="Like" [(ngModel)]="likes[i]" name="likes[i]">
+            
+
+            <span *ngIf="likes[i]==true">
+              <span *ngIf="post.likes.count==1">&nbsp;&nbsp;(You like this)</span>
+              <span *ngIf="post.likes.count>1">&nbsp;&nbsp;(You and {{post.likes.count-1}} more like this)</span>
+            </span>
+            <span *ngIf="likes[i]==false">
+              <span>&nbsp;&nbsp;({{post.likes.count}} like this)</span>
+            </span>
+          </div> -->
+          <!-- <input style="cursor: pointer" class="btn bg-alter-logo btn-sm topmargin-xxs" type="button" [ngClass]="{colored: likes[i]==true}" (click)="updateLikes(post._id,i)" value="Like"> -->
+          
+          
+          <div class="list-group-item" *ngFor="let comment of post.comments.commentArray;let j=index;">
+            <div class="cross-btn" *ngIf="comment.by==username">
+              <ul *ngIf="commentEditMode.menu_id==comment._id" class="cross-btn">
+                <!-- FOR GAP -->
+                <li class="editmenu-item text-right invisible">.</li>
+                <li class="editmenu-item text-right"><a (click)="commentEditMode.edit_id=comment._id;commentEditMode.menu_id=null" class="btn-sm">EDIT</a></li>
+                <li class="editmenu-item text-right"><a (click)="modifyComment(0,i,j)" class="btn-sm">DELETE</a></li>
+              </ul>
+              <a class="edit-btn btn" (click)="(commentEditMode.menu_id==comment._id)?commentEditMode.menu_id=null:commentEditMode.menu_id=comment._id"><span class="caret"></span></a>
+            </div>
+            <!-- <a class="cross-btn btn" *ngIf="post.username==username" (click)="deleteComment(post)">Delete?</a> -->
+            <small>{{comment.by}}</small>
+            <li>{{comment.timestamp}}</li>
+            <li *ngIf="commentEditMode.edit_id!=comment._id">{{comment.content}}</li>
+            <div *ngIf="comment.by==username&&commentEditMode.edit_id==comment._id">
+              <input type="text" class="form-control" [(ngModel)]="allposts[i].comments.commentArray[j].content" value="{{comment.content}}">
+              <input type="button" (click)="modifyComment(1,i,j)" class="btn bg-alter-logo" value="Update">
+              <input type="button" (click)="commentEditMode.edit_id=null" class="btn bg-alter-logo" value="Cancel">
+            </div>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+  <div class="col-sm-4 col-sm-push-1">
+    <div class="feedsbar">
+
+    </div>
+  </div>
+</div>

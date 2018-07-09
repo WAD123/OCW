@@ -1,0 +1,353 @@
+<app-loader [loading]="loading"></app-loader>
+<div *ngIf="!permanentbookings && !meetingroombookings && !hotdeskbookings">
+  <div id="loading" class="container">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
+</div>
+<div class="col-sm-3">
+  <div class="bookinfo-btn">
+    <a [ngClass]="{disabled:bookingsToShow==1}" class="btn btn-primary btn-block" (click)="bookingsToShow=1">Dedicated Bookings</a>
+    <a [ngClass]="{disabled:bookingsToShow==2}" class="btn btn-primary btn-block" (click)="bookingsToShow=2">Meeting Room Bookings</a>
+    <a [ngClass]="{disabled:bookingsToShow==3}" class="btn btn-primary btn-block" (click)="bookingsToShow=3">HotDesk Bookings</a>
+  </div>
+</div>
+<div class="col-sm-9">
+  <div *ngIf="permanentbookings&&bookingsToShow==1" id="dedicated">
+    
+    <div class="col-sm-12 list-group-item"><h4> Dedicated Bookings (18/30 days), Total : {{permanentbookings.length}} Bookings </h4></div>
+    <div class="list-group" *ngFor="let booking of permanentbookings; let i=index">
+      <div class="col-sm-12"><hr></div>
+      <li class="list-group-item hidden">NOTHING TO WORRY ABOUT</li>
+      <li [ngClass]="{'col-sm-10':adminuser.book_approve && booking.isPendingApproval,'col-sm-11':adminuser.book_approve && !booking.isPendingApproval && !booking.isApproved,'col-sm-12':adminuser.book_approve && !booking.isPendingApproval && booking.isApproved}" class="list-group-item active">Dedicated Booking {{i+1}}</li>
+      <li *ngIf="adminuser.book_approve && booking.isPendingApproval" class="list-group-item active col-sm-1">
+        <i class="glyphicon glyphicon-ok" (click)="approve_permanent(booking._id, true)"></i>
+      </li> 
+      <li *ngIf="!booking.isApproved||booking.isPendingApproval" class="list-group-item active col-sm-1">
+          <i class="glyphicon glyphicon-remove" *ngIf="adminuser.book_approve && booking.isPendingApproval" (click)="approve_permanent(booking._id, false)"></i>
+          <i class="glyphicon glyphicon-trash" *ngIf="adminuser.book_delete && !booking.isPendingApproval && !booking.isApproved" (click)="movetotrash(booking._id, 'permanent')"></i>
+      </li>
+      <li class="col-sm-6 list-group-item"><strong>Username</strong></li><li class="col-sm-6 list-group-item">{{booking.username}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Email</strong></li><li class="col-sm-6 list-group-item">{{booking.email}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Plan</strong></li><li class="col-sm-6 list-group-item">{{booking.plan}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Center</strong></li><li class="col-sm-6 list-group-item">{{booking.center}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Start Date</strong></li><li class="col-sm-6 list-group-item">{{booking.startdate}}</li>
+      <li class="col-sm-6 list-group-item"><strong>End Date</strong></li><li class="col-sm-6 list-group-item">{{booking.enddate}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Alloted Fixed Seats</strong></li><li class="col-sm-6 list-group-item">{{booking.seatsNumber}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Status</strong></li>
+      <li *ngIf="!booking.isApproved && booking.isPendingApproval" class="col-sm-6 list-group-item">Pending Action</li>
+      <li *ngIf="booking.isApproved && !booking.isPendingApproval" class="col-sm-6 list-group-item">Approved</li>
+      <li *ngIf="!booking.isApproved && !booking.isPendingApproval" class="col-sm-6 list-group-item">Declined</li>
+      <li class="col-sm-6 list-group-item"><strong>Amount</strong></li><li class="col-sm-6 list-group-item">{{booking.amount}}</li>
+      <li *ngIf="booking.isApproved" class="col-sm-12 list-group-item"><button type="button" (click)="invoice(booking._id, 'hotdesk');getInvoiceDates(0,booking.startdate)" value="Invoice"> Generate Invoice</button> </li> 
+      <li class = "col-sm-12 list-group-item" *ngIf="showInvoiceId==booking._id">
+          
+        <div class="invoice-overlay" (click)="invoice(booking._id, 'hotdesk')"></div>
+        <div class="invoice-close-btn" (click)="invoice(booking._id, 'hotdesk')">x</div>
+        
+        <!-- <div class="invoice-popup"> -->
+          <div class="invoice-popup" [ngClass]="booking.invoiceVisible[i]==true?'':'hidden'" *ngFor="let a of booking.amountBreakdown; let i=index;">
+            <div>
+                <!-- <div class="col-sm-12 hidden"></div> -->
+                
+                <div class="col-sm-12 invoice-title">ONE CO. WORK</div>
+                <!-- <div class="col-sm-2">INVOICE</div> -->
+                <div class="col-sm-12 invoice-tagline">Eat, Sleep, Work , Play for startups</div>
+                
+                <div style="visibility: hidden" class="col-sm-12">line space</div>
+                
+                <div class="col-sm-12 invoice-bold-style">Invoice #[{{i+1}}]</div>
+                <div class="col-sm-12">Date: (Today's Date)</div>
+                <!-- <div class="col-sm-12">From:</div> -->
+                <!-- <div class="col-sm-8">Address</div> -->
+                <!-- <div class="col-sm-8">Address line 2</div> -->
+                <!-- <div class="col-sm-8">Contact Details</div> -->
+                
+                <div style="visibility: hidden" class="col-sm-12">line space</div>
+                <!-- <div style="visibility: hidden" class="col-sm-12">line space</div> -->
+                
+                <div class="col-sm-6">
+                  <div>From:</div>
+                  <div>Address 1</div>
+                  <div>Address 2</div>
+                  <div>Contact Details</div>
+                  <!-- <div style="visibility: hidden">line space</div> -->
+                  <!-- <div>{{booking.email}}</div> -->
+                </div>
+                <div class="col-sm-6 text-right">
+                    <div>To:</div>
+                    <div>{{booking.username}}</div>
+                    <div>{{booking.email}}</div>
+                    <div>More Details</div>
+                    <!-- <div>More Details 2</div> -->
+                    <!-- <div>{{booking.email}}</div> -->
+                </div>
+                <div class="col-sm-12 list-group">
+                  <div class="col-sm-12" style="visibility: hidden">first-col-item</div>
+                  <div class="col-sm-6 list-group-item active">Booking Plan (Seats Allotted)</div>
+                  <div class="col-sm-4 list-group-item active">Time Period</div>
+                  <div class="col-sm-2 list-group-item active">Amount</div>
+                  
+                  <div class="col-sm-6 list-group-item">{{booking.plan}} ({{booking.seatsNumber}})</div>
+                  <div class="col-sm-4 list-group-item">{{invoiceStartDate | date: "mediumDate"}} - {{invoiceEndDate | date: "mediumDate"}}</div>
+                  <div class="col-sm-2 list-group-item">{{a.toFixed(2)}}</div>
+                  
+                  <div class="col-sm-6 list-group-item">-</div>
+                  <div class="col-sm-4 list-group-item">GST (18%)</div>
+                  <div class="col-sm-2 list-group-item">{{(a*0.18).toFixed(2)}}</div>
+                  
+                  <div class="col-sm-10 text-right list-group-item">Total (inclusive of taxes): </div>
+                  <div class="col-sm-2 list-group-item">{{(a*1.18).toFixed(2)}}</div>
+                  
+                  <div class="col-sm-12" style="visibility: hidden">last-col-item</div>
+                </div>
+                <div class="col-sm-8" style="visibility: hidden">space</div>
+                <div class="col-sm-2">
+                  <button class="btn btn-primary btn-block" onclick="alert('in development')">Generate</button>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-primary btn-block" (click)="booking.invoiceVisible[i]=false;booking.invoiceVisible[(i+1)%booking.invoiceVisible.length]=true;getInvoiceDates(i+1,booking.startdate,booking.invoiceVisible.length)">Next</button>
+                </div>
+                <!-- {{monthNames[(i+booking.startmonth)%12]}}, {{ ( booking.year + ( (i+booking.startmonth)/12) ) | number : '4.0-1'}}, -->
+                <!-- Amount: {{a.toFixed(2)}} -->
+                <!-- (Exclusive of 18% GST) -->
+            </div>
+          </div>
+       
+        <!-- </div> -->
+      
+      </li>
+      </div>
+    
+  </div>
+  
+
+  <div *ngIf="meetingroombookings&&bookingsToShow==2" id="mtr">
+    <div class="col-sm-12 list-group-item"><h4> Meeting Room Bookings, Total : {{meetingroombookings.length}} Bookings </h4></div>
+    <div class="list-group" *ngFor="let booking of meetingroombookings; let i=index">
+      <div class="col-sm-12"><hr></div>
+      <li class="list-group-item hidden">NOTHING TO WORRY ABOUT</li>
+      <li [ngClass]="{'col-sm-10':adminuser.book_approve && booking.isPendingApproval,'col-sm-11':adminuser.book_approve && !booking.isPendingApproval && !booking.isApproved,'col-sm-12':adminuser.book_approve && !booking.isPendingApproval && booking.isApproved}" class="list-group-item active">Meeting Room Booking {{i+1}}</li>
+      <li *ngIf="adminuser.book_approve && booking.isPendingApproval" class="list-group-item active col-sm-1">
+        <i class="glyphicon glyphicon-ok" (click)="approve_mtr(booking._id, true)"></i>
+      </li> 
+      <li *ngIf="!booking.isApproved||booking.isPendingApproval" class="list-group-item active col-sm-1">
+          <i class="glyphicon glyphicon-remove" *ngIf="adminuser.book_approve && booking.isPendingApproval" (click)="approve_mtr(booking._id, false)"></i>
+          <i class="glyphicon glyphicon-trash" *ngIf="adminuser.book_delete && !booking.isPendingApproval && !booking.isApproved" (click)="movetotrash(booking._id, 'mtr')"></i>
+      </li>
+      <li class="col-sm-6 list-group-item"><strong>Username</strong></li><li class="col-sm-6 list-group-item">{{booking.username}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Email</strong></li><li class="col-sm-6 list-group-item">{{booking.email}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Center</strong></li><li class="col-sm-6 list-group-item">{{booking.center}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Date</strong></li><li class="col-sm-6 list-group-item">{{booking.startdate.toLocaleDateString()}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Start Time</strong></li><li class="col-sm-6 list-group-item">{{booking.startdate.toLocaleTimeString()}}</li>
+      <li class="col-sm-6 list-group-item"><strong>End Time</strong></li><li class="col-sm-6 list-group-item">{{booking.enddate.toLocaleTimeString()}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Status</strong></li>
+      <li *ngIf="!booking.isApproved && booking.isPendingApproval" class="col-sm-6 list-group-item">Pending Action</li>
+      <li *ngIf="booking.isApproved && !booking.isPendingApproval" class="col-sm-6 list-group-item">Approved</li>
+      <li *ngIf="!booking.isApproved && !booking.isPendingApproval" class="col-sm-6 list-group-item">Declined</li>
+      <li class="col-sm-6 list-group-item"><strong>Amount</strong></li><li class="col-sm-6 list-group-item">{{booking.amount}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Amount</strong></li><li class="col-sm-6 list-group-item">{{booking.amount}}</li>
+      <li *ngIf="booking.isApproved" class="col-sm-12 list-group-item"><button type="button" (click)="invoice(booking._id, 'hotdesk');getInvoiceDates(0,booking.startdate)" value="Invoice"> Generate Invoice</button> </li> 
+      <li class = "col-sm-12 list-group-item" *ngIf="showInvoiceId==booking._id">
+          
+        <div class="invoice-overlay" (click)="invoice(booking._id, 'hotdesk')"></div>
+        <div class="invoice-close-btn" (click)="invoice(booking._id, 'hotdesk')">x</div>
+        
+        <!-- <div class="invoice-popup"> -->
+          <div class="invoice-popup" [ngClass]="booking.invoiceVisible[i]==true?'':'hidden'" *ngFor="let a of booking.amountBreakdown; let i=index;">
+            <div>
+                <!-- <div class="col-sm-12 hidden"></div> -->
+                
+                <div class="col-sm-12 invoice-title">ONE CO. WORK</div>
+                <!-- <div class="col-sm-2">INVOICE</div> -->
+                <div class="col-sm-12 invoice-tagline">Eat, Sleep, Work , Play for startups</div>
+                
+                <div style="visibility: hidden" class="col-sm-12">line space</div>
+                
+                <div class="col-sm-12 invoice-bold-style">Invoice #[{{i+1}}]</div>
+                <div class="col-sm-12">Date: (Today's Date)</div>
+                <!-- <div class="col-sm-12">From:</div> -->
+                <!-- <div class="col-sm-8">Address</div> -->
+                <!-- <div class="col-sm-8">Address line 2</div> -->
+                <!-- <div class="col-sm-8">Contact Details</div> -->
+                
+                <div style="visibility: hidden" class="col-sm-12">line space</div>
+                <!-- <div style="visibility: hidden" class="col-sm-12">line space</div> -->
+                
+                <div class="col-sm-6">
+                  <div>From:</div>
+                  <div>Address 1</div>
+                  <div>Address 2</div>
+                  <div>Contact Details</div>
+                  <!-- <div style="visibility: hidden">line space</div> -->
+                  <!-- <div>{{booking.email}}</div> -->
+                </div>
+                <div class="col-sm-6 text-right">
+                    <div>To:</div>
+                    <div>{{booking.username}}</div>
+                    <div>{{booking.email}}</div>
+                    <div>More Details</div>
+                    <!-- <div>More Details 2</div> -->
+                    <!-- <div>{{booking.email}}</div> -->
+                </div>
+                <div class="col-sm-12 list-group">
+                  <div class="col-sm-12" style="visibility: hidden">first-col-item</div>
+                  <div class="col-sm-6 list-group-item active">Booking Plan (Seats Allotted)</div>
+                  <div class="col-sm-4 list-group-item active">Time Period</div>
+                  <div class="col-sm-2 list-group-item active">Amount</div>
+                  
+                  <div class="col-sm-6 list-group-item">{{booking.plan}} ({{booking.seatsNumber}})</div>
+                  <div class="col-sm-4 list-group-item">{{invoiceStartDate | date: "mediumDate"}} - {{invoiceEndDate | date: "mediumDate"}}</div>
+                  <div class="col-sm-2 list-group-item">{{a.toFixed(2)}}</div>
+                  
+                  <div class="col-sm-6 list-group-item">-</div>
+                  <div class="col-sm-4 list-group-item">GST (18%)</div>
+                  <div class="col-sm-2 list-group-item">{{(a*0.18).toFixed(2)}}</div>
+                  
+                  <div class="col-sm-10 text-right list-group-item">Total (inclusive of taxes): </div>
+                  <div class="col-sm-2 list-group-item">{{(a*1.18).toFixed(2)}}</div>
+                  
+                  <div class="col-sm-12" style="visibility: hidden">last-col-item</div>
+                </div>
+                <div class="col-sm-8" style="visibility: hidden">space</div>
+                <div class="col-sm-2">
+                  <button class="btn btn-primary btn-block" onclick="alert('in development')">Generate</button>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-primary btn-block" (click)="booking.invoiceVisible[i]=false;booking.invoiceVisible[(i+1)%booking.invoiceVisible.length]=true;getInvoiceDates(i+1,booking.startdate,booking.invoiceVisible.length)">Next</button>
+                </div>
+                <!-- {{monthNames[(i+booking.startmonth)%12]}}, {{ ( booking.year + ( (i+booking.startmonth)/12) ) | number : '4.0-1'}}, -->
+                <!-- Amount: {{a.toFixed(2)}} -->
+                <!-- (Exclusive of 18% GST) -->
+            </div>
+          </div>
+       
+        <!-- </div> -->
+      
+      </li>
+    </div>
+  </div>
+
+
+  <div *ngIf="hotdeskbookings&&bookingsToShow==3" id="hotdesks">
+    <div class="col-sm-12 list-group-item"><h4> HotDesk Bookings, Total : {{hotdeskbookings.length}} Bookings </h4></div>
+    <div class="list-group" *ngFor="let booking of hotdeskbookings; let i=index">
+      <div class="col-sm-12"><hr></div>
+      <li class="list-group-item hidden">NOTHING TO WORRY ABOUT</li>
+      <li [ngClass]="{'col-sm-10':adminuser.book_approve && booking.isPendingApproval,'col-sm-11':adminuser.book_approve && !booking.isPendingApproval && !booking.isApproved,'col-sm-12':adminuser.book_approve && !booking.isPendingApproval && booking.isApproved}" class="list-group-item active">HotDesk Booking {{i+1}}</li>
+      <li *ngIf="adminuser.book_approve && booking.isPendingApproval" class="list-group-item active col-sm-1">
+        <i class="glyphicon glyphicon-ok" (click)="approve_hotdesk(booking._id, true)"></i>
+      </li> 
+      <li *ngIf="!booking.isApproved||booking.isPendingApproval" class="list-group-item active col-sm-1">
+          <i class="glyphicon glyphicon-remove" *ngIf="adminuser.book_approve && booking.isPendingApproval" (click)="approve_hotdesk(booking._id, false)"></i>
+          <i class="glyphicon glyphicon-trash" *ngIf="adminuser.book_delete && !booking.isPendingApproval && !booking.isApproved" (click)="movetotrash(booking._id, 'hotdesk')"></i>
+      </li>
+      <li class="col-sm-6 list-group-item"><strong>Username</strong></li><li class="col-sm-6 list-group-item">{{booking.username}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Email</strong></li><li class="col-sm-6 list-group-item">{{booking.email}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Plan</strong></li><li class="col-sm-6 list-group-item">{{booking.plan}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Center</strong></li><li class="col-sm-6 list-group-item">{{booking.center}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Start Date</strong></li><li class="col-sm-6 list-group-item">{{booking.startdate}}</li>
+      <li class="col-sm-6 list-group-item"><strong>End Date</strong></li><li class="col-sm-6 list-group-item">{{booking.enddate}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Total Seats</strong></li><li class="col-sm-6 list-group-item">{{booking.seats}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Status</strong></li>
+      <li *ngIf="!booking.isApproved && booking.isPendingApproval" class="col-sm-6 list-group-item">Pending Action</li>
+      <li *ngIf="booking.isApproved && !booking.isPendingApproval" class="col-sm-6 list-group-item">Approved</li>
+      <li *ngIf="!booking.isApproved && !booking.isPendingApproval" class="col-sm-6 list-group-item">Declined</li>
+      <li class="col-sm-6 list-group-item"><strong>Amount</strong></li><li class="col-sm-6 list-group-item">{{booking.amount}}</li>
+      <li class="col-sm-6 list-group-item"><strong>Amount</strong></li><li class="col-sm-6 list-group-item">{{booking.amount}}</li>
+      <li *ngIf="booking.isApproved" class="col-sm-12 list-group-item"><button type="button" (click)="invoice(booking._id, 'hotdesk');getInvoiceDates(0,booking.startdate)" value="Invoice"> Generate Invoice</button> </li> 
+      <li class = "col-sm-12 list-group-item" *ngIf="showInvoiceId==booking._id">
+          
+        <div class="invoice-overlay" (click)="invoice(booking._id, 'hotdesk')"></div>
+        <div class="invoice-close-btn" (click)="invoice(booking._id, 'hotdesk')">x</div>
+        
+        <!-- <div class="invoice-popup"> -->
+          <div class="invoice-popup" [ngClass]="booking.invoiceVisible[i]==true?'':'hidden'" *ngFor="let a of booking.amountBreakdown; let i=index;">
+            <div>
+                <!-- <div class="col-sm-12 hidden"></div> -->
+                
+                <div class="col-sm-12 invoice-title">ONE CO. WORK</div>
+                <!-- <div class="col-sm-2">INVOICE</div> -->
+                <div class="col-sm-12 invoice-tagline">Eat, Sleep, Work , Play for startups</div>
+                
+                <div style="visibility: hidden" class="col-sm-12">line space</div>
+                
+                <div class="col-sm-12 invoice-bold-style">Invoice #[{{i+1}}]</div>
+                <div class="col-sm-12">Date: (Today's Date)</div>
+                <!-- <div class="col-sm-12">From:</div> -->
+                <!-- <div class="col-sm-8">Address</div> -->
+                <!-- <div class="col-sm-8">Address line 2</div> -->
+                <!-- <div class="col-sm-8">Contact Details</div> -->
+                
+                <div style="visibility: hidden" class="col-sm-12">line space</div>
+                <!-- <div style="visibility: hidden" class="col-sm-12">line space</div> -->
+                
+                <div class="col-sm-6">
+                  <div>From:</div>
+                  <div>Address 1</div>
+                  <div>Address 2</div>
+                  <div>Contact Details</div>
+                  <!-- <div style="visibility: hidden">line space</div> -->
+                  <!-- <div>{{booking.email}}</div> -->
+                </div>
+                <div class="col-sm-6 text-right">
+                    <div>To:</div>
+                    <div>{{booking.username}}</div>
+                    <div>{{booking.email}}</div>
+                    <div>More Details</div>
+                    <!-- <div>More Details 2</div> -->
+                    <!-- <div>{{booking.email}}</div> -->
+                </div>
+                <div class="col-sm-12 list-group">
+                  <div class="col-sm-12" style="visibility: hidden">first-col-item</div>
+                  <div class="col-sm-6 list-group-item active">Booking Plan (Seats Allotted)</div>
+                  <div class="col-sm-4 list-group-item active">Time Period</div>
+                  <div class="col-sm-2 list-group-item active">Amount</div>
+                  
+                  <div class="col-sm-6 list-group-item">{{booking.plan}} ({{booking.seatsNumber}})</div>
+                  <div class="col-sm-4 list-group-item">{{invoiceStartDate | date: "mediumDate"}} - {{invoiceEndDate | date: "mediumDate"}}</div>
+                  <div class="col-sm-2 list-group-item">{{a.toFixed(2)}}</div>
+                  
+                  <div class="col-sm-6 list-group-item">-</div>
+                  <div class="col-sm-4 list-group-item">GST (18%)</div>
+                  <div class="col-sm-2 list-group-item">{{(a*0.18).toFixed(2)}}</div>
+                  
+                  <div class="col-sm-10 text-right list-group-item">Total (inclusive of taxes): </div>
+                  <div class="col-sm-2 list-group-item">{{(a*1.18).toFixed(2)}}</div>
+                  
+                  <div class="col-sm-12" style="visibility: hidden">last-col-item</div>
+                </div>
+                <div class="col-sm-8" style="visibility: hidden">space</div>
+                <div class="col-sm-2">
+                  <button class="btn btn-primary btn-block" onclick="alert('in development')">Generate</button>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-primary btn-block" (click)="booking.invoiceVisible[i]=false;booking.invoiceVisible[(i+1)%booking.invoiceVisible.length]=true;getInvoiceDates(i+1,booking.startdate,booking.invoiceVisible.length)">Next</button>
+                </div>
+                <!-- {{monthNames[(i+booking.startmonth)%12]}}, {{ ( booking.year + ( (i+booking.startmonth)/12) ) | number : '4.0-1'}}, -->
+                <!-- Amount: {{a.toFixed(2)}} -->
+                <!-- (Exclusive of 18% GST) -->
+            </div>
+          </div>
+       
+        <!-- </div> -->
+      
+      </li>
+    </div>
+  </div>
+</div>
